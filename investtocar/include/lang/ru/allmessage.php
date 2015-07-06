@@ -84,11 +84,36 @@
 	$MESS["CREDIT"] = "Кредит";
 	$MESS["EQUIPMENT"] = "Дополнительное оборудование";
 	$MESS["FUEL"] = "Топливо";
-	$MESS[""] = "";
-	$MESS[""] = "";
-	$MESS[""] = "";
-	$MESS[""] = "";
-	$MESS[""] = "";
+	$MESS["TS"] = "ТО";
+	$MESS["WE_DROVE_KM_FOR"] = "Проехали, км (за #PERIOD#)";
+
+	$MESS["ABBREV_NAME_DAY_OF_WEEK_SUN"] = "Вс.";
+	$MESS["ABBREV_NAME_DAY_OF_WEEK_MON"] = "Пн.";
+	$MESS["ABBREV_NAME_DAY_OF_WEEK_TUE"] = "Вт.";
+	$MESS["ABBREV_NAME_DAY_OF_WEEK_WED"] = "Ср.";
+	$MESS["ABBREV_NAME_DAY_OF_WEEK_THU"] = "Чт.";
+	$MESS["ABBREV_NAME_DAY_OF_WEEK_FRI"] = "Пт.";
+	$MESS["ABBREV_NAME_DAY_OF_WEEK_SAT"] = "Сб.";
+
+
+	$MESS["JANUARY"] = "Январь";
+	$MESS["FEBRUARY"] = "Февраль";
+	$MESS["MARCH"] = "Март";
+	$MESS["APRIL"] = "Апрель";
+	$MESS["MAY"] = "Май";
+	$MESS["JUNE"] = "Июнь";
+	$MESS["JULY"] = "Июль";
+	$MESS["AUGUST"] = "Август";
+	$MESS["SEPTEMBER"] = "Сентябрь";
+	$MESS["OCTOBER"] = "Октябрь";
+	$MESS["NOVEMBER"] = "Ноябрь";
+	$MESS["DECEMBER"] = "Декабрь";
+
+	$MESS["INVALID_CAR_ID"] = "Неверный ID автомобиля";
+	$MESS["REFERENCED_DATA_TRIPS"] = "Есть привязанные данные о поездках";
+	$MESS["PETROL_STATION_LINKED"] = "Есть привязанные записи о заправках";
+	$MESS["BOUND_TO_RUN_RECORD"] = "Есть привязанные записи о пробеге";
+	$MESS["BOUND_RECORD_MAINTENANCE"] = "Есть привязанные записи о прохождении ТО";
 	$MESS[""] = "";
 	$MESS[""] = "";
 	$MESS[""] = "";

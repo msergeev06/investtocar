@@ -250,7 +250,7 @@
 			for ($i=0; $i<=25; $i++) {
 				$echo .= "<option value=\"".$i."\"";
 				if ($i==0) $echo .= " selected";
-				$echo .= ">ТО-".$i."</option>";
+				$echo .= ">".GetMessage("TS")."-".$i."</option>";
 			}
 			$echo .= "</select>";
 
@@ -313,7 +313,7 @@
 				$arSettings["fromTitle"] = date ("Y")." г.";
 			}
 
-			$arSettings["fullTitle"] = "Проехали, км (за ".$arSettings["fromTitle"].")";
+			$arSettings["fullTitle"] = GetMessage("WE_DROVE_KM_FOR",array("PERIOD"=>$arSettings["fromTitle"]));
 
 			if ($echo = self::HtmlCharts ($arSettings))
 			{
@@ -784,19 +784,19 @@
 			switch ($day)
 			{
 				case 0:
-					return "Вс.";
+					return GetMessage("ABBREV_NAME_DAY_OF_WEEK_SUN");
 				case 1:
-					return "Пн.";
+					return GetMessage("ABBREV_NAME_DAY_OF_WEEK_MON");
 				case 2:
-					return "Вт.";
+					return GetMessage("ABBREV_NAME_DAY_OF_WEEK_TUE");
 				case 3:
-					return "Ср.";
+					return GetMessage("ABBREV_NAME_DAY_OF_WEEK_WED");
 				case 4:
-					return "Чт.";
+					return GetMessage("ABBREV_NAME_DAY_OF_WEEK_THU");
 				case 5:
-					return "Пт.";
+					return GetMessage("ABBREV_NAME_DAY_OF_WEEK_FRI");
 				case 6:
-					return "Сб.";
+					return GetMessage("ABBREV_NAME_DAY_OF_WEEK_SAT");
 				default:
 					return false;
 			}
@@ -816,29 +816,29 @@
 			switch ($month)
 			{
 				case 1:
-					return "Январь";
+					return GetMessage("JANUARY");
 				case 2:
-					return "Февраль";
+					return GetMessage("FEBRUARY");
 				case 3:
-					return "Март";
+					return GetMessage("MARCH");
 				case 4:
-					return "Апрель";
+					return GetMessage("APRIL");
 				case 5:
-					return "Май";
+					return GetMessage("MAY");
 				case 6:
-					return "Июнь";
+					return GetMessage("JUNE");
 				case 7:
-					return "Июль";
+					return GetMessage("JULY");
 				case 8:
-					return "Август";
+					return GetMessage("AUGUST");
 				case 9:
-					return "Сентябрь";
+					return GetMessage("SEPTEMBER");
 				case 10:
-					return "Октябрь";
+					return GetMessage("OCTOBER");
 				case 11:
-					return "Ноябрь";
+					return GetMessage("NOVEMBER");
 				case 12:
-					return "Декабрь";
+					return GetMessage("DECEMBER");
 				default:
 					return false;
 			}
@@ -1036,7 +1036,7 @@
 			global $DB;
 
 			if ($car == 0) {
-				self::$arMessage["ERROR"] = "Неверный ID автомобиля";
+				self::$arMessage["ERROR"] = GetMessage("INVALID_CAR_ID");
 				return false;
 			}
 			$canDelete = true;
@@ -1046,7 +1046,7 @@
 
 			if (isset($res[0]["id"])) {
 				$canDelete = false;
-				self::$arMessage["CAN_DELETE"][] = "Есть привязанные данные о поездках<br>";
+				self::$arMessage["CAN_DELETE"][] = GetMessage("REFERENCED_DATA_TRIPS")."<br>";
 			}
 
 			$query = "SELECT `id` , `auto` FROM `ms_icar_fuel` WHERE `auto` =".$car;
@@ -1054,7 +1054,7 @@
 
 			if (isset($res[0]["id"])) {
 				$canDelete = false;
-				self::$arMessage["CAN_DELETE"][] = "Есть привязанные записи о заправках<br>";
+				self::$arMessage["CAN_DELETE"][] = GetMessage("PETROL_STATION_LINKED")."<br>";
 			}
 
 			$query = "SELECT `id` , `auto` FROM `ms_icar_odometer` WHERE `auto` =".$car;
@@ -1062,7 +1062,7 @@
 
 			if (isset($res[0]["id"])) {
 				$canDelete = false;
-				self::$arMessage["CAN_DELETE"][] = "Есть привязанные записи о пробеге<br>";
+				self::$arMessage["CAN_DELETE"][] = GetMessage("BOUND_TO_RUN_RECORD")."<br>";
 			}
 
 			$query = "SELECT `id` , `auto` FROM `ms_icar_ts` WHERE `auto` =".$car;
@@ -1070,7 +1070,7 @@
 
 			if (isset($res[0]["id"])) {
 				$canDelete = false;
-				self::$arMessage["CAN_DELETE"][] = "Есть привязанные записи о прохождении ТО<br>";
+				self::$arMessage["CAN_DELETE"][] = GetMessage("BOUND_RECORD_MAINTENANCE")."<br>";
 			}
 
 			return $canDelete;
@@ -1224,17 +1224,17 @@
 		public function GetRepairNameByID ($id) {
 			switch ($id) {
 				case 1:
-					return "Не дилер";
+					return GetMessage("NO_DEALER");
 				case 2:
-					return "Дилер";
+					return GetMessage("DEALER");
 				case 3:
-					return "СТО";
+					return GetMessage("SERVICE_STATION");
 				case 4:
-					return "Сам делал";
+					return GetMessage("DID_HE");
 				case 5:
-					return "Частный сервис";
+					return GetMessage("PRIVATE_SERVICE");
 				default:
-					return "Нет данных";
+					return GetMessage("NO_DATA");
 			}
 		}
 
@@ -1315,107 +1315,4 @@
 
 		}
 
-		public function AddNewOdo($post="") {
-			if (!is_array($post)) {
-				return false;
-			}
-
-			$arOdo = array();
-			$arOdo["auto"] = $post["odo_auto"];
-			list($day,$month,$year) = explode (".",$post["date"]);
-			$arOdo["date"] = mktime(0,0,0,$month,$day,$year)+3600;
-			$arOdo["odo"] = floatval(str_replace(",",".",$post["odo"]));
-			$arOdo["start_point"] = $post["start_point"];
-			if ($arOdo["start_point"]==0) {
-				if (strlen($post["start_point_lon"])<2 || strlen($post["start_point_lat"])<2) {
-					if (strlen ($post["start_point_address"]) > 3)
-					{
-						if ($arCoords = self::GetCoordsByAddressYandex ($post["start_point_address"]))
-						{
-							$post["start_point_lon"] = $arCoords["lon"];
-							$post["start_point_lat"] = $arCoords["lat"];
-						}
-					}
-
-					$new_point = self::AddNewPointDB (
-						array (
-							"name"      => $post["start_point_name"],
-							"address"   => $post["start_point_address"],
-							"longitude" => $post["start_point_lon"],
-							"latitude"  => $post["start_point_lat"]
-						)
-					);
-					if (intval ($new_point) > 0)
-					{
-						$arOdo["start_point"] = $new_point;
-					}
-
-				}
-			}
-			$arOdo["city"] = isset($post["city"]);
-			if ($arOdo["city"]) {
-				$arOdo["end_point"] = 0;
-			}
-			else {
-				$arOdo["end_point"] = $post["end_point"];
-				if ($arOdo["end_point"]==0) {
-					if (strlen($post["end_point_lon"])<2 || strlen($post["end_point_lat"])<2) {
-						if (strlen ($post["end_point_address"]) > 3)
-						{
-							if ($arCoords = self::GetCoordsByAddressYandex ($post["end_point_address"]))
-							{
-								$post["end_point_lon"] = $arCoords["lon"];
-								$post["end_point_lat"] = $arCoords["lat"];
-							}
-						}
-
-						$new_point = self::AddNewPointDB (
-							array (
-								"name"      => $post["end_point_name"],
-								"address"   => $post["end_point_address"],
-								"longitude" => $post["end_point_lon"],
-								"latitude"  => $post["end_point_lat"]
-							)
-						);
-						if (intval ($new_point) > 0)
-						{
-							$arOdo["end_point"] = $new_point;
-						}
-
-					}
-				}
-			}
-
-			if ($res = self::AddNewOdoDB($arOdo)) {
-				return $res;
-			}
-			else {
-				return false;
-			}
-
-		}
-
-		public function AddNewOdoDB ($arData) {
-			global $DB;
-
-			$query = "INSERT INTO `ms_icar_routs`";
-			$query .= " (`auto` , `date` , `start_point` , `end_start` , `end_point` , `odo`)";
-			$query .= "VALUES ('".$arData["auto"]."', '".$arData["date"]."', '".$arData["start_point"]."',";
-			$query .= " '";
-			if ($arData["city"]) {
-				$query .= "1";
-				$query .= "', '0',";
-			}
-			else {
-				$query .= "0";
-				$query .= "', '".$arData["end_point"]."',";
-			}
-			$query .= " '".$arData["odo"]."');";
-			if ($res = $DB->Insert($query)) {
-				return $res;
-			}
-			else {
-				return false;
-			}
-		}
 	}
