@@ -60,19 +60,24 @@
 		 * Функция возвращает <select> состоящий из маршрутных точек
 		 *
 		 * @param string $select_name
+		 * @param int selected
 		 * @return string
 		 */
-		public function ShowSelectPoints ($select_name = "")
+		public function ShowSelectPoints ($select_name = "", $selected=0)
 		{
 			global $DB;
 			$query = "SELECT `id` , `name` FROM `ms_icar_points` WHERE `type` =1 ORDER BY `period` DESC";
 			$arResult = $DB->Select ($query);
 
 			$echo = "<select name=\"".$select_name."\">\n";
-			$echo .= "<option value=\"0\" selected>--Выбрать--</option>\n";
+			$echo .= "<option value=\"0\"";
+			if ($selected==0) $echo .= " selected=\"selected\"";
+			$echo .= ">--Выбрать--</option>\n";
 			foreach ($arResult as $arPoint)
 			{
-				$echo .= "<option value=\"".$arPoint["id"]."\">".$arPoint["name"]."</option>\n";
+				$echo .= "<option value=\"".$arPoint["id"]."\"";
+				if ($selected>0 && $selected==$arPoint["id"]) $echo .= " selected=\"selected\"";
+				$echo .= ">".$arPoint["name"]."</option>\n";
 			}
 			$echo .= "</select>\n";
 
@@ -243,14 +248,46 @@
 		 * Функция возвращает <select> состоящий из номеров ТО (ТО-0, ТО-1 и т.д.)
 		 *
 		 * @param string $name
+		 * @param int selected
 		 * @return string
 		 */
-		public function ShowSelectTs ($name="ts_num") {
+		public function ShowSelectTs ($name="ts_num", $selected=-1) {
 			$echo = "<select name=\"".$name."\" id=\"".$name."\">";
 			for ($i=0; $i<=25; $i++) {
 				$echo .= "<option value=\"".$i."\"";
 				if ($i==0) $echo .= " selected";
+				if ($selected>=0 && $selected==$i) $echo .= " selected";
 				$echo .= ">".GetMessage("TS")."-".$i."</option>";
+			}
+			$echo .= "</select>";
+
+			return $echo;
+		}
+
+		/**
+		 * Функция возвращает <select> состоящий из исполнителей ремонта
+		 *
+		 * @param string $name
+		 * @param int $selected
+		 * @return string
+		 */
+		public function ShowSelectRepair ($name="", $selected=0) {
+			if ($name=="") {
+				$name = "repair";
+			}
+
+			$echo = "<select name=\"".$name."\">";
+			for ($i=1; $i<=5; $i++) {
+				$echo .= "<option value=\"".$i."\"";
+				if ($selected>0 && $selected==$i) {
+					$echo .= " selected=\"selected\"";
+				}
+				else {
+					if ($i==1) $echo .= " selected=\"selected\"";
+				}
+				$echo .= ">";
+				$echo .= self::GetRepairNameByID($i);
+				$echo .= "</option>";
 			}
 			$echo .= "</select>";
 
@@ -1315,4 +1352,93 @@
 
 		}
 
+		/**
+		 * Функция возвращает массив данных по указанному ID записи о ТО
+		 *
+		 * @param int $tsID
+		 * @return bool
+		 */
+		public function GetTsInfo ($tsID=0) {
+			global $DB;
+			if ($tsID==0) {
+				return false;
+			}
+
+			$query = "SELECT * FROM `ms_icar_ts` WHERE `id` =".$tsID;
+			if ($res = $DB->Select($query)) {
+				return $res;
+			}
+			else {
+				return false;
+			}
+		}
+
+		public function UpdateTsInfo ($tsID=0, $arPost=array()) {
+			if ($tsID==0 || empty($arPost)) return false;
+
+			$arData = array();
+			$arData["id"] = intval($arPost["tsID"]);
+			$arData["ts_num"] = intval($arPost["ts_num"]);
+			$arData["ts_auto"] = intval($arPost["ts_auto"]);
+			list($day,$month,$year) = explode(".",$arPost["date"]);
+			$arData["date"] = mktime(0,0,0,$month,$day,$year)+3600;
+			$arData["ts_repair"] = intval($arPost["ts_repair"]);
+			$arData["cost"] = floatval(str_replace(",",".",$arPost["cost"]));
+			$arData["odo"] = floatval(str_replace(",",".",$arPost["odo"]));
+			if ($arPost["ts_point"]==0) {
+				if (strlen($post["newpoint_lon"])<2 || strlen($post["newpoint_lat"])<2) {
+					if (strlen ($post["newpoint_address"]) > 3)
+					{
+						if ($arCoords = self::GetCoordsByAddressYandex ($post["newpoint_address"]))
+						{
+							$post["newpoint_lon"] = $arCoords["lon"];
+							$post["newpoint_lat"] = $arCoords["lat"];
+						}
+					}
+
+					$new_point = self::AddNewPointDB (
+						array (
+							"name"      => $post["newpoint_name"],
+							"address"   => $post["newpoint_address"],
+							"longitude" => $post["newpoint_lon"],
+							"latitude"  => $post["newpoint_lat"]
+						)
+					);
+					if (intval ($new_point) > 0)
+					{
+						$arPost["ts_point"] = $new_point;
+					}
+				}
+			}
+			$arData["point"] = $arPost["ts_point"];
+			$arData["comment"] = $arPost["comment"];
+			if ($res = self::UpdateTsInfoDB($arData)) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+
+		public function UpdateTsInfoDB ($arData) {
+			global $DB;
+
+			$query = "UPDATE `ms_icar_ts` SET ";
+			$query .= "`ts_num` = '".$arData["ts_num"]."', ";
+			$query .= "`auto` = '".$arData["ts_auto"]."', ";
+			$query .= "`date` = '".$arData["date"]."', ";
+			$query .= "`repair` = '".$arData["ts_repair"]."', ";
+			$query .= "`cost` = '".$arData["cost"]."', ";
+			$query .= "`odo` = '".$arData["odo"]."', ";
+			$query .= "`point` = '".$arData["point"]."', ";
+			$query .= "`description` = '".$arData["comment"]."' ";
+			$query .= "WHERE `ms_icar_ts`.`id` =".$arData["id"].";";
+			if ($res = $DB->Update($query)) {
+				return true;
+			}
+			else {
+				return false;
+			}
+
+		}
 	}

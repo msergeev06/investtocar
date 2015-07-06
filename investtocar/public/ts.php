@@ -13,7 +13,7 @@
 				<td><?=GetMessage("AMOUNT")?></td>
 				<td><?=GetMessage("MILEAGE")?></td>
 				<td><?=GetMessage("ARTIST_WORKS")?></td>
-				<td><?=GetMessage("POINT")?>></td>
+				<td><?=GetMessage("POINT")?></td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
 			</tr>

@@ -76,6 +76,9 @@
 	$MESS["DATA_ADD_SUCCESS"] = "Данные добавлены";
 	$MESS["DATA_ADD_ERROR"] = "Ошибка добавления данных";
 
+	$MESS["DATA_UPDATE_SUCCESS"] = "Данные успешно обновлены";
+	$MESS["DATA_UPDATE_ERROR"] = "Ошибка обновления данных";
+
 	$MESS["ADDED"] = "Добавлено";
 
 	$MESS["DELETE_NOTE_TS"] = "Удаление записи о ТО";
@@ -114,7 +117,8 @@
 	$MESS["PETROL_STATION_LINKED"] = "Есть привязанные записи о заправках";
 	$MESS["BOUND_TO_RUN_RECORD"] = "Есть привязанные записи о пробеге";
 	$MESS["BOUND_RECORD_MAINTENANCE"] = "Есть привязанные записи о прохождении ТО";
-	$MESS[""] = "";
+
+	$MESS["SUBMIT_SAVE"] = "Сохранить";
 	$MESS[""] = "";
 	$MESS[""] = "";
 	$MESS[""] = "";
