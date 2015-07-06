@@ -66,12 +66,12 @@
 
 	$MESS["ADD_AUTO_MODEL"] = "Добавить модель автомобиля";
 	$MESS["SETUP"] = "Настройки";
-	
 
-	$MESS[""] = "";
-	$MESS[""] = "";
-	$MESS[""] = "";
-	$MESS[""] = "";
+
+	$MESS["NOW_MONTH"] = "Текущий месяц";
+	$MESS["LAST_MONTH"] = "Предыдущий месяц";
+	$MESS["FROM_YEAR"] = "За год";
+	$MESS["UPDATE_DAY_ODO"] = "Обновить данные о пробеге";
 	$MESS[""] = "";
 	$MESS[""] = "";
 	$MESS[""] = "";

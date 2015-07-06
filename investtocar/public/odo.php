@@ -7,10 +7,10 @@
 	<p><a href="<?=$path?>odo/add_route.php?car=<?=$defaultCar?>"><?=GetMessage("ADD_MILEAGE_INFORMATION")?></a></p>
 
 	<select name="period" id="period_select">
-		<option value="1" selected>Текущий месяц</option>
-		<option value="2">Предыдущий месяц</option>
-		<option value="3">За год</option>
-	</select>&nbsp;&nbsp;<a class="update" href="#">Обновить данные о пробеге</a><br><br>
+		<option value="1" selected><?=GetMessage("NOW_MONTH")?></option>
+		<option value="2"><?=GetMessage("LAST_MONTH")?></option>
+		<option value="3"><?=GetMessage("FROM_YEAR")?></option>
+	</select>&nbsp;&nbsp;<a class="update" href="#"><?=GetMessage("UPDATE_DAY_ODO")?></a><br><br>
 
 	<div class="charts">
 	</div>
