@@ -10,11 +10,11 @@
 			<td><? echo CInvestToCarMain::ShowSelectTs("ts_num"); ?></td>
 		</tr>
 		<tr>
-			<td class="title"><?=GetMessage("CAR")?>></td>
+			<td class="title"><?=GetMessage("CAR")?></td>
 			<td><? echo CInvestToCarMain::ShowSelectAuto("ts_auto",false,$car); ?></td>
 		</tr>
 		<tr>
-			<td class="title"><?=GetMessage("DATE_DDMMYYYY")?>></td>
+			<td class="title"><?=GetMessage("DATE_DDMMYYYY")?></td>
 			<td><input type="text" name="date" value=""></td>
 		</tr>
 		<tr>
