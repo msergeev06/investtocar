@@ -1373,6 +1373,13 @@
 			}
 		}
 
+		/**
+		 * Функция обновляет информации о расходе на ТО
+		 *
+		 * @param int $tsID
+		 * @param array $arPost
+		 * @return bool
+		 */
 		public function UpdateTsInfo ($tsID=0, $arPost=array()) {
 			if ($tsID==0 || empty($arPost)) return false;
 
@@ -1420,6 +1427,12 @@
 			}
 		}
 
+		/**
+		 * Функция обновляет информацию о расходен на ТО в DB
+		 *
+		 * @param $arData
+		 * @return bool
+		 */
 		public function UpdateTsInfoDB ($arData) {
 			global $DB;
 
