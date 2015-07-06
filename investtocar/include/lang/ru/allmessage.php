@@ -11,8 +11,8 @@
 	$MESS["OR"] = "или";
 	$MESS["NAME_NEW_WAYPOINT"] = "Имя новой точки";
 	$MESS["ADDRESS_NEW_WAYPOINT"] = "Адрес новой точки";
-	$MESS["LONGITUDE_NEW_WAYPOINT"] = "Долгота новой точки";
-	$MESS["LATITUDE_NEW_WAYPOINT"] = "Широта новой точки";
+	$MESS["LONGITUDE_NEW_WAYPOINT"] = "Долгота новой точки (37.123441)";
+	$MESS["LATITUDE_NEW_WAYPOINT"] = "Широта новой точки (55.1141345)";
 	$MESS["IN_THE_CITY_Q"] = "По городу?";
 	$MESS["FINAL_WAYPOINT"] = "Конечная путевая точка";
 	$MESS["SUBMIT_ADD"] = "Добавить";
@@ -72,8 +72,9 @@
 	$MESS["LAST_MONTH"] = "Предыдущий месяц";
 	$MESS["FROM_YEAR"] = "За год";
 	$MESS["UPDATE_DAY_ODO"] = "Обновить данные о пробеге";
-	$MESS[""] = "";
-	$MESS[""] = "";
+
+	$MESS["DATA_ADD_SUCCESS"] = "Данные добавлены";
+	$MESS["DATA_ADD_ERROR"] = "Ошибка добавления данных";
 	$MESS[""] = "";
 	$MESS[""] = "";
 	$MESS[""] = "";

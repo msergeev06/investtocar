@@ -8,10 +8,10 @@
 <?
 	if (isset($_POST["action"])&&$_POST["action"]==1) {
 		if (CInvestToCarMain::AddNewRoute($_POST)) {
-			echo "<span class=\"ok\">Данные добавлены</span>";
+			echo "<span class=\"ok\">".GetMessage("DATA_ADD_SUCCESS")."</span>";
 		}
 		else {
-			echo "<span class=\"err\">Ошибка добавления данных</span>";
+			echo "<span class=\"err\">".GetMessage("DATA_ADD_ERROR")."</span>";
 		}
 		list($day, $month, $year) = explode (".", $post["date"]);
 		$arResult["date"] = mktime (0, 0, 0, $month, $day, $year, 0) + 3600;
@@ -25,72 +25,72 @@
 <form name="add_route" method="POST">
 	<table style="border: 0;">
 		<tr>
-			<td class="name">Автомобиль</td>
+			<td class="name"><?=GetMessage("CAR")?></td>
 			<td class="value"><? echo CInvestToCarMain::ShowSelectAuto("auto")?></td>
 		</tr>
 		<tr>
-			<td class="name">Дата</td>
+			<td class="name"><?=GetMessage("DATE_DDMMYYYY")?>></td>
 			<td class="value"><input type="text" name="date" value="<?=date("d.m.Y")?>"></td>
 		</tr>
 		<tr>
-			<td class="name">Одометр</td>
+			<td class="name"><?=GetMessage("ODOMETER_VALUE")?>></td>
 			<td class="value"><input type="text" name="odo" value=""></td>
 		</tr>
 		<tr>
-			<td class="name">Стартовая точка</td>
+			<td class="name"><?=GetMessage("HOME_WAYPOINT")?>></td>
 			<td class="value"><? echo CInvestToCarMain::ShowSelectPoints("start_point")?></td>
 		</tr>
 		<tr>
 			<td class="name">&nbsp;</td>
-			<td class="value">или</td>
+			<td class="value"><?=GetMessage("OR")?>></td>
 		</tr>
 		<tr>
-			<td class="name">Стартовая точка имя</td>
+			<td class="name"><?=GetMessage("NAME_NEW_WAYPOINT")?>></td>
 			<td class="value"><input type="text" name="start_name" value=""></td>
 		</tr>
 		<tr>
-			<td class="name">Стартовая точка адрес</td>
+			<td class="name"><?=GetMessage("ADDRESS_NEW_WAYPOINT")?>></td>
 			<td class="value"><input type="text" name="start_address" value=""></td>
 		</tr>
 		<tr>
-			<td class="name">Стартовая точка долгота</td>
+			<td class="name"><?=GetMessage(LONGITUDE_NEW_WAYPOINT)?>></td>
 			<td class="value"><input type="text" name="start_lon" value=""></td>
 		</tr>
 		<tr>
-			<td class="name">Стартовая точка широта</td>
+			<td class="name"><?=GetMessage("LATITUDE_NEW_WAYPOINT")?></td>
 			<td class="value"><input type="text" name="start_lat" value=""></td>
 		</tr>
 		<tr>
-			<td class="name">По городу?</td>
+			<td class="name"><?=GetMessage("IN_THE_CITY_Q")?>></td>
 			<td class="value"><input type="checkbox" name="end_start" value="1"></td>
 		</tr>
 		<tr>
-			<td class="name">Конечная точка</td>
+			<td class="name"><?=GetMessage("FINAL_WAYPOINT")?></td>
 			<td class="value"><? echo CInvestToCarMain::ShowSelectPoints("end_point")?></td>
 		</tr>
 		<tr>
 			<td class="name">&nbsp;</td>
-			<td class="value">или</td>
+			<td class="value"><?=GetMessage("OR")?>></td>
 		</tr>
 		<tr>
-			<td class="name">Конечная точка имя</td>
+			<td class="name"><?=GetMessage("NAME_NEW_WAYPOINT")?>></td>
 			<td class="value"><input type="text" name="end_name" value=""></td>
 		</tr>
 		<tr>
-			<td class="name">Конечная точка адрес</td>
+			<td class="name"><?=GetMessage("ADDRESS_NEW_WAYPOINT")?></td>
 			<td class="value"><input type="text" name="end_address" value=""></td>
 		</tr>
 		<tr>
-			<td class="name">Конечная точка долгота</td>
+			<td class="name"><?=GetMessage("LONGITUDE_NEW_WAYPOINT")?></td>
 			<td class="value"><input type="text" name="end_lon" value=""></td>
 		</tr>
 		<tr>
-			<td class="name">Конечная точка широта</td>
+			<td class="name"><?=GetMessage("LATITUDE_NEW_WAYPOINT")?></td>
 			<td class="value"><input type="text" name="end_lat" value=""></td>
 		</tr>
 		<tr>
 			<td class="name"><input type="hidden" name="action" value="1"></td>
-			<td class="value"><input type="submit" value="Добавить"></td>
+			<td class="value"><input type="submit" value="<?=GetMessage("SUBMIT_ADD")?>"></td>
 		</tr>
 	</table>
 </form>
