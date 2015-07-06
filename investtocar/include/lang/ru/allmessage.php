@@ -82,8 +82,8 @@
 	$MESS["EDIT_NOTE_TS"] = "Редактирование записи о ТО";
 	$MESS["ACCIDENT"] = "ДТП";
 	$MESS["CREDIT"] = "Кредит";
-	$MESS[""] = "";
-	$MESS[""] = "";
+	$MESS["EQUIPMENT"] = "Дополнительное оборудование";
+	$MESS["FUEL"] = "Топливо";
 	$MESS[""] = "";
 	$MESS[""] = "";
 	$MESS[""] = "";
