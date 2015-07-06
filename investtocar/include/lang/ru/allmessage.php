@@ -75,7 +75,8 @@
 
 	$MESS["DATA_ADD_SUCCESS"] = "Данные добавлены";
 	$MESS["DATA_ADD_ERROR"] = "Ошибка добавления данных";
-	$MESS[""] = "";
+
+	$MESS["ADDED"] = "Добавлено";
 	$MESS[""] = "";
 	$MESS[""] = "";
 	$MESS[""] = "";
