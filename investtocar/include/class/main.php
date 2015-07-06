@@ -1454,4 +1454,19 @@
 			}
 
 		}
+
+		/**
+		 * Функция удаляет информацию о расходе на ТО из DB;
+		 *
+		 * @param int $tsID
+		 * @return bool
+		 */
+		public function DeleteTsInfoDB ($tsID=0) {
+			global $DB;
+
+			if ($tsID==0) return false;
+
+			$query = "DELETE FROM `ms_icar_ts` WHERE `id` = ".$tsID;
+			return $res = $DB->Delete($query);
+		}
 	}

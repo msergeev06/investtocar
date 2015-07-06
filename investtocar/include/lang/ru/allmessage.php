@@ -79,6 +79,9 @@
 	$MESS["DATA_UPDATE_SUCCESS"] = "Данные успешно обновлены";
 	$MESS["DATA_UPDATE_ERROR"] = "Ошибка обновления данных";
 
+	$MESS["DATA_DELETE_SUCCESS"] = "Данные успешно удалены";
+	$MESS["DATA_DELETE_ERROR"] = "Ошибка удаления данных";
+
 	$MESS["ADDED"] = "Добавлено";
 
 	$MESS["DELETE_NOTE_TS"] = "Удаление записи о ТО";
@@ -119,8 +122,9 @@
 	$MESS["BOUND_RECORD_MAINTENANCE"] = "Есть привязанные записи о прохождении ТО";
 
 	$MESS["SUBMIT_SAVE"] = "Сохранить";
-	$MESS[""] = "";
-	$MESS[""] = "";
+	$MESS["SUBMIT_DELETE"] = "Удалить";
+	$MESS["SUBMIT_CANCEL"] = "Отменить";
+	$MESS["SURE_TO_DELETE_Q"] = "Вы уверены, что хотите удалить запись?";
 	$MESS[""] = "";
 	$MESS[""] = "";
 	$MESS[""] = "";
