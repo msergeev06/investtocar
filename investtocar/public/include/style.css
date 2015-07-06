@@ -1,0 +1,90 @@
+.top_menu {
+    margin: auto;
+    border: 0;
+    background-color: #000099;
+    color: white;
+}
+.top_menu td {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.a_menu {
+    color: white;
+    text-decoration: underline;
+}
+h1,h2,h3,h4,h5 {
+    margin: auto;
+    text-align: center;
+}
+table {
+    border: 0;
+}
+
+/* Страница my_cars.php*/
+.carinfo {
+    display: block;
+    width: 100%;
+    background-color: #DDDDDD;
+    padding: 5px;
+    margin-bottom: 20px;
+}
+.blockcar {
+    display: block;
+    width: 250px;
+    margin: 10px;
+    padding: 5px;
+    border: solid #000000 1px;
+}
+.cardetailinfo {
+    width: 100%;
+
+}
+
+/* Страница /my_cars/add_car.php */
+.add_new_car {
+    width: 100%;
+}
+.add_new_car td {
+    padding-bottom: 5px;
+}
+
+/* Страница ts.php  */
+.ts_list {
+    width: 100%;
+    border: 0;
+}
+
+.ts_list tr, .ts_list td {
+    margin: 0;
+    padding: 5px;
+}
+
+.ts_list thead tr {
+    background: #038ACA;
+}
+
+.ts_list thead td {
+    color: #ffffff;
+    text-align: center;
+}
+
+.ts_list tbody td {
+    color: black;
+    text-align: center;
+}
+
+/* Страница /ts/add_ts.php */
+.add_ts {
+    width: 100%;
+}
+.add_ts td {
+    width: 50%;
+    padding: 5px;
+}
+.center {
+    text-align: center;
+}
+.add_ts .title {
+    text-align: right;
+}
+

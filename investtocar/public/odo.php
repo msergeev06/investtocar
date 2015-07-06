@@ -1,0 +1,42 @@
+<? require_once($_SERVER["DOCUMENT_ROOT"]."/msergeev/investtocar/public/include/header.php"); ?>
+	<h1><?=GetMessage("MILEAGE")?></h1>
+<?
+	$defaultCar = CInvestToCarMain::GetDefaultCar();
+?>
+	<p><?=GetMessage("STATISTICS_FOR")?>: <? echo CInvestToCarMain::ShowSelectAuto("my_car",true); ?><br><br></p>
+	<p><a href="<?=$path?>odo/add_route.php?car=<?=$defaultCar?>"><?=GetMessage("ADD_MILEAGE_INFORMATION")?></a></p>
+
+	<select name="period" id="period_select">
+		<option value="1" selected>Текущий месяц</option>
+		<option value="2">Предыдущий месяц</option>
+		<option value="3">За год</option>
+	</select>&nbsp;&nbsp;<a class="update" href="#">Обновить данные о пробеге</a><br><br>
+
+	<div class="charts">
+	</div>
+	<script type="text/javascript">
+		$(document).on("ready",function(){
+			var sel;
+			var chartWidth = 1000;
+			var chartHeight = 500;
+			var xTitle = "<?=urlencode("Дата")?>";
+			var yTitle = "<?=urlencode("Километраж")?>";
+
+			sel = $("#period_select").val();
+			$(".charts").html('<iframe src="/msergeev/investtocar/include/tools/getchartsodo.php?chartWidth='+chartWidth+'&chartHeight='+chartHeight+'&type='+sel+'&xTitle='+xTitle+'&yTitle='+yTitle+'" scrolling="no" frameborder="no" width="'+chartWidth+'" height="'+chartHeight+'" align="left"></iframe>');
+
+			$("#period_select").on("change",function(){
+				sel = $(this).val();
+
+				$(".charts").html('<iframe src="/msergeev/investtocar/include/tools/getchartsodo.php?chartWidth='+chartWidth+'&chartHeight='+chartHeight+'&type='+sel+'&xTitle='+xTitle+'&yTitle='+yTitle+'" scrolling="no" frameborder="no" width="'+chartWidth+'" height="'+chartHeight+'" align="left"></iframe>');
+
+			});
+
+			$(".update").on("click", function(){
+				$.post("/msergeev/investtocar/include/tools/update_day_odo.php",function(){});
+			});
+		});
+	</script>
+
+
+<? require_once($_SERVER["DOCUMENT_ROOT"]."/msergeev/investtocar/public/include/footer.php"); ?>
