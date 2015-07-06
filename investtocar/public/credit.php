@@ -1,5 +1,5 @@
 <? require_once($_SERVER["DOCUMENT_ROOT"]."/msergeev/investtocar/public/include/header.php"); ?>
-	<h1>Кредит</h1>
+	<h1><?=GetMessage("CREDIT")?></h1>
 
 
 
