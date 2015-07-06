@@ -1469,4 +1469,55 @@
 			$query = "DELETE FROM `ms_icar_ts` WHERE `id` = ".$tsID;
 			return $res = $DB->Delete($query);
 		}
+
+		/**
+		 * Функция получает массив записей о расходе топлива
+		 *
+		 * @param int $carID
+		 * @return bool
+		 */
+		public function GetFuelList ($carID=0) {
+			global $DB;
+			if ($carID==0) return false;
+
+			$query = "SELECT * FROM `ms_icar_fuel` WHERE `auto` =".$carID." ORDER BY `date` ASC";
+			return $res = $DB->Select($query);
+		}
+
+		public  function GetFuelMarkByID ($fuelMarkID=0) {
+			if ($fuelMarkID==0) return false;
+
+			switch (intval($fuelMarkID)) {
+				case 1:
+					return "Бензин 80";
+					break;
+				case 2:
+					return "Бензин 92";
+					break;
+				case 3:
+					return "Бензин 92 Улучшенный";
+					break;
+				case 4:
+					return "Бензин 95";
+					break;
+				case 5:
+					return "Бензин 95 Улучшенный";
+					break;
+				case 6:
+					return "Бензин 95 Био";
+					break;
+				case 7:
+					return "Бензин 98";
+					break;
+				case 8:
+					return "ДТ";
+					break;
+				case 9:
+					return "Газ";
+					break;
+				default:
+					return "Нет данных";
+					break;
+			}
+		}
 	}
