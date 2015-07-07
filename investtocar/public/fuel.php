@@ -12,11 +12,11 @@
 		<tr>
 			<td><?=GetMessage("DATE")?></td>
 			<td><?=GetMessage("FUEL_MARK")?></td>
-			<td><?=GetMessage("AMOUNT")?></td>
-			<td><?=GetMessage("DISPLACEMENT")?></td>
-			<td><?=GetMessage("COST_FOR_LITER")?></td>
-			<td><?=GetMessage("EXPENSE")?></td>
-			<td><?=GetMessage("MILEAGE")?></td>
+			<td><?=GetMessage("AMOUNT")?>,<br><?=GetMessage("RUB")?></td>
+			<td><?=GetMessage("DISPLACEMENT")?>,<br><?=GetMessage("LITER")?></td>
+			<td><?=GetMessage("COST_FOR_LITER")?>,<br><?=GetMessage("RUB")?></td>
+			<td><?=GetMessage("EXPENSE")?>,<br><?=GetMessage("LITERS_FOR_100KM")?></td>
+			<td><?=GetMessage("MILEAGE")?>,<br><?=GetMessage("KM")?></td>
 			<td><?=GetMessage("WAYPOINT")?></td>
 			<td><?=GetMessage("FULL_TANK")?></td>
 			<td>&nbsp;</td>
@@ -30,7 +30,7 @@
 			<tr>
 				<td><?=date("d.m.Y",$arFuel["date"])?></td>
 				<td><?=CInvestToCarMain::GetFuelMarkByID($arFuel["fuel_mark"],true)?></td>
-				<td><?=$arFuel["summ"]?>&nbsp;<?=GetMessage("RUB")?></td>
+				<td><?=$arFuel["summ"]?></td>
 				<td><?=$arFuel["liter"]?></td>
 				<td><?=$arFuel["liter_cost"]?></td>
 				<td><?=(floatval($arFuel["expense"])>0)?floatval($arFuel["expense"]):"-"?></td>

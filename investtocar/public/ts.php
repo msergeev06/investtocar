@@ -10,7 +10,7 @@
 			<tr>
 				<td><?=GetMessage("TITLE")?></td>
 				<td><?=GetMessage("DATE")?></td>
-				<td><?=GetMessage("AMOUNT")?></td>
+				<td><?=GetMessage("AMOUNT")?>,<br><?=GetMessage("RUB")?></td>
 				<td><?=GetMessage("MILEAGE")?></td>
 				<td><?=GetMessage("ARTIST_WORKS")?></td>
 				<td><?=GetMessage("POINT")?></td>
@@ -24,7 +24,7 @@
 			<tr>
 				<td>ТО-<?=$arTs["ts_num"]?></td>
 				<td><?=date("d.m.Y",$arTs["date"])?></td>
-				<td><?=$arTs["cost"]?>&nbsp;<?=GetMessage("RUB")?></td>
+				<td><?=$arTs["cost"]?></td>
 				<td><?=$arTs["odo"]?></td>
 				<td><?=$arTs["repair"]?></td>
 				<td><?=($arTs["point"]!==false) ? $arTs["point"]["name"] : GetMessage("NO_DATA")?></td>

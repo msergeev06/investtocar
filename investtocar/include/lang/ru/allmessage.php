@@ -160,7 +160,7 @@
 	$MESS["NO"] = "Нет";
 	$MESS["AVERAGE_FUEL_CONSUMPTION"] = "Средний расход топлива";
 	$MESS["LITERS_FOR_100KM"] = "л/100км";
-	$MESS[""] = "";
+	$MESS["LITER"] = "л.";
 	$MESS[""] = "";
 	$MESS[""] = "";
 	$MESS[""] = "";
