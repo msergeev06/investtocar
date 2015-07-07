@@ -29,31 +29,31 @@
 			<td class="value"><? echo CInvestToCarMain::ShowSelectAuto("auto")?></td>
 		</tr>
 		<tr>
-			<td class="name"><?=GetMessage("DATE_DDMMYYYY")?>></td>
+			<td class="name"><?=GetMessage("DATE_DDMMYYYY")?></td>
 			<td class="value"><input type="text" name="date" value="<?=date("d.m.Y")?>"></td>
 		</tr>
 		<tr>
-			<td class="name"><?=GetMessage("ODOMETER_VALUE")?>></td>
+			<td class="name"><?=GetMessage("ODOMETER_VALUE")?></td>
 			<td class="value"><input type="text" name="odo" value=""></td>
 		</tr>
 		<tr>
-			<td class="name"><?=GetMessage("HOME_WAYPOINT")?>></td>
+			<td class="name"><?=GetMessage("HOME_WAYPOINT")?></td>
 			<td class="value"><? echo CInvestToCarMain::ShowSelectPoints("start_point")?></td>
 		</tr>
 		<tr>
 			<td class="name">&nbsp;</td>
-			<td class="value"><?=GetMessage("OR")?>></td>
+			<td class="value"><?=GetMessage("OR")?></td>
 		</tr>
 		<tr>
-			<td class="name"><?=GetMessage("NAME_NEW_WAYPOINT")?>></td>
+			<td class="name"><?=GetMessage("NAME_NEW_WAYPOINT")?></td>
 			<td class="value"><input type="text" name="start_name" value=""></td>
 		</tr>
 		<tr>
-			<td class="name"><?=GetMessage("ADDRESS_NEW_WAYPOINT")?>></td>
+			<td class="name"><?=GetMessage("ADDRESS_NEW_WAYPOINT")?></td>
 			<td class="value"><input type="text" name="start_address" value=""></td>
 		</tr>
 		<tr>
-			<td class="name"><?=GetMessage(LONGITUDE_NEW_WAYPOINT)?>></td>
+			<td class="name"><?=GetMessage(LONGITUDE_NEW_WAYPOINT)?></td>
 			<td class="value"><input type="text" name="start_lon" value=""></td>
 		</tr>
 		<tr>
@@ -61,7 +61,7 @@
 			<td class="value"><input type="text" name="start_lat" value=""></td>
 		</tr>
 		<tr>
-			<td class="name"><?=GetMessage("IN_THE_CITY_Q")?>></td>
+			<td class="name"><?=GetMessage("IN_THE_CITY_Q")?></td>
 			<td class="value"><input type="checkbox" name="end_start" value="1"></td>
 		</tr>
 		<tr>
@@ -70,10 +70,10 @@
 		</tr>
 		<tr>
 			<td class="name">&nbsp;</td>
-			<td class="value"><?=GetMessage("OR")?>></td>
+			<td class="value"><?=GetMessage("OR")?></td>
 		</tr>
 		<tr>
-			<td class="name"><?=GetMessage("NAME_NEW_WAYPOINT")?>></td>
+			<td class="name"><?=GetMessage("NAME_NEW_WAYPOINT")?></td>
 			<td class="value"><input type="text" name="end_name" value=""></td>
 		</tr>
 		<tr>
