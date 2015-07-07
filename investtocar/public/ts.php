@@ -3,7 +3,7 @@
 <?
 	$defaultCar = CInvestToCarMain::GetDefaultCar();
 ?>
-	<p><?=GetMessage("STATISTICS_FOR")?>: <? echo CInvestToCarMain::ShowSelectAuto("my_car",true); ?><?=GetMessage("TOTAL_MAINTENANCE_COSTS")?>: <?=CInvestToCarMain::GetTotalMaintenanceCosts()?> <?=GetMessage("RUBLES")?><br><br></p>
+	<p><?=GetMessage("STATISTICS_FOR")?>: <? echo CInvestToCarMain::ShowSelectAuto("my_car",true); ?><?=GetMessage("TOTAL_MAINTENANCE_COSTS")?>: <?=CInvestToCarMain::GetTotalMaintenanceCosts()?> <?=GetMessage("RUB")?><br><br></p>
 	<p><a href="<?=$path?>ts/add_ts.php?car=<?=$defaultCar?>"><?=GetMessage("ADD_NOTE")?></a><br><br></p>
 	<table class="ts_list">
 		<thead>
@@ -24,7 +24,7 @@
 			<tr>
 				<td>ТО-<?=$arTs["ts_num"]?></td>
 				<td><?=date("d.m.Y",$arTs["date"])?></td>
-				<td><?=$arTs["cost"]?></td>
+				<td><?=$arTs["cost"]?>&nbsp;<?=GetMessage("RUB")?></td>
 				<td><?=$arTs["odo"]?></td>
 				<td><?=$arTs["repair"]?></td>
 				<td><?=($arTs["point"]!==false) ? $arTs["point"]["name"] : GetMessage("NO_DATA")?></td>

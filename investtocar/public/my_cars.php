@@ -44,7 +44,7 @@
 						</tr>
 						<tr>
 							<td><b><?=GetMessage("TOTAL_COSTS")?>:</b></td>
-							<td colspan="5"><?=round($myCar["total_costs"],2)?> <?=GetMessage("RUBLES")?></td>
+							<td colspan="5"><?=round($myCar["total_costs"],2)?> <?=GetMessage("RUB")?></td>
 						</tr>
 						<tr>
 							<td><b><?=GetMessage("AVERAGE_FUEL_CONSUMPTION")?>:</b></td>

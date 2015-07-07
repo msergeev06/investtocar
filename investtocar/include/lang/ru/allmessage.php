@@ -128,9 +128,9 @@
 	$MESS["SURE_TO_DELETE_Q"] = "Вы уверены, что хотите удалить запись?";
 
 	$MESS["TOTAL_FUEL_COSTS"] = "Общие затраты на топливо";
-	$MESS["RUBLES"] = '<del><span style="font-family: Arial; font-size: 12.0pt;">P</span></del>';
+	$MESS["RUBLES"] = 'P';
 	$MESS["RUB"] = '<del><span style="font-family: Arial; font-size: 12.0pt;">P</span></del>';
-	$MESS["RUBL"] = '<del><span style="font-family: Arial; font-size: 12.0pt;">P</span></del>';
+	$MESS["RUBL"] = 'P';
 	$MESS["TOTAL_MAINTENANCE_COSTS"] = "Общие затраты на ТО";
 	$MESS["FUEL_MARK"] = "Марка топлива";
 	$MESS["DISPLACEMENT"] = "Литраж";
