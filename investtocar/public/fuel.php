@@ -5,7 +5,7 @@
 ?>
 	<p><?=GetMessage("STATISTICS_FOR")?>: <? echo CInvestToCarMain::ShowSelectAuto("my_car",true); ?><br>
 		<?=GetMessage("TOTAL_FUEL_COSTS")?>: <? echo CInvestToCarMain::GetTotalFuelCosts($defaultCar); ?> <?=GetMessage("RUB")?><br>
-		<?=GetMessage("AVERAGE_FUEL_CONSUMPTION")?>: <?=round(CInvestToCarMain::GetAverageFuelConsumption($defaultCar),2)?> <?=GetMessage("LITERS_FOR_100KM")?><br><br></p>
+		<?=GetMessage("AVERAGE_FUEL_CONSUMPTION")?>: <?=number_format(CInvestToCarMain::GetAverageFuelConsumption($defaultCar),2)?> <?=GetMessage("LITERS_FOR_100KM")?><br><br></p>
 	<p><a href="<?=$path?>fuel/add_fuel.php?car=<?=$defaultCar?>"><?=GetMessage("ADD_NOTE")?></a><br><br></p>
 	<table class="ts_list">
 		<thead>
@@ -30,12 +30,13 @@
 			<tr>
 				<td><?=date("d.m.Y",$arFuel["date"])?></td>
 				<td><?=CInvestToCarMain::GetFuelMarkByID($arFuel["fuel_mark"],true)?></td>
-				<td><?=$arFuel["summ"]?></td>
+				<td><?=number_format($arFuel["summ"],2)?></td>
 				<td><?=$arFuel["liter"]?></td>
-				<td><?=$arFuel["liter_cost"]?></td>
+				<td><?=number_format($arFuel["liter_cost"],2)?></td>
 				<td><?=(floatval($arFuel["expense"])>0)?floatval($arFuel["expense"]):"-"?></td>
 				<td><?=$arFuel["odo"]?></td>
-				<td>point</td>
+				<? $arPoint = CInvestToCarMain::GetPointInfoByID($arFuel["point"]); ?>
+				<td><?=$arPoint["name"]?></td>
 				<td><?=(intval($arFuel["full"])>0)?"+":"-"?></td>
 				<td>(i)</td>
 				<td><a href="<?=$path?>fuel/fuel_edit.php?id=<?=$arFuel["id"]?>"><img src="/msergeev/images/edit.png"></a></td>
