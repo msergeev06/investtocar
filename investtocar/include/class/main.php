@@ -63,16 +63,16 @@
 		 * @param int selected
 		 * @return string
 		 */
-		public function ShowSelectPoints ($select_name = "", $selected=0)
+		public function ShowSelectPoints ($select_name = "", $selected=0, $type=1)
 		{
 			global $DB;
-			$query = "SELECT `id` , `name` FROM `ms_icar_points` WHERE `type` =1 ORDER BY `period` DESC";
+			$query = "SELECT `id` , `name` FROM `ms_icar_points` WHERE `type` =".$type." ORDER BY `period` DESC";
 			$arResult = $DB->Select ($query);
 
 			$echo = "<select name=\"".$select_name."\">\n";
 			$echo .= "<option value=\"0\"";
 			if ($selected==0) $echo .= " selected=\"selected\"";
-			$echo .= ">--Выбрать--</option>\n";
+			$echo .= ">".GetMessage("SELECT_DEFAULT_SELECTED")."</option>\n";
 			foreach ($arResult as $arPoint)
 			{
 				$echo .= "<option value=\"".$arPoint["id"]."\"";
@@ -103,7 +103,7 @@
 			{
 				$select .= " selected";
 			}
-			$select .= ">--Выбрать--</option>\n";
+			$select .= ">".GetMessage("SELECT_DEFAULT_SELECTED")."</option>\n";
 			foreach ($res as $arBrand)
 			{
 				$select .= "\t<option value=\"".$arBrand["id"]."\"";
@@ -143,7 +143,7 @@
 
 			$select = "<select name=\"car_model\" id=\"car_model\">";
 			if ($selected == 0) {
-				$select .= "<option value=\"0\" selected>--Выбрать--</option>";
+				$select .= "<option value=\"0\" selected>".GetMessage("SELECT_DEFAULT_SELECTED")."</option>";
 			}
 			foreach ($res as $arModel)
 			{
@@ -173,7 +173,7 @@
 
 			$select = "<select name=\"car_year\" id=\"car_year\">";
 			if ($selected == 0) {
-				$select .= "<option value=\"0\" selected>--Выбрать--</option>";
+				$select .= "<option value=\"0\" selected>".GetMessage("SELECT_DEFAULT_SELECTED")."</option>";
 			}
 			for ($i = $start; $i <= $end; $i++)
 			{
@@ -202,7 +202,7 @@
 
 			$select = "<select name=\"car_body\" id=\"car_body\">";
 			if ($selected==0) {
-				$select .= "<option value=\"0\" selected>--Выбрать--</option>";
+				$select .= "<option value=\"0\" selected>".GetMessage("SELECT_DEFAULT_SELECTED")."</option>";
 			}
 			foreach ($res as $arBody)
 			{
@@ -231,7 +231,7 @@
 
 			$select = "<select name=\"car_gearbox\" id=\"car_gearbox\">";
 			if ($selected==0) {
-				$select .= "<option value=\"0\" selected>--Выбрать--</option>";
+				$select .= "<option value=\"0\" selected>".GetMessage("SELECT_DEFAULT_SELECTED")."</option>";
 			}
 			foreach ($res as $arGear)
 			{
@@ -288,6 +288,38 @@
 				$echo .= ">";
 				$echo .= self::GetRepairNameByID($i);
 				$echo .= "</option>";
+			}
+			$echo .= "</select>";
+
+			return $echo;
+		}
+
+		/**
+		 * Функция возвращает <select> состоящий из марок топлива
+		 *
+		 * @param string $name
+		 * @param int $car
+		 * @param int $selected
+		 * @return string
+		 */
+		public function ShowSelectFuelMark ($name="", $car=0, $selected=0) {
+			global $DB;
+			if ($name=="") $name = "fuel_mark";
+			if ($car==0) $car = self::GetDefaultCar();
+			$echo = "";
+
+			$query = "SELECT * FROM `ms_icar_setup_fuel_mark` ORDER BY `sort` ASC";
+			$res = $DB->Select($query);
+			$echo .= "<select name=\"".$name."\">";
+			if ($selected==0) {
+				$echo .= "<option value=\"0\" selected=\"selected\">".GetMessage("SELECT_DEFAULT_SELECTED")."</option>";
+			}
+			foreach ($res as $arRes) {
+				$echo .= "<option value=\"".$arRes["id"]."\"";
+				if ($selected>0 && $selected==$arRes["id"]) {
+					$echo .= " selected=\"selected\"";
+				}
+				$echo .= ">".$arRes["name"]."</option>";
 			}
 			$echo .= "</select>";
 
@@ -427,39 +459,12 @@
 			$arResult["start_point"] = intval ($post["start_point"]);
 			if ($arResult["start_point"] == 0)
 			{
-				$arResult["start_new"]["start_name"] = $post["start_name"];
-				$arResult["start_new"]["start_address"] = $post["start_address"];
-				$arResult["start_new"]["start_lon"] = $post["start_lon"];
-				$arResult["start_new"]["start_lat"] = $post["start_lat"];
-
-				//Если координаты точки не заданы, запрашиваем их по указанному адресу через сервер Яндекс
-				if (strlen ($arResult["start_new"]["start_lon"]) < 2
-				    && strlen ($arResult["start_new"]["start_lat"]) < 2
-				)
-				{
-					if (strlen ($arResult["start_new"]["start_address"]) > 3)
-					{
-						if ($arCoords = self::GetCoordsByAddressYandex ($arResult["start_new"]["start_address"]))
-						{
-							$arResult["start_new"]["start_lon"] = $arCoords["lon"];
-							$arResult["start_new"]["start_lat"] = $arCoords["lat"];
-						}
-					}
-				}
-
-				$new_point = self::AddNewPointDB (
-					array (
-						"name"      => $arResult["start_new"]["start_name"],
-						"address"   => $arResult["start_new"]["start_address"],
-						"longitude" => $arResult["start_new"]["start_lon"],
-						"latitude"  => $arResult["start_new"]["start_lat"]
-					)
+				$arResult["start_point"] = self::CreateNewPoint (
+					$post["start_name"],
+					$post["start_address"],
+					$post["start_lon"],
+					$post["start_lat"]
 				);
-				if (intval ($new_point) > 0)
-				{
-					$arResult["start_point"] = $new_point;
-				}
-
 			}
 			if (isset($post["end_start"]))
 			{
@@ -472,37 +477,12 @@
 				$arResult["end_point"] = intval ($post["end_point"]);
 				if ($arResult["end_point"] == 0)
 				{
-					$arResult["end_new"]["end_name"] = $post["end_name"];
-					$arResult["end_new"]["end_address"] = $post["end_address"];
-					$arResult["end_new"]["end_lon"] = $post["end_lon"];
-					$arResult["end_new"]["end_lat"] = $post["end_lat"];
-
-					//Если координаты точки не заданы, запрашиваем их по указанному адресу через сервер Яндекс
-					if (strlen ($arResult["end_new"]["end_lon"]) < 2 && strlen ($arResult["end_new"]["end_lat"]) < 2)
-					{
-						if (strlen ($arResult["end_new"]["end_address"]) > 3)
-						{
-							$arCoords = array ();
-							if ($arCoords = self::GetCoordsByAddressYandex ($arResult["end_new"]["end_address"]))
-							{
-								$arResult["end_new"]["end_lon"] = $arCoords["lon"];
-								$arResult["end_new"]["end_lat"] = $arCoords["lat"];
-							}
-						}
-					}
-					$new_point = self::AddNewPointDB (
-						array (
-							"name"      => $arResult["end_new"]["end_name"],
-							"address"   => $arResult["end_new"]["end_address"],
-							"longitude" => $arResult["end_new"]["end_lon"],
-							"latitude"  => $arResult["end_new"]["end_lat"]
-						)
+					$arResult["end_point"] = self::CreateNewPoint (
+						$post["end_name"],
+						$post["end_address"],
+						$post["end_lon"],
+						$post["end_lat"]
 					);
-					if (intval ($new_point) > 0)
-					{
-						$arResult["end_point"] = $new_point;
-					}
-
 				}
 			}
 			$arResult["odo"] = $post["odo"];
@@ -1298,30 +1278,12 @@
 			$arTs["odo"] = $post["odo"];
 			$arTs["point"] = $post["ts_point"];
 			if ($arTs["point"]==0) {
-				if (strlen($post["newpoint_lon"])<2 || strlen($post["newpoint_lat"])<2) {
-					if (strlen ($post["newpoint_address"]) > 3)
-					{
-						if ($arCoords = self::GetCoordsByAddressYandex ($post["newpoint_address"]))
-						{
-							$post["newpoint_lon"] = $arCoords["lon"];
-							$post["newpoint_lat"] = $arCoords["lat"];
-						}
-					}
-
-					$new_point = self::AddNewPointDB (
-						array (
-							"name"      => $post["newpoint_name"],
-							"address"   => $post["newpoint_address"],
-							"longitude" => $post["newpoint_lon"],
-							"latitude"  => $post["newpoint_lat"]
-						)
-					);
-					if (intval ($new_point) > 0)
-					{
-						$arTs["point"] = $new_point;
-					}
-
-				}
+				$arTs["point"] = self::CreateNewPoint (
+					$post["newpoint_name"],
+					$post["newpoint_address"],
+					$post["newpoint_lon"],
+					$post["newpoint_lat"]
+				);
 			}
 			$arTs["description"] = $post["comment"];
 
@@ -1396,31 +1358,13 @@
 			$arData["cost"] = floatval(str_replace(",",".",$arPost["cost"]));
 			$arData["odo"] = floatval(str_replace(",",".",$arPost["odo"]));
 			if ($arPost["ts_point"]==0) {
-				if (strlen($post["newpoint_lon"])<2 || strlen($post["newpoint_lat"])<2) {
-					if (strlen ($post["newpoint_address"]) > 3)
-					{
-						if ($arCoords = self::GetCoordsByAddressYandex ($post["newpoint_address"]))
-						{
-							$post["newpoint_lon"] = $arCoords["lon"];
-							$post["newpoint_lat"] = $arCoords["lat"];
-						}
-					}
-
-					$new_point = self::AddNewPointDB (
-						array (
-							"name"      => $post["newpoint_name"],
-							"address"   => $post["newpoint_address"],
-							"longitude" => $post["newpoint_lon"],
-							"latitude"  => $post["newpoint_lat"]
-						)
-					);
-					if (intval ($new_point) > 0)
-					{
-						$arPost["ts_point"] = $new_point;
-					}
-				}
+				$arData["point"] = self::CreateNewPoint (
+					$arPost["newpoint_name"],
+					$arPost["newpoint_address"],
+					$arPost["newpoint_lon"],
+					$arPost["newpoint_lat"]
+				);
 			}
-			$arData["point"] = $arPost["ts_point"];
 			$arData["comment"] = $arPost["comment"];
 			if ($res = self::UpdateTsInfoDB($arData)) {
 				return true;
@@ -1600,6 +1544,270 @@
 			}
 			else {
 				return 0;
+			}
+		}
+
+		/**
+		 * Функция добавляет информацию о заправке а также проверяет, необходимо ли пересчитать средний расход топлива
+		 *
+		 * @param array $post
+		 * @return bool
+		 */
+		public function AddFuelCosts ($post=array()) {
+			if (empty($post)) return false;
+			$arData = array();
+
+			$arData["auto"] = intval($post["fuel_auto"]);
+			list($day,$month,$year) = explode(".",$post["date"]);
+			$arData["date"] = mktime(0,0,0,$month,$day,$year)+3600;
+			$arData["odo"] = floatval(str_replace(",",".",$post["odo"]));
+			$arData["fuel_mark"] = intval($post["fuel_mark"]);
+			$arData["liters"] = floatval(str_replace(",",".",$post["liters"]));
+			$arData["cost_liter"] = floatval(str_replace(",",".",$post["cost_liter"]));
+			$arData["summ"] = $arData["liters"] * $arData["cost_liter"];
+			if (isset($post["full_tank"])) {
+				$arData["full_tank"] = 1;
+			}
+			else {
+				$arData["full_tank"] =0;
+			}
+			$arData["fuel_point"] = intval($post["fuel_point"]);
+			if ($arData["fuel_point"]==0) {
+				$arData["fuel_point"] = self::CreateNewPoint (
+					$post["newpoint_name"],
+					$post["newpoint_address"],
+					$post["newpoint_lon"],
+					$post["newpoint_lat"],
+					2
+				);
+			}
+			$arData["comment"] = htmlspecialchars($post["comment"]);
+			if ($arData["full_tank"] > 0) {
+				$arData["expense"] = self::CalculationExpense($arData["odo"],$arData["liters"],$arData["auto"],$arData["date"]);
+				//$arData["expense"] = self::CalculationExpense(2549,41.99,1,1428699600);
+			}
+			else {
+				$arData["expense"] = 0;
+			}
+			//echo "EXPENSE=(".$arData["expense"].")";
+			if ($res = self::AddFuelCostsDB($arData)) {
+				$increase = self::IncreasePointPeriod($arData["point"]);
+
+				if (!self::CheckLastFuelCosts($arData["date"], $arData["auto"])) {
+					//Необходимо пересчитать все средние значения расхода на 100 км
+					self::RecalculationExpense($arData["auto"]);
+				}
+				return $res;
+			}
+			else {
+				return false;
+			}
+		}
+
+		/**
+		 * Функция создает новую точку, определяя координаты по адресу, если необходимо
+		 *
+		 * @param $name
+		 * @param $address
+		 * @param $lon
+		 * @param $lat
+		 * @param int $type
+		 * @return int|mixed
+		 */
+		public function CreateNewPoint ($name, $address,$lon,$lat,$type=1) {
+			if (strlen($lon)<2 || strlen($lat)<2)
+			{
+				if (strlen ($address) > 3)
+				{
+					if ($arCoords = self::GetCoordsByAddressYandex ($address))
+					{
+						$lon = $arCoords["lon"];
+						$lat = $arCoords["lat"];
+					}
+				}
+			}
+			$new_point = self::AddNewPointDB (
+				array (
+					"name"      => $name,
+					"address"   => $address,
+					"longitude" => $lon,
+					"latitude"  => $lat,
+					"type"      => $type
+				)
+			);
+			if (intval ($new_point) > 0)
+			{
+				return $new_point;
+			}
+			else {
+				return 0;
+			}
+
+		}
+
+		/**
+		 * Функция добавляет информацию о заправке в DB
+		 *
+		 * @param array $arData
+		 * @return bool
+		 */
+		public function AddFuelCostsDB ($arData=array()) {
+			global $DB;
+			if (empty($arData)) return false;
+
+			$query = "INSERT INTO `ms_icar_fuel` (";
+			$query .= "`auto` , `date` , `odo` , `fuel_mark` , ";
+			$query .= "`summ` , `liter` , `liter_cost` , `full` , ";
+			$query .= "`expense` , `point` , `description`) VALUES (";
+			$query .= "'".$arData["auto"]."', '".$arData["date"]."', '".$arData["odo"]."', '".$arData["fuel_mark"]."', ";
+			$query .= "'".$arData["summ"]."', '".$arData["liters"]."', '".$arData["cost_liter"]."', '".$arData["full_tank"]."', ";
+			$query .= "'".$arData["expense"]."', '".$arData["fuel_point"]."', '".$arData["comment"]."');";
+			if ($res = $DB->Insert($query)) {
+				return $res;
+			}
+			else {
+				return false;
+			}
+
+		}
+
+		/**
+		 * Функция проверяет нет ли более поздних данных о заправках, после добавленной
+		 *
+		 * @param int $date
+		 * @param int $car
+		 * @return bool
+		 */
+		public function CheckLastFuelCosts ($date=0, $car=0) {
+			global $DB;
+			if ($date==0) $date = mktime(0,0,0,date("m"),date("d"),date("Y"))+3600;
+			if ($car==0) $car = self::GetDefaultCar();
+
+			$query = "SELECT * FROM `ms_icar_fuel` WHERE `date` >".$date." LIMIT 0 , 5";
+			if ($res = $DB->Select($query)) {
+				return false;
+			}
+			else {
+				return true;
+			}
+
+		}
+
+		/**
+		 * Функция выполняет пересчет расхода для всех записей о заправках
+		 *
+		 * @param int $car
+		 */
+		public function RecalculationExpense ($car=0) {
+			global $DB;
+
+			$query = "SELECT `id` , `date` , `auto` , `odo` , `liter` , `liter_cost` , `full` FROM `ms_icar_fuel`";
+			if ($car>0) {
+				$query .= " WHERE `auto` =".$car;
+			}
+			$query .= " ORDER BY `date` ASC";
+			$first = true;
+			$res = $DB->Select($query);
+			foreach ($res as $arRes) {
+				$expense = 0;
+				if ($first) {
+					$first = false;
+					self::UpdateExpense($arRes["id"],0);
+				}
+				else {
+					if ($arRes["full"]>0) {
+						$expense = self::CalculationExpense($arRes["odo"],$arRes["liter"],$arRes["auto"],$arRes["date"]);
+						self::UpdateExpense($arRes["id"],$expense);
+					}
+					else {
+						self::UpdateExpense($arRes["id"],0);
+					}
+				}
+			}
+
+		}
+
+		/**
+		 * Функция высчитывает расход топлива на 100км
+		 *
+		 * @param int $odo
+		 * @param int $liters
+		 * @param int $car
+		 * @param int $date
+		 * @return float|int
+		 */
+		public function CalculationExpense ($odo=0,$liters=0,$car=0,$date=0) {
+			global $DB;
+			if ($odo==0 || $liters==0) return 0;
+			if ($date==0) $date = mktime(0,0,0,date("m"),date("d"),date("Y"))+3600;
+			if ($car==0) $car = self::GetDefaultCar();
+
+			$query = "SELECT `odo` , `liter` , `full` FROM `ms_icar_fuel` WHERE `auto` =".$car." AND `date` <".$date." ORDER BY `date` DESC";
+			//$query = "SELECT `odo` , `liter` , `full` FROM `ms_icar_fuel` WHERE `auto` =".$car." AND `date` <1428699600 ORDER BY `date` DESC";
+			if ($res = $DB->Select($query)) {
+				$mileage = 0;
+				$liter_sum = $liters;
+				$expense = 0;
+				$null = 0;
+				foreach ($res as $arRes) {
+					if (intval($arRes["full"])>0) {
+						if ($arRes["odo"]>0) {
+							if ($null == 1) {
+								//echo "liter_sum = ".$liter_sum." + ".$arRes["liter"]." = ";
+								$liter_sum += $arRes["liter"];
+								//echo $liter_sum."<br>";
+							}
+							//echo "mileage = ".$odo." - ".$arRes["odo"]." = ";
+							$mileage = $odo - $arRes["odo"];
+							//echo $mileage."<br>";
+							break;
+						}
+						else {
+							$null = 1;
+							//echo "liter_sum = ".$liter_sum." + ".$arRes["liter"]." = ";
+							$liter_sum += $arRes["liter"];
+							//echo $liter_sum."<br>";
+						}
+					}
+					else {
+						//echo "liter_sum = ".$liter_sum." + ".$arRes["liter"]." = ";
+						$liter_sum += $arRes["liter"];
+						//echo $liter_sum."<br>";
+
+					}
+				}
+				if ($mileage>0) {
+					//echo "expense = (".$liter_sum." * 100) / ".$mileage." = ";
+					$expense = ($liter_sum*100)/$mileage;
+					$expense = round($expense,2);
+					//echo $expense."<br>";
+					return $expense;
+				}
+				else {
+					return 0;
+				}
+			}
+			else {
+				return 0;
+			}
+		}
+
+		/**
+		 * Функция обновляет значение расхода для указанной записи
+		 *
+		 * @param $id
+		 * @param $expense
+		 * @return bool
+		 */
+		public function UpdateExpense ($id, $expense) {
+			global $DB;
+
+			$query = "UPDATE `ms_icar_fuel` SET `expense` = '".$expense."' WHERE `ms_icar_fuel`.`id` =".$id.";";
+			if ($res = $DB->Update($query)) {
+				return $res;
+			}
+			else {
+				return false;
 			}
 		}
 	}

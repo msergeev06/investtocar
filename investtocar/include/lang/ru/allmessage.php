@@ -161,10 +161,12 @@
 	$MESS["AVERAGE_FUEL_CONSUMPTION"] = "Средний расход топлива";
 	$MESS["LITERS_FOR_100KM"] = "л/100км";
 	$MESS["LITER"] = "л.";
-	$MESS[""] = "";
-	$MESS[""] = "";
-	$MESS[""] = "";
-	$MESS[""] = "";
+
+	$MESS["ADDING_FUEL_COSTS"] = "Добавление расхода на топливо";
+	$MESS["SELECT_DEFAULT_SELECTED"] = "--Выбрать--";
+
+	$MESS["ADDING_FUEL_COSTS_SUCCESS"] = "Данные по заправке успешно сохранены";
+	$MESS["ADDING_FUEL_COSTS_FAILED"] = "Ошибка при сохранении данных о заправке";
 	$MESS[""] = "";
 	$MESS[""] = "";
 	$MESS[""] = "";
