@@ -915,6 +915,9 @@
 				$query2 = "SELECT * FROM `ms_icar_setup_car_body` WHERE `id` =".$arCar["body"];
 				$res2 = $DB->Select ($query2);
 				$arCar["body"] = $res2[0]["name"];
+
+				$arCar["total_costs"] = self::GetTotalCosts($arCar["id"]);
+				$arCar["average_fuel_consum"] = self::GetAverageFuelConsumption($arCar["id"]);
 			}
 
 			if (intval($car) == 0) {
@@ -1484,40 +1487,119 @@
 			return $res = $DB->Select($query);
 		}
 
-		public  function GetFuelMarkByID ($fuelMarkID=0) {
-			if ($fuelMarkID==0) return false;
+		/**
+		 * Функция получает наименование топлива по ID, либо краткое (по-умолчанию), либо полное
+		 *
+		 * @param int $fuelMarkID
+		 * @param bool $full
+		 * @return string
+		 */
+		public  function GetFuelMarkByID ($fuelMarkID=0,$full=false) {
+			global $DB;
+			if ($fuelMarkID==0) return "-";
 
-			switch (intval($fuelMarkID)) {
-				case 1:
-					return "Бензин 80";
-					break;
-				case 2:
-					return "Бензин 92";
-					break;
-				case 3:
-					return "Бензин 92 Улучшенный";
-					break;
-				case 4:
-					return "Бензин 95";
-					break;
-				case 5:
-					return "Бензин 95 Улучшенный";
-					break;
-				case 6:
-					return "Бензин 95 Био";
-					break;
-				case 7:
-					return "Бензин 98";
-					break;
-				case 8:
-					return "ДТ";
-					break;
-				case 9:
-					return "Газ";
-					break;
-				default:
-					return "Нет данных";
-					break;
+			$query = "SELECT * FROM `ms_icar_setup_fuel_mark` WHERE `id` =".$fuelMarkID;
+			if ($res = $DB->Select($query)) {
+				if ($full) {
+					return $res[0]["name"];
+				}
+				else {
+					return $res[0]["shot_name"];
+				}
+			}
+			else {
+				return "-";
+			}
+		}
+
+		/**
+		 * Функция возвращает общую сумму расходов на топливо
+		 *
+		 * @param int $car
+		 * @return float|int
+		 */
+		public function GetTotalFuelCosts ($car=0) {
+			global $DB;
+			if ($car==0) $car = self::GetDefaultCar();
+
+			$query = "SELECT SUM(`summ`) FROM `ms_icar_fuel` WHERE `auto` =".$car;
+			$res = $DB->Select($query);
+			$res = $res[0]["SUM(`summ`)"];
+			if (floatval($res)>0) {
+				return round($res, 2);
+			}
+			else {
+				return 0;
+			}
+		}
+
+		/**
+		 * Функция возвращает общую сумму расходов на ТО
+		 *
+		 * @param int $car
+		 * @return float|int
+		 */
+		public function GetTotalMaintenanceCosts ($car=0) {
+			global $DB;
+			if ($car==0) $car = self::GetDefaultCar();
+
+			$query = "SELECT SUM(`cost`) FROM `ms_icar_ts` WHERE `auto` =".$car;
+			$res = $DB->Select($query);
+			$res = $res[0]["SUM(`cost`)"];
+			if (floatval($res)>0) {
+				return round($res, 2);
+			}
+			else {
+				return 0;
+			}
+		}
+
+		/**
+		 * Функция возвращает общую сумму расходов на автомобиль
+		 *
+		 * @param int $car
+		 * @return float|int
+		 */
+		public function GetTotalCosts ($car=0) {
+			if ($car==0) $car = self::GetDefaultCar();
+			$summ = 0;
+			//Расходы на топливо
+			$summ += self::GetTotalFuelCosts($car);
+			//Расходы на ТО
+			$summ += self::GetTotalMaintenanceCosts($car);
+
+			if ($summ>0) {
+				return round($summ,2);
+			}
+			else {
+				return 0;
+			}
+		}
+
+		/**
+		 * Функция возвращает средний расход топлива на 100км
+		 *
+		 * @param int $car
+		 * @return float|int
+		 */
+		public function GetAverageFuelConsumption ($car=0) {
+			global $DB;
+			$amount = 0;
+			$quantity = 0;
+			if ($car==0) $car = self::GetDefaultCar();
+
+			$query = "SELECT `expense` FROM `ms_icar_fuel` WHERE `auto` =".$car." ORDER BY `date` ASC";
+			if ($res =  $DB->Select($query)) {
+				foreach ($res as $arRes) {
+					if (floatval($arRes["expense"])>0) {
+						$amount += $arRes["expense"];
+						$quantity++;
+					}
+				}
+				return round(($amount/$quantity),2);
+			}
+			else {
+				return 0;
 			}
 		}
 	}
