@@ -164,9 +164,11 @@
 
 	$MESS["ADDING_FUEL_COSTS"] = "Добавление расхода на топливо";
 	$MESS["SELECT_DEFAULT_SELECTED"] = "--Выбрать--";
-
 	$MESS["ADDING_FUEL_COSTS_SUCCESS"] = "Данные по заправке успешно сохранены";
 	$MESS["ADDING_FUEL_COSTS_FAILED"] = "Ошибка при сохранении данных о заправке";
-	$MESS[""] = "";
+
+	$MESS["EDITING_FUEL_COSTS"] = "Редактирование расхода на топливо";
+	$MESS["EDITING_FUEL_COSTS_SUCCESS"] = "Данные по заправке успешно обновлены";
+	$MESS["EDITING_FUEL_COSTS_FAILED"] = "Ошибка при обновлении данных о заправке";
 	$MESS[""] = "";
 	$MESS[""] = "";

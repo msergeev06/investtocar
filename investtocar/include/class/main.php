@@ -1810,4 +1810,23 @@
 				return false;
 			}
 		}
+
+		/**
+		 * Функция возвращает массив данных записи о заправке, по ее ID
+		 *
+		 * @param int $id
+		 * @return bool
+		 */
+		public function GetFuelCostsByID ($id=0) {
+			global $DB;
+			if ($id==0) return false;
+
+			$query = "SELECT * FROM `ms_icar_fuel` WHERE `id` =".$id;
+			if ($res = $DB->Select($query)) {
+				return $res[0];
+			}
+			else {
+				return false;
+			}
+		}
 	}
