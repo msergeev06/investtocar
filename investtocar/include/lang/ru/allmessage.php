@@ -204,6 +204,6 @@
 	$MESS["PAID_HIMSELF"] = "Оплачивал сам";
 	$MESS["OSAGO"] = "ОСАГО";
 	$MESS["KASKO"] = "КАСКО";
-	$MESS[""] = "";
-	$MESS[""] = "";
+	$MESS["ADD_REPAIR_PARTS_SUCCESS"] = "Данные по запчастям успешно добавлены";
+	$MESS["ADD_REPAIR_PARTS_FAILED"] = "Ошибка добавления данных по запчастям";
 

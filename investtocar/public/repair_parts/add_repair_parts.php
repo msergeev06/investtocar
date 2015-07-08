@@ -1,6 +1,19 @@
 <? require_once($_SERVER["DOCUMENT_ROOT"]."/msergeev/investtocar/public/include/header.php"); ?>
 	<h1><?=GetMessage("ADD_REPAIR_PARTS")?></h1>
-<? $car = $_GET["car"]; ?>
+<? $car = $_GET["car"];
+	$pService = $OPTIONS->GetOptionInt("point_service");
+	$pStore = $OPTIONS->GetOptionInt("point_auto_parts_store");
+	$pCarwash = $OPTIONS->GetOptionInt("point_carwash");
+
+	if (isset($_POST["action"])) {
+		if ($res = CInvestToCarMain::AddRepairParts($_POST)) {
+			?><span style="color: green;"><?=GetMessage("ADD_REPAIR_PARTS_SUCCESS")?></span><?
+		}
+		else {
+			?><span style="color: red;"><?=GetMessage("ADD_REPAIR_PARTS_FAILED")?></span><?
+		}
+	}
+?>
 	<form action="" method="post">
 		<input type="hidden" name="car" value="<?=$car?>">
 		<table class="add_ts">
@@ -71,7 +84,7 @@
 			</tr>
 			<tr>
 				<td class="title"><?=GetMessage("WAYPOINT")?></td>
-				<td><? echo CInvestToCarMain::ShowSelectPoints("waypoint"); ?></td>
+				<td><? echo CInvestToCarMain::ShowSelectPoints("waypoint",0,array($pService,$pStore,$pCarwash)); ?></td>
 			</tr>
 			<tr>
 				<td class="center" colspan="2"><?=GetMessage("OR")?></td>

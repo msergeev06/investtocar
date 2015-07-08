@@ -1,5 +1,5 @@
 <?php
-	global $DB, $MESS;
+	global $DB, $MESS, $OPTIONS;
 
 
 	class CInvestToCarMain
@@ -60,13 +60,33 @@
 		 * Функция возвращает <select> состоящий из маршрутных точек
 		 *
 		 * @param string $select_name
-		 * @param int selected
+		 * @param int $selected
+		 * @param int|array $type
 		 * @return string
 		 */
-		public function ShowSelectPoints ($select_name = "", $selected=0, $type=1)
+		public function ShowSelectPoints ($select_name = "", $selected=0, $type=0)
 		{
-			global $DB;
-			$query = "SELECT `id` , `name` FROM `ms_icar_points` WHERE `type` =".$type." ORDER BY `period` DESC";
+			global $DB,$OPTIONS;
+			if (is_array($type)) {
+				$query = "SELECT `id` , `name` FROM `ms_icar_points` WHERE `type` ";
+				$query .= "IN (";
+				$first = true;
+				foreach ($type as $in) {
+					if ($first) {
+						$first = false;
+					}
+					else {
+						$query .= ", ";
+					}
+					$query .= $in;
+				}
+				$query .= ")";
+				$query .= " ORDER BY `period` DESC";
+			}
+			else {
+				if ($type==0) $type = $OPTIONS->GetOptionInt("point_default");
+				$query = "SELECT `id` , `name` FROM `ms_icar_points` WHERE `type` =".$type." ORDER BY `period` DESC";
+			}
 			$arResult = $DB->Select ($query);
 
 			$echo = "<select name=\"".$select_name."\">\n";
@@ -456,6 +476,7 @@
 		 */
 		public function ShowChartsOdo ($arSettings = "")
 		{
+			global $OPTIONS;
 			if (!is_array ($arSettings))
 			{
 				return false;
@@ -464,9 +485,9 @@
 			if (intval ($arSettings["type"]) == 1)
 			{
 				//за Текущий месяц
-				$firstMonthDay = mktime (0, 0, 0, date ("n"), 1, date ("Y")) + 3600;
+				$firstMonthDay = mktime (0, 0, 0, date ("n"), 1, date ("Y")) + $OPTIONS->GetOptionInt("mktime_add_time");
 				$daysInMonth = date ("t");
-				$lastMonthDay = mktime (0, 0, 0, date ("n"), $daysInMonth, date ("Y")) + 3600;
+				$lastMonthDay = mktime (0, 0, 0, date ("n"), $daysInMonth, date ("Y")) + $OPTIONS->GetOptionInt("mktime_add_time");
 				if ($data = self::GetListOdoFromTo ($firstMonthDay, $lastMonthDay))
 				{
 					$arSettings["data"] = $data;
@@ -483,9 +504,9 @@
 					$prevMonth = 12;
 					$year = $year - 1;
 				}
-				$firstMonthDay = mktime (0, 0, 0, $prevMonth, 1, $year) + 3600;
-				$daysInMonth = date ("t", mktime (0, 0, 0, $prevMonth, 1, $year) + 3600);
-				$lastMonthDay = mktime (0, 0, 0, $prevMonth, $daysInMonth, $year) + 3600;
+				$firstMonthDay = mktime (0, 0, 0, $prevMonth, 1, $year) + $OPTIONS->GetOptionInt("mktime_add_time");
+				$daysInMonth = date ("t", mktime (0, 0, 0, $prevMonth, 1, $year) + $OPTIONS->GetOptionInt("mktime_add_time"));
+				$lastMonthDay = mktime (0, 0, 0, $prevMonth, $daysInMonth, $year) + $OPTIONS->GetOptionInt("mktime_add_time");
 				if ($data = self::GetListOdoFromTo ($firstMonthDay, $lastMonthDay))
 				{
 					$arSettings["data"] = $data;
@@ -495,8 +516,8 @@
 			elseif (intval ($arSettings["type"]) == 3)
 			{
 				//за Текущий год
-				$firstMonthDay = mktime (0, 0, 0, 1, 1, date ("Y")) + 3600;
-				$lastMonthDay = mktime (0, 0, 0, 12, 31, date ("Y")) + 3600;
+				$firstMonthDay = mktime (0, 0, 0, 1, 1, date ("Y")) + $OPTIONS->GetOptionInt("mktime_add_time");
+				$lastMonthDay = mktime (0, 0, 0, 12, 31, date ("Y")) + $OPTIONS->GetOptionInt("mktime_add_time");
 				if ($data = self::GetListOdoFromTo ($firstMonthDay, $lastMonthDay, 1))
 				{
 					$arSettings["data"] = $data;
@@ -576,8 +597,7 @@
 		public function AddNewRoute ($post = "")
 		{
 			$arResult["auto"] = intval ($post["auto"]);
-			list($day, $month, $year) = explode (".", $post["date"]);
-			$arResult["date"] = mktime (0, 0, 0, $month, $day, $year, 0) + 3600;
+			$arResult["date"] = self::ConvertDateToTimestamp($post["date"]);
 			$arResult["start_point"] = intval ($post["start_point"]);
 			if ($arResult["start_point"] == 0)
 			{
@@ -733,7 +753,7 @@
 		 */
 		public function UpdateDayOdometer ($date = 0)
 		{
-			global $DB;
+			global $DB,$OPTIONS;
 			//$startTimestamp = 1426194000;
 			$startTimestamp = 0;
 			$nowTimestamp = time ();
@@ -769,7 +789,7 @@
 				}
 				if ($startTimestamp == 0)
 				{
-					$startTimestamp = mktime (0, 0, 0, $month, $day, $year) + 3600;
+					$startTimestamp = self::ConvertDateToTimestamp(date("d.m.Y", $select["date"]));
 				}
 			}
 
@@ -792,8 +812,8 @@
 								$day = strval ($i);
 							}
 
-							if ((mktime (0, 0, 0, $month, $i, $year) + 3600) >= $startTimestamp
-							    && (mktime (0, 0, 0, $month, $i, $year) + 3600) <= $nowTimestamp
+							if ((mktime (0, 0, 0, $month, $i, $year) + $OPTIONS->GetOptionInt("mktime_add_time")) >= $startTimestamp
+							    && (mktime (0, 0, 0, $month, $i, $year) + $OPTIONS->GetOptionInt("mktime_add_time")) <= $nowTimestamp
 							)
 							{
 								if (!isset($arMonth["days"][$day]))
@@ -821,7 +841,7 @@
 					{
 						foreach ($arMonth["days"] as $day => $arDay)
 						{
-							$dateTimes = mktime (0, 0, 0, $month, $day, $year) + 3600;
+							$dateTimes = mktime (0, 0, 0, $month, $day, $year) + $OPTIONS->GetOptionInt("mktime_add_time");
 							$query =
 								"SELECT `id` FROM `ms_icar_odometer` WHERE `auto` =".$car." AND `date` =".$dateTimes;
 							//echo $query."<br>";
@@ -1393,8 +1413,7 @@
 
 			$arTs["auto"] = $post["ts_auto"];
 			$arTs["ts_num"] = $post["ts_num"];
-			list($day,$month,$year) = explode (".",$post["date"]);
-			$arTs["date"] = mktime(0,0,0,$month,$day,$year)+3600;
+			$arTs["date"] = self::ConvertDateToTimestamp($post["date"]);
 			$arTs["repair"] = $post["ts_repair"];
 			$arTs["cost"] = $post["cost"];
 			$arTs["odo"] = $post["odo"];
@@ -1474,8 +1493,7 @@
 			$arData["id"] = intval($arPost["tsID"]);
 			$arData["ts_num"] = intval($arPost["ts_num"]);
 			$arData["ts_auto"] = intval($arPost["ts_auto"]);
-			list($day,$month,$year) = explode(".",$arPost["date"]);
-			$arData["date"] = mktime(0,0,0,$month,$day,$year)+3600;
+			$arData["date"] = self::ConvertDateToTimestamp($arPost["date"]);
 			$arData["ts_repair"] = intval($arPost["ts_repair"]);
 			$arData["cost"] = floatval(str_replace(",",".",$arPost["cost"]));
 			$arData["odo"] = floatval(str_replace(",",".",$arPost["odo"]));
@@ -1680,8 +1698,7 @@
 			$arData = array();
 
 			$arData["auto"] = intval($post["fuel_auto"]);
-			list($day,$month,$year) = explode(".",$post["date"]);
-			$arData["date"] = mktime(0,0,0,$month,$day,$year)+3600;
+			$arData["date"] = self::ConvertDateToTimestamp($post["date"]);
 			$arData["odo"] = floatval(str_replace(",",".",$post["odo"]));
 			$arData["fuel_mark"] = intval($post["fuel_mark"]);
 			$arData["liters"] = floatval(str_replace(",",".",$post["liters"]));
@@ -1736,7 +1753,9 @@
 		 * @param int $type
 		 * @return int|mixed
 		 */
-		public function CreateNewPoint ($name, $address,$lon,$lat,$type=1) {
+		public function CreateNewPoint ($name, $address,$lon,$lat,$type=0) {
+			global $OPTIONS;
+			if ($type==0) $type = $OPTIONS->GetOptionInt("point_default");
 			if (strlen($lon)<2 || strlen($lat)<2)
 			{
 				if (strlen ($address) > 3)
@@ -1802,7 +1821,7 @@
 		 */
 		public function CheckLastFuelCosts ($date=0, $car=0) {
 			global $DB;
-			if ($date==0) $date = mktime(0,0,0,date("m"),date("d"),date("Y"))+3600;
+			if ($date==0) $date = self::ConvertDateToTimestamp();
 			if ($car==0) $car = self::GetDefaultCar();
 
 			$query = "SELECT * FROM `ms_icar_fuel` WHERE `date` >".$date." LIMIT 0 , 5";
@@ -1861,7 +1880,7 @@
 		public function CalculationExpense ($odo=0,$liters=0,$car=0,$date=0) {
 			global $DB;
 			if ($odo==0 || $liters==0) return 0;
-			if ($date==0) $date = mktime(0,0,0,date("m"),date("d"),date("Y"))+3600;
+			if ($date==0) $date = self::ConvertDateToTimestamp();
 			if ($car==0) $car = self::GetDefaultCar();
 
 			$query = "SELECT `odo` , `liter` , `full` FROM `ms_icar_fuel` WHERE `auto` =".$car." AND `date` <".$date." ORDER BY `date` DESC";
@@ -1965,8 +1984,7 @@
 
 			$arData["id"] = intval($post["id"]);
 			$arData["auto"] = intval($post["fuel_auto"]);
-			list($day,$month,$year) = explode(".",$post["date"]);
-			$arData["date"] = mktime(0,0,0,$month,$day,$year)+3600;
+			$arData["date"] = self::ConvertDateToTimestamp($post["date"]);
 			$arData["odo"] = floatval(str_replace(",",".",$post["odo"]));
 			$arData["fuel_mark"] = intval($post["fuel_mark"]);
 			$arData["liters"] = floatval(str_replace(",",".",$post["liters"]));
@@ -2066,5 +2084,105 @@
 			}
 		}
 
+		/**
+		 * Функция преобразует дату формата dd.mm.YYYY в timestamp
+		 *
+		 * @param string $date
+		 * @return int
+		 */
+		public function ConvertDateToTimestamp ($date="") {
+			global $OPTIONS;
+			if ($date=="") $date=date("d.m.Y");
+			list($day,$month,$year) = explode(".",$date);
+			$timestamp = mktime(0,0,0,$month,$day,$year)+$OPTIONS->GetOptionInt("mktime_add_time");
+			return $timestamp;
+		}
 
+		/**
+		 * Функция добавляет информацию о запчасти
+		 *
+		 * @param array $post
+		 * @return bool
+		 */
+		public function AddRepairParts ($post=array()) {
+			if (empty($post)) return false;
+			$arData = array();
+
+			$arData["auto"] = intval($post["auto"]);
+			$arData["date"] = self::ConvertDateToTimestamp($post["date"]);
+			$arData["name"] = htmlspecialchars($post["name"]);
+			$arData["storage"] = intval($post["storage"]);
+			$arData["catalog_number"] = htmlspecialchars($post["catalog_number"]);
+			$arData["number"] = floatval(str_replace(",",".",$post["number"]));
+			$arData["cost"] = floatval(str_replace(",",".",$post["cost"]));
+			$arData["reason"] = intval($post["reason"]);
+			switch ($arData["reason"]) {
+				case 1:
+					$arData["reason_detail"] = intval($post["reason_ts"]);
+					break;
+				case 2:
+					$arData["reason_detail"] = intval($post["reason_breakdown"]);
+					break;
+				case 3:
+					$arData["reason_detail"] = intval($post["reason_dtp"]);
+					break;
+				case 4:
+					$arData["reason_detail"] = intval($post["reason_tuning"]);
+					break;
+				case 5:
+					$arData["reason_detail"] = intval($post["reason_upgrade"]);
+					break;
+				case 6:
+					$arData["reason_detail"] = 0;
+					break;
+			}
+			$arData["who_paid"] = intval($post["who_paid"]);
+			$arData["odo"] = floatval(str_replace(",",".",$post["odo"]));
+			$arData["waypoint"] = intval($post["waypoint"]);
+			if ($arData["waypoint"]==0) {
+				$arData["waypoint"] = self::CreateNewPoint(
+					$post["newpoint_name"],
+					$post["newpoint_address"],
+					$post["newpoint_lon"],
+					$post["newpoint_lat"],
+					3
+				);
+			}
+			$arData["comment"] = htmlspecialchars($post["comment"]);
+
+			if ($res = self::AddRepairPartsDB($arData)) {
+				return $res;
+			}
+			else {
+				return false;
+			}
+		}
+
+		/**
+		 * Функция добавляет в DB информацию о запасной части
+		 *
+		 * @param array $arData
+		 * @return bool
+		 */
+		public function AddRepairPartsDB ($arData=array()) {
+			global $DB;
+
+			if (empty($arData)) return false;
+
+			$query = "INSERT INTO `ms_icar_repair_parts` (";
+			$query .= "`auto` , `date` , `name` , `storage` , ";
+			$query .= "`catalog_number` , `number` , `cost` , `reason` , ";
+			$query .= "`reason_detail` , `who_paid` , `odo` , `waypoint` , ";
+			$query .= "`comment`) VALUES (";
+			$query .= "'".$arData["auto"]."', '".$arData["date"]."', '".$arData["name"]."', '".$arData["storage"]."', ";
+			$query .= "'".$arData["catalog_number"]."', '".$arData["number"]."', '".$arData["cost"]."', '".$arData["reason"]."', ";
+			$query .= "'".$arData["reason_detail"]."', '".$arData["who_paid"]."', '".$arData["odo"]."', '".$arData["waypoint"]."', ";
+			$query .= "'".$arData["comment"]."');";
+			if ($res = $DB->Insert($query)) {
+				return $res;
+			}
+			else {
+				return false;
+			}
+		}
 	}

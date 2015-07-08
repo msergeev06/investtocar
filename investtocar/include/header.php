@@ -23,8 +23,8 @@
 	/**
 	 * Подключаем классы
 	 */
-	//Основной класс
-	require_once (INVESTTOCAR_CLASS_PATH."main.php");
 	//Класс опций
 	require_once (INVESTTOCAR_CLASS_PATH."options.php");
 	$OPTIONS = new CInvestToCarOptions();
+	//Основной класс
+	require_once (INVESTTOCAR_CLASS_PATH."main.php");
