@@ -1829,4 +1829,92 @@
 				return false;
 			}
 		}
+
+		/**
+		 * Функция обновляет данные о заправке и пересчитывает все показания расхода топлива
+		 *
+		 * @param array $post
+		 * @return bool
+		 */
+		public function UpdateFuelCosts ($post=array()) {
+			if (empty($post)) return false;
+
+			$arData = array();
+
+			$arData["id"] = intval($post["id"]);
+			$arData["auto"] = intval($post["fuel_auto"]);
+			list($day,$month,$year) = explode(".",$post["date"]);
+			$arData["date"] = mktime(0,0,0,$month,$day,$year)+3600;
+			$arData["odo"] = floatval(str_replace(",",".",$post["odo"]));
+			$arData["fuel_mark"] = intval($post["fuel_mark"]);
+			$arData["liters"] = floatval(str_replace(",",".",$post["liters"]));
+			$arData["cost_liter"] = floatval(str_replace(",",".",$post["cost_liter"]));
+			$arData["summ"] = $arData["liters"] * $arData["cost_liter"];
+			if (isset($post["full_tank"])) {
+				$arData["full_tank"] = 1;
+			}
+			else {
+				$arData["full_tank"] =0;
+			}
+			$arData["fuel_point"] = intval($post["fuel_point"]);
+			if ($arData["fuel_point"]==0) {
+				$arData["fuel_point"] = self::CreateNewPoint (
+					$post["newpoint_name"],
+					$post["newpoint_address"],
+					$post["newpoint_lon"],
+					$post["newpoint_lat"],
+					2
+				);
+			}
+			$arData["comment"] = htmlspecialchars($post["comment"]);
+			if ($arData["full_tank"] > 0) {
+				$arData["expense"] = self::CalculationExpense($arData["odo"],$arData["liters"],$arData["auto"],$arData["date"]);
+			}
+			else {
+				$arData["expense"] = 0;
+			}
+			if ($res = self::UpdateFuelCostsDB($arData)) {
+				self::RecalculationExpense($arData["auto"]);
+				return $res;
+			}
+			else {
+				return false;
+			}
+		}
+
+		/**
+		 * Функция обновляет данные о заправке в DB
+		 *
+		 * @param array $arData
+		 * @return bool
+		 */
+		public function UpdateFuelCostsDB ($arData=array()) {
+			global $DB;
+			if (empty($arData)) return false;
+
+			$query = "UPDATE `ms_icar_fuel` SET ";
+			$query .= "`auto` = '".$arData["auto"]."', ";
+			$query .= "`date` = '".$arData["date"]."', ";
+			$query .= "`odo` = '".$arData["odo"]."', ";
+			$query .= "`fuel_mark` = '".$arData["fuel_mark"]."', ";
+			$query .= "`summ` = '".$arData["summ"]."', ";
+			$query .= "`liter` = '".$arData["liters"]."', ";
+			$query .= "`liter_cost` = '".$arData["cost_liter"]."', ";
+			$query .= "`full` = '".$arData["full_tank"]."', ";
+			$query .= "`expense` = '".$arData["expense"]."', ";
+			$query .= "`point` = '".$arData["fuel_point"]."', ";
+			$query .= "`description` = '".$arData["comment"]."' ";
+			$query .= "WHERE `id` =".$arData["id"].";";
+
+
+			if ($res = $DB->Update($query)) {
+				return $res;
+			}
+			else {
+				return false;
+			}
+
+		}
+
+		
 	}

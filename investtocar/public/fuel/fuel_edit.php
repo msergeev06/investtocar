@@ -1,6 +1,7 @@
 <? require_once($_SERVER["DOCUMENT_ROOT"]."/msergeev/investtocar/public/include/header.php"); ?>
 	<h1><?=GetMessage("EDITING_FUEL_COSTS")?></h1>
-<? $fuelCostsID = $_GET["id"];
+<?
+	$fuelCostsID = $_GET["id"];
 
 	if(isset($_POST["action"])) {
 		if ($res = CInvestToCarMain::UpdateFuelCosts($_POST)) {
@@ -16,6 +17,7 @@
 	}
 ?>
 	<form action="" method="post">
+		<input type="hidden" name="id" value="<?=$fuelCostsID?>">
 		<table class="add_ts">
 			<tr>
 				<td class="title"><?=GetMessage("CAR")?></td>
