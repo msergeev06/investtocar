@@ -4,13 +4,13 @@
 
 	class CInvestToCarOptions
 	{
-		var $arOptions=array();
-		var $LastError;
-		var $boolError = false;
+		private $arOptions=array();
+		private $LastError;
+		private $boolError = false;
 
 		public function __construct ()
 		{
-			require_once ("../default_options.php");
+			require_once (INVESTTOCAR_INCLUDE_PATH."default_options.php");
 			if (!empty($arDefaultOptions)) {
 				foreach ($arDefaultOptions as $option => $value) {
 					$this->arOptions[$option]=$value;
@@ -68,7 +68,7 @@
 			}
 		}
 
-		public function GetOption ($option="") {
+		private function GetOption ($option="") {
 			global $DB;
 
 			if ($option=="") {
