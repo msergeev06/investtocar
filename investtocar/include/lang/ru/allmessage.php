@@ -22,6 +22,7 @@
 
 	$MESS["MILEAGE"] = "Пробег";
 	$MESS["STATISTICS_FOR"] = "Статистика для";
+	$MESS["INFORMATION_FOR"] = "Информация для";
 	$MESS["ADD_MILEAGE_INFORMATION"] = "Добавить данные о пробеге";
 	$MESS["MAINTENANCE_COST"] = "Расходы на ТО";
 	$MESS["NUMBER_TS"] = "Номер ТО";
@@ -176,3 +177,20 @@
 	$MESS["DELETING_FUEL_COSTS_FAILED"] = "Ошибка при удалении данных о заправке";
 
 	$MESS["DELETING_FUEL_COSTS_QUESTION"] = "Вы уверены, что хотите удалить данную запись о заправке?";
+
+	$MESS["REPAIR_PARTS"] = "Запчасти";
+	$MESS["TOTAL_REPAIR_PARTS_COSTS"] = "Общие затраты на запчасти";
+	$MESS["ADD_REPAIR_PARTS"] = "Добавление запчастей";
+
+	$MESS["NO_TS"] = "Нет ТО";
+	$MESS["NOT_SELECTED"] = "Не выбрано";
+	$MESS["NO_REPAIR"] = "Нет ремонта";
+	$MESS["NO_DTP"] = "Нет зарегистрированных ДТП";
+	$MESS[""] = "";
+	$MESS[""] = "";
+	$MESS[""] = "";
+	$MESS[""] = "";
+	$MESS[""] = "";
+	$MESS[""] = "";
+	$MESS[""] = "";
+

@@ -327,6 +327,128 @@
 		}
 
 		/**
+		 * Функция возвращает <select> состоящий из списка пройденных ТО
+		 *
+		 * @param string $name
+		 * @param int $car
+		 * @param int $selected
+		 * @param string $additional_data
+		 * @return string
+		 */
+		public function ShowSelectReasonTs ($name="", $car=0, $selected=0, $additional_data="") {
+			global $DB;
+
+			if ($name=="") $name="reason_ts";
+			if ($car==0) $car = self::GetDefaultCar();
+			$echo = "<select name=\"".$name."\" class=\"".$name."\"".$additional_data.">";
+
+			$query = "SELECT * FROM `ms_icar_ts` WHERE `auto` =".$car;
+			if ($res = $DB->Select($query)) {
+				if ($selected==0) {
+					$echo .= "<option value=\"0\" selected>".GetMessage("NOT_SELECTED")."</option>";
+				}
+				foreach ($res as $arRes) {
+					$echo .= "<option value=\"".$arRes["id"]."\"";
+					if ($selected>0 && $selected==$arRes["id"]) {
+						$echo .= " selected";
+					}
+					$echo .= ">".date("d.m.Y",$arRes["date"])." ".GetMessage("TS")."-".$arRes["ts_num"]."</option>";
+				}
+			}
+			else {
+				$echo .= "<option value=\"0\" selected>".GetMessage("NO_TS")."</option>";
+			}
+
+			$echo .= "</select>";
+
+			return $echo;
+		}
+
+		/**
+		 * Функция возвращает <select> состоящий из списка проведенных ремонтов
+		 *
+		 * @param string $name
+		 * @param int $car
+		 * @param int $selected
+		 * @param string $additional_data
+		 * @return string
+		 */
+		public function ShowSelectReasonRepair($name="", $car=0, $selected=0, $additional_data="") {
+			global $DB;
+
+			if ($name=="") $name="reason_repair";
+			if ($car==0) $car = self::GetDefaultCar();
+			$echo = "<select name=\"".$name."\" class=\"".$name."\"".$additional_data.">";
+
+			/*
+			$query = "SELECT * FROM `ms_icar_ts` WHERE `auto` =".$car;
+			if ($res = $DB->Select($query)) {
+				if ($selected==0) {
+					$echo .= "<option value=\"0\" selected>".GetMessage("NOT_SELECTED")."</option>";
+				}
+
+				foreach ($res as $arRes) {
+					$echo .= "<option value=\"".$arRes["id"]."\"";
+					if ($selected>0 && $selected==$arRes["id"]) {
+						$echo .= " selected";
+					}
+					$echo .= ">".date("d.m.Y",$arRes["date"])." ".GetMessage("TS")."-".$arRes["ts_num"]."</option>";
+				}
+			}
+			else {
+				$echo .= "<option value=\"0\" selected>".GetMessage("NO_REPAIR")."</option>";
+			}
+			*/
+			$echo .= "<option value=\"0\" selected>".GetMessage("NO_REPAIR")."</option>";
+
+			$echo .= "</select>";
+
+			return $echo;
+		}
+
+		/**
+		 * Функция возвращает <select> состоящий из списка зарегистрированных ДТП
+		 *
+		 * @param string $name
+		 * @param int $car
+		 * @param int $selected
+		 * @param string $additional_data
+		 * @return string
+		 */
+		public function ShowSelectReasonDtp ($name="", $car=0, $selected=0, $additional_data="") {
+			global $DB;
+			if ($name=="") $name="reason_dtp";
+			if ($car==0) $car = self::GetDefaultCar();
+
+			$echo = "<select name=\"".$name."\" class=\"".$name."\"".$additional_data.">";
+
+			/*
+			$query = "SELECT * FROM `ms_icar_ts` WHERE `auto` =".$car;
+			if ($res = $DB->Select($query)) {
+				if ($selected==0) {
+					$echo .= "<option value=\"0\" selected>".GetMessage("NOT_SELECTED")."</option>";
+				}
+
+				foreach ($res as $arRes) {
+					$echo .= "<option value=\"".$arRes["id"]."\"";
+					if ($selected>0 && $selected==$arRes["id"]) {
+						$echo .= " selected";
+					}
+					$echo .= ">".date("d.m.Y",$arRes["date"])." ".GetMessage("TS")."-".$arRes["ts_num"]."</option>";
+				}
+			}
+			else {
+				$echo .= "<option value=\"0\" selected>".GetMessage("NO_REPAIR")."</option>";
+			}
+			*/
+			$echo .= "<option value=\"0\" selected>".GetMessage("NO_DTP")."</option>";
+
+			$echo .= "</select>";
+
+			return $echo;
+		}
+
+		/**
 		 * Функция возвращает html-код графика Километража
 		 *
 		 * @param string $arSettings
