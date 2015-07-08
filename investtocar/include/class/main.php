@@ -1916,5 +1916,33 @@
 
 		}
 
-		
+		/**
+		 * Функция удаляет из DB информацию о заправке и пересчитывает значения расхода топлива
+		 *
+		 * @param array $post
+		 * @return bool
+		 */
+		public function DeleteFuelCostsDB ($post=array()) {
+			global $DB;
+			if (empty($post)) return false;
+
+			$arData["id"] = intval($post["id"]);
+			$query = "SELECT `auto` FROM `ms_icar_fuel` WHERE `id` =".$arData["id"];
+			if ($res = $DB->Select($query)) {
+				$arData["auto"] = $res[0]["auto"];
+				$query2 = "DELETE FROM `ms_icar_fuel` WHERE `id` = ".$arData["id"];
+				if ($res2 = $DB->Delete($query2)) {
+					self::RecalculationExpense($arData["auto"]);
+					return $res2;
+				}
+				else {
+					return false;
+				}
+			}
+			else {
+				return false;
+			}
+		}
+
+
 	}

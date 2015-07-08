@@ -170,5 +170,9 @@
 	$MESS["EDITING_FUEL_COSTS"] = "Редактирование расхода на топливо";
 	$MESS["EDITING_FUEL_COSTS_SUCCESS"] = "Данные по заправке успешно обновлены";
 	$MESS["EDITING_FUEL_COSTS_FAILED"] = "Ошибка при обновлении данных о заправке";
-	$MESS[""] = "";
-	$MESS[""] = "";
+
+	$MESS["DELETING_FUEL_COSTS"] = "Удаление расхода на топливо";
+	$MESS["DELETING_FUEL_COSTS_SUCCESS"] = "Данные по заправке успешно удалены";
+	$MESS["DELETING_FUEL_COSTS_FAILED"] = "Ошибка при удалении данных о заправке";
+
+	$MESS["DELETING_FUEL_COSTS_QUESTION"] = "Вы уверены, что хотите удалить данную запись о заправке?";
