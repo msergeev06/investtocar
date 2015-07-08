@@ -186,11 +186,24 @@
 	$MESS["NOT_SELECTED"] = "Не выбрано";
 	$MESS["NO_REPAIR"] = "Нет ремонта";
 	$MESS["NO_DTP"] = "Нет зарегистрированных ДТП";
-	$MESS[""] = "";
-	$MESS[""] = "";
-	$MESS[""] = "";
-	$MESS[""] = "";
-	$MESS[""] = "";
+
+	$MESS["NAME"] = "Название";
+	$MESS["STORAGE"] = "Место хранения";
+	$MESS["ESTABLISHED"] = "Установлено";
+	$MESS["IN_STOCK"] = "На складе";
+	$MESS["CATALOG_NUMBER"] = "Каталожный номер";
+	$MESS["NUMBER"] = "Количество";
+	$MESS["REASON_REPLACEMENT"] = "Причина замены";
+	$MESS["PLANNED_OR_TS"] = "Плановая или ТО";
+	$MESS["BREAKDOWN"] = "Поломка";
+	$MESS["TUNING"] = "Тюнинг";
+	$MESS["UPGRADE"] = "Апгрейд";
+	$MESS["TIRE"] = "Шиномонтаж";
+	$MESS["REASON_DETAILS"] = "Причина (подробности)";
+	$MESS["WHO_PAID"] = "Кто оплачивал";
+	$MESS["PAID_HIMSELF"] = "Оплачивал сам";
+	$MESS["OSAGO"] = "ОСАГО";
+	$MESS["KASKO"] = "КАСКО";
 	$MESS[""] = "";
 	$MESS[""] = "";
 

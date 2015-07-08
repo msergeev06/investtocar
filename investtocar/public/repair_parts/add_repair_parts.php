@@ -13,41 +13,41 @@
 				<td><input type="text" name="date" value="<?=date("d.m.Y")?>"></td>
 			</tr>
 			<tr>
-				<td class="title">Название</td>
+				<td class="title"><?=GetMessage("NAME")?></td>
 				<td><input type="text" name="name" value=""></td>
 			</tr>
 			<tr>
-				<td class="title">Место хранения</td>
-				<td><select name="stored">
-						<option value="1" selected>Установлено</option>
-						<option value="2">На складе</option>
+				<td class="title"><?=GetMessage("STORAGE")?></td>
+				<td><select name="storage">
+						<option value="1" selected><?=GetMessage("ESTABLISHED")?></option>
+						<option value="2"><?=GetMessage("IN_STOCK")?></option>
 					</select></td>
 			</tr>
 			<tr>
-				<td class="title">Каталожный номер</td>
+				<td class="title"><?=GetMessage("CATALOG_NUMBER")?></td>
 				<td><input type="text" name="catalog_number" value=""></td>
 			</tr>
 			<tr>
-				<td class="title">Количество</td>
-				<td><input type="text" name="amount" value=""></td>
+				<td class="title"><?=GetMessage("NUMBER")?></td>
+				<td><input type="text" name="number" value=""></td>
 			</tr>
 			<tr>
 				<td class="title"><?=GetMessage("AMOUNT")?></td>
 				<td><input type="text" name="cost" value=""></td>
 			</tr>
 			<tr>
-				<td class="title">Причина замены</td>
+				<td class="title"><?=GetMessage("REASON_REPLACEMENT")?></td>
 				<td><select name="reason" class="reason">
-						<option value="1" selected>Плановая или ТО</option>
-						<option value="2">Поломка</option>
-						<option value="3">ДТП</option>
-						<option value="4">Тюнинг</option>
-						<option value="5">Апгрейд</option>
-						<option value="6">Шиномонтаж</option>
+						<option value="1" selected><?=GetMessage("PLANNED_OR_TS")?></option>
+						<option value="2"><?=GetMessage("BREAKDOWN")?></option>
+						<option value="3"><?=GetMessage("ACCIDENT")?></option>
+						<option value="4"><?=GetMessage("TUNING")?></option>
+						<option value="5"><?=GetMessage("UPGRADE")?></option>
+						<option value="6"><?=GetMessage("TIRE")?></option>
 					</select></td>
 			</tr>
 			<tr>
-				<td class="title">Причина (подробности)</td>
+				<td class="title"><?=GetMessage("REASON_DETAILS")?></td>
 				<td class="reason_add">
 					<? echo CInvestToCarMain::ShowSelectReasonTs("reason_ts",$car); ?>
 					<? echo CInvestToCarMain::ShowSelectReasonRepair("reason_breakdown",$car,0,' style="display: none;"'); ?>
@@ -58,11 +58,11 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="title">Кто оплачивал</td>
+				<td class="title"><?=GetMessage("WHO_PAID")?></td>
 				<td><select name="who_paid">
-						<option value="1" selected>Оплачивал сам</option>
-						<option value="2">ОСАГО</option>
-						<option value="3">КАСКО</option>
+						<option value="1" selected><?=GetMessage("PAID_HIMSELF")?></option>
+						<option value="2"><?=GetMessage("OSAGO")?></option>
+						<option value="3"><?=GetMessage("KASKO")?></option>
 					</select></td>
 			</tr>
 			<tr>
@@ -71,7 +71,7 @@
 			</tr>
 			<tr>
 				<td class="title"><?=GetMessage("WAYPOINT")?></td>
-				<td><? echo CInvestToCarMain::ShowSelectPoints("ts_point"); ?></td>
+				<td><? echo CInvestToCarMain::ShowSelectPoints("waypoint"); ?></td>
 			</tr>
 			<tr>
 				<td class="center" colspan="2"><?=GetMessage("OR")?></td>
