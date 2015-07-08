@@ -5,10 +5,10 @@
 
 	if(isset($_POST["action"])) {
 		if ($res = CInvestToCarMain::UpdateFuelCosts($_POST)) {
-			?><span style="color: green;"><?=GetMessage("ADDING_FUEL_COSTS_SUCCESS")?></span><?
+			?><span style="color: green;"><?=GetMessage("EDITING_FUEL_COSTS_SUCCESS")?></span><?
 		}
 		else {
-			?><span style="color: red;"><?=GetMessage("ADDING_FUEL_COSTS_FAILED")?></span><?
+			?><span style="color: red;"><?=GetMessage("EDITING_FUEL_COSTS_FAILED")?></span><?
 		}
 	}
 	else {
