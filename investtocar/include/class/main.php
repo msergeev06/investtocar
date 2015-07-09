@@ -17,43 +17,7 @@
 		 */
 		public function ShowSelectAuto ($select_name = "" ,$full=false, $selected=0)
 		{
-			global $DB;
-			$query = "SELECT `id`, `name`,";
-			if ($full) {
-				$query .= "`trademark`, `model`, `year`, `carnumber`, ";
-			}
-			$query .= "`default` FROM `ms_icar_my_car` ORDER BY `name` ASC";
-			$arResult = $DB->Select ($query);
-
-			$echo = "<select name=\"".$select_name."\">\n";
-			//echo "<pre>"; print_r($arResult); echo "</pre>";
-			foreach ($arResult as $arAuto)
-			{
-				if ($full) {
-					$arAuto["trademark"] = self::GetCarTrademarkNameByID($arAuto["trademark"]);
-					$arAuto["model"] = self::GetCarModelNameByID($arAuto["model"]);
-				}
-				$echo .= "<option value=\"".intval ($arAuto["id"])."\"";
-				if ($selected==0) {
-					if (intval ($arAuto["default"]) == 1)
-					{
-						$echo .= " selected";
-					}
-				}
-				elseif ($selected>0 && $selected==$arAuto["id"]) {
-					$echo .= " selected";
-				}
-
-				if ($full) {
-					$echo .= ">".$arAuto["trademark"]." ".$arAuto["model"]." ".$arAuto["year"]." - ".$arAuto["carnumber"]."</option>\n";
-				}
-				else {
-					$echo .= ">".$arAuto["name"]."</option>\n";
-				}
-			}
-			$echo .= "</select>\n";
-
-			return $echo;
+			return CInvestToCarShowSelect::Auto($select_name,$full,$selected);
 		}
 
 		/**
@@ -66,42 +30,7 @@
 		 */
 		public function ShowSelectPoints ($select_name = "", $selected=0, $type=0)
 		{
-			global $DB,$OPTIONS;
-			if (is_array($type)) {
-				$query = "SELECT `id` , `name` FROM `ms_icar_points` WHERE `type` ";
-				$query .= "IN (";
-				$first = true;
-				foreach ($type as $in) {
-					if ($first) {
-						$first = false;
-					}
-					else {
-						$query .= ", ";
-					}
-					$query .= $in;
-				}
-				$query .= ")";
-				$query .= " ORDER BY `period` DESC";
-			}
-			else {
-				if ($type==0) $type = $OPTIONS->GetOptionInt("point_default");
-				$query = "SELECT `id` , `name` FROM `ms_icar_points` WHERE `type` =".$type." ORDER BY `period` DESC";
-			}
-			$arResult = $DB->Select ($query);
-
-			$echo = "<select name=\"".$select_name."\">\n";
-			$echo .= "<option value=\"0\"";
-			if ($selected==0) $echo .= " selected=\"selected\"";
-			$echo .= ">".GetMessage("SELECT_DEFAULT_SELECTED")."</option>\n";
-			foreach ($arResult as $arPoint)
-			{
-				$echo .= "<option value=\"".$arPoint["id"]."\"";
-				if ($selected>0 && $selected==$arPoint["id"]) $echo .= " selected=\"selected\"";
-				$echo .= ">".$arPoint["name"]."</option>\n";
-			}
-			$echo .= "</select>\n";
-
-			return $echo;
+			return CInvestToCarShowSelect::Points($select_name,$selected,$type);
 		}
 
 		/**
@@ -112,30 +41,7 @@
 		 */
 		public function ShowSelectCarBrands ($selected = 0)
 		{
-			global $DB;
-
-			$query = "SELECT * FROM `ms_icar_setup_car_brand` ORDER BY `name` ASC";
-			$res = $DB->Select ($query);
-
-			$select = '<select name="car_brand" id="car_brand">'."\n";
-			$select .= "\t<option value=\"0\"";
-			if ($selected == 0)
-			{
-				$select .= " selected";
-			}
-			$select .= ">".GetMessage("SELECT_DEFAULT_SELECTED")."</option>\n";
-			foreach ($res as $arBrand)
-			{
-				$select .= "\t<option value=\"".$arBrand["id"]."\"";
-				if (intval($selected) == intval($arBrand["id"]))
-				{
-					$select .= " selected";
-				}
-				$select .= ">".$arBrand["name"]."</option>\n";
-			}
-			$select .= "</select>";
-
-			return $select;
+			return CInvestToCarShowSelect::ShowSelectCarBrands($selected);
 		}
 
 		/**
@@ -146,34 +52,7 @@
 		 */
 		public function ShowSelectCarModel ($brand, $selected = 0)
 		{
-			global $DB;
-
-			if (intval ($brand) == 0)
-			{
-				return false;
-			}
-
-			$query = "SELECT * FROM `ms_icar_setup_car_model` WHERE `brand` =".intval ($brand)." ORDER BY `name` ASC";
-			$res = $DB->Select ($query);
-
-			if (!isset($res[0]["name"]))
-			{
-				return false;
-			}
-
-			$select = "<select name=\"car_model\" id=\"car_model\">";
-			if ($selected == 0) {
-				$select .= "<option value=\"0\" selected>".GetMessage("SELECT_DEFAULT_SELECTED")."</option>";
-			}
-			foreach ($res as $arModel)
-			{
-				$select .= "<option value=\"".$arModel["id"]."\"";
-				if ($arModel["id"]==$selected) $select .= " selected";
-				$select .= ">".$arModel["name"]."</option>";
-			}
-			$select .= "</select>";
-
-			return $select;
+			return CInvestToCarShowSelect::CarModel($brand, $selected);
 		}
 
 		/**
@@ -186,24 +65,7 @@
 		 */
 		public function ShowSelectCarCreateYear ($selected = 0, $start = 1970, $end = 0)
 		{
-			if ($end == 0)
-			{
-				$end = date ("Y");
-			}
-
-			$select = "<select name=\"car_year\" id=\"car_year\">";
-			if ($selected == 0) {
-				$select .= "<option value=\"0\" selected>".GetMessage("SELECT_DEFAULT_SELECTED")."</option>";
-			}
-			for ($i = $start; $i <= $end; $i++)
-			{
-				$select .= "<option value=\"".$i."\"";
-				if ($i==$selected) $select .= " selected";
-				$select .= ">".$i."</option>";
-			}
-			$select .= "</select>";
-
-			return $select;
+			return CInvestToCarShowSelect::CarCreateYear($selected, $start, $end);
 		}
 
 		/**
@@ -215,24 +77,7 @@
 		 */
 		public function ShowSelectCarBody ($selected=0, $sortCol = "sort", $sort = "ASC")
 		{
-			global $DB;
-
-			$query = "SELECT * FROM `ms_icar_setup_car_body` ORDER BY `".$sortCol."` ".$sort;
-			$res = $DB->Select ($query);
-
-			$select = "<select name=\"car_body\" id=\"car_body\">";
-			if ($selected==0) {
-				$select .= "<option value=\"0\" selected>".GetMessage("SELECT_DEFAULT_SELECTED")."</option>";
-			}
-			foreach ($res as $arBody)
-			{
-				$select .= "<option value=\"".$arBody["id"]."\"";
-				if ($arBody["id"]==$selected) $select .= " selected";
-				$select .= ">".$arBody["name"]."</option>";
-			}
-			$select .= "</select>";
-
-			return $select;
+			return CInvestToCarShowSelect::CarBody($selected, $sortCol, $sort);
 		}
 
 		/**
@@ -244,24 +89,7 @@
 		 */
 		public function ShowSelectCarGearbox ($selected=0, $sortCol = "sort", $sort = "ASC")
 		{
-			global $DB;
-
-			$query = "SELECT * FROM `ms_icar_setup_car_gearbox` ORDER BY `".$sortCol."` ".$sort;
-			$res = $DB->Select ($query);
-
-			$select = "<select name=\"car_gearbox\" id=\"car_gearbox\">";
-			if ($selected==0) {
-				$select .= "<option value=\"0\" selected>".GetMessage("SELECT_DEFAULT_SELECTED")."</option>";
-			}
-			foreach ($res as $arGear)
-			{
-				$select .= "<option value=\"".$arGear["id"]."\"";
-				if ($arGear["id"]==$selected) $select .= " selected";
-				$select .= ">".$arGear["name"]."</option>";
-			}
-			$select .= "</select>";
-
-			return $select;
+			return CInvestToCarShowSelect::CarGearbox($selected, $sortCol, $sort);
 		}
 
 		/**
@@ -272,16 +100,7 @@
 		 * @return string
 		 */
 		public function ShowSelectTs ($name="ts_num", $selected=-1) {
-			$echo = "<select name=\"".$name."\" id=\"".$name."\">";
-			for ($i=0; $i<=25; $i++) {
-				$echo .= "<option value=\"".$i."\"";
-				if ($i==0) $echo .= " selected";
-				if ($selected>=0 && $selected==$i) $echo .= " selected";
-				$echo .= ">".GetMessage("TS")."-".$i."</option>";
-			}
-			$echo .= "</select>";
-
-			return $echo;
+			return CInvestToCarShowSelect::Ts($name, $selected);
 		}
 
 		/**
@@ -292,26 +111,7 @@
 		 * @return string
 		 */
 		public function ShowSelectRepair ($name="", $selected=0) {
-			if ($name=="") {
-				$name = "repair";
-			}
-
-			$echo = "<select name=\"".$name."\">";
-			for ($i=1; $i<=5; $i++) {
-				$echo .= "<option value=\"".$i."\"";
-				if ($selected>0 && $selected==$i) {
-					$echo .= " selected=\"selected\"";
-				}
-				else {
-					if ($i==1) $echo .= " selected=\"selected\"";
-				}
-				$echo .= ">";
-				$echo .= self::GetRepairNameByID($i);
-				$echo .= "</option>";
-			}
-			$echo .= "</select>";
-
-			return $echo;
+			return CInvestToCarShowSelect::Repair($name, $selected);
 		}
 
 		/**
@@ -323,27 +123,7 @@
 		 * @return string
 		 */
 		public function ShowSelectFuelMark ($name="", $car=0, $selected=0) {
-			global $DB;
-			if ($name=="") $name = "fuel_mark";
-			if ($car==0) $car = self::GetDefaultCar();
-			$echo = "";
-
-			$query = "SELECT * FROM `ms_icar_setup_fuel_mark` ORDER BY `sort` ASC";
-			$res = $DB->Select($query);
-			$echo .= "<select name=\"".$name."\">";
-			if ($selected==0) {
-				$echo .= "<option value=\"0\" selected=\"selected\">".GetMessage("SELECT_DEFAULT_SELECTED")."</option>";
-			}
-			foreach ($res as $arRes) {
-				$echo .= "<option value=\"".$arRes["id"]."\"";
-				if ($selected>0 && $selected==$arRes["id"]) {
-					$echo .= " selected=\"selected\"";
-				}
-				$echo .= ">".$arRes["name"]."</option>";
-			}
-			$echo .= "</select>";
-
-			return $echo;
+			return CInvestToCarShowSelect::FuelMark($name, $car, $selected);
 		}
 
 		/**
@@ -356,32 +136,7 @@
 		 * @return string
 		 */
 		public function ShowSelectReasonTs ($name="", $car=0, $selected=0, $additional_data="") {
-			global $DB;
-
-			if ($name=="") $name="reason_ts";
-			if ($car==0) $car = self::GetDefaultCar();
-			$echo = "<select name=\"".$name."\" class=\"".$name."\"".$additional_data.">";
-
-			$query = "SELECT * FROM `ms_icar_ts` WHERE `auto` =".$car;
-			if ($res = $DB->Select($query)) {
-				if ($selected==0) {
-					$echo .= "<option value=\"0\" selected>".GetMessage("NOT_SELECTED")."</option>";
-				}
-				foreach ($res as $arRes) {
-					$echo .= "<option value=\"".$arRes["id"]."\"";
-					if ($selected>0 && $selected==$arRes["id"]) {
-						$echo .= " selected";
-					}
-					$echo .= ">".date("d.m.Y",$arRes["date"])." ".GetMessage("TS")."-".$arRes["ts_num"]."</option>";
-				}
-			}
-			else {
-				$echo .= "<option value=\"0\" selected>".GetMessage("NO_TS")."</option>";
-			}
-
-			$echo .= "</select>";
-
-			return $echo;
+			return CInvestToCarShowSelect::ReasonTs($name, $car, $selected, $additional_data);
 		}
 
 		/**
@@ -394,36 +149,7 @@
 		 * @return string
 		 */
 		public function ShowSelectReasonRepair($name="", $car=0, $selected=0, $additional_data="") {
-			global $DB;
-
-			if ($name=="") $name="reason_repair";
-			if ($car==0) $car = self::GetDefaultCar();
-			$echo = "<select name=\"".$name."\" class=\"".$name."\"".$additional_data.">";
-
-			/*
-			$query = "SELECT * FROM `ms_icar_ts` WHERE `auto` =".$car;
-			if ($res = $DB->Select($query)) {
-				if ($selected==0) {
-					$echo .= "<option value=\"0\" selected>".GetMessage("NOT_SELECTED")."</option>";
-				}
-
-				foreach ($res as $arRes) {
-					$echo .= "<option value=\"".$arRes["id"]."\"";
-					if ($selected>0 && $selected==$arRes["id"]) {
-						$echo .= " selected";
-					}
-					$echo .= ">".date("d.m.Y",$arRes["date"])." ".GetMessage("TS")."-".$arRes["ts_num"]."</option>";
-				}
-			}
-			else {
-				$echo .= "<option value=\"0\" selected>".GetMessage("NO_REPAIR")."</option>";
-			}
-			*/
-			$echo .= "<option value=\"0\" selected>".GetMessage("NO_REPAIR")."</option>";
-
-			$echo .= "</select>";
-
-			return $echo;
+			return CInvestToCarShowSelect::ReasonRepair($name, $car, $selected, $additional_data);
 		}
 
 		/**
@@ -436,36 +162,7 @@
 		 * @return string
 		 */
 		public function ShowSelectReasonDtp ($name="", $car=0, $selected=0, $additional_data="") {
-			global $DB;
-			if ($name=="") $name="reason_dtp";
-			if ($car==0) $car = self::GetDefaultCar();
-
-			$echo = "<select name=\"".$name."\" class=\"".$name."\"".$additional_data.">";
-
-			/*
-			$query = "SELECT * FROM `ms_icar_ts` WHERE `auto` =".$car;
-			if ($res = $DB->Select($query)) {
-				if ($selected==0) {
-					$echo .= "<option value=\"0\" selected>".GetMessage("NOT_SELECTED")."</option>";
-				}
-
-				foreach ($res as $arRes) {
-					$echo .= "<option value=\"".$arRes["id"]."\"";
-					if ($selected>0 && $selected==$arRes["id"]) {
-						$echo .= " selected";
-					}
-					$echo .= ">".date("d.m.Y",$arRes["date"])." ".GetMessage("TS")."-".$arRes["ts_num"]."</option>";
-				}
-			}
-			else {
-				$echo .= "<option value=\"0\" selected>".GetMessage("NO_REPAIR")."</option>";
-			}
-			*/
-			$echo .= "<option value=\"0\" selected>".GetMessage("NO_DTP")."</option>";
-
-			$echo .= "</select>";
-
-			return $echo;
+			return CInvestToCarShowSelect::ReasonDtp($name, $car, $selected, $additional_data);
 		}
 
 		/**

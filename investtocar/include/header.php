@@ -28,3 +28,4 @@
 	$OPTIONS = new CInvestToCarOptions();
 	//Основной класс
 	require_once (INVESTTOCAR_CLASS_PATH."main.php");
+	require_once (INVESTTOCAR_CLASS_PATH."showselect.php");
