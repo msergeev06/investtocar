@@ -1828,4 +1828,23 @@
 			}
 
 		}
+
+		/**
+		 * Функция удаляет информацию о запчасти из DB по ее id
+		 *
+		 * @param int $repairPartsID
+		 * @return bool
+		 */
+		public function DeleteRepairPartsInfoDB ($repairPartsID=0) {
+			global $DB;
+			if ($repairPartsID==0) return false;
+
+			$query = "DELETE FROM `ms_icar_repair_parts` WHERE `id` = ".$repairPartsID;
+			if ($res = $DB->Delete($query)) {
+				return $res;
+			}
+			else {
+				return false;
+			}
+		}
 	}
