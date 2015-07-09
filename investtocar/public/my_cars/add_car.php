@@ -79,7 +79,7 @@ else {
 	</tr>
 	<tr>
 		<td>Марка авто:</td>
-		<td><? echo CInvestToCarMain::ShowSelectCarBrands(); ?></td>
+		<td><? echo CInvestToCarShowSelect::CarBrands(); ?></td>
 		<td>&nbsp;</td>
 	</tr>
 	<tr>
@@ -89,7 +89,7 @@ else {
 	</tr>
 	<tr>
 		<td>Год выпуска: </td>
-		<td><? echo CInvestToCarMain::ShowSelectCarCreateYear(); ?></td>
+		<td><? echo CInvestToCarShowSelect::CarCreateYear(); ?></td>
 		<td>&nbsp;</td>
 	</tr>
 	<tr>
@@ -109,12 +109,12 @@ else {
 	</tr>
 	<tr>
 		<td>КПП:</td>
-		<td><? echo CInvestToCarMain::ShowSelectCarGearbox(); ?></td>
+		<td><? echo CInvestToCarShowSelect::CarGearbox(); ?></td>
 		<td>&nbsp;</td>
 	</tr>
 	<tr>
 		<td>Тип кузова:</td>
-		<td><? echo CInvestToCarMain::ShowSelectCarBody(); ?></td>
+		<td><? echo CInvestToCarShowSelect::CarBody(); ?></td>
 		<td>&nbsp;</td>
 	</tr>
 	<tr>

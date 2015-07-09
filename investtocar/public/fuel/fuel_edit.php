@@ -21,7 +21,7 @@
 		<table class="add_ts">
 			<tr>
 				<td class="title"><?=GetMessage("CAR")?></td>
-				<td><? echo CInvestToCarMain::ShowSelectAuto("fuel_auto",false,$arFuel["auto"]); ?></td>
+				<td><? echo CInvestToCarShowSelect::Auto("fuel_auto",false,$arFuel["auto"]); ?></td>
 			</tr>
 			<tr>
 				<td class="title"><?=GetMessage("DATE_DDMMYYYY")?></td>
@@ -33,7 +33,7 @@
 			</tr>
 			<tr>
 				<td class="title"><?=GetMessage("FUEL_MARK")?></td>
-				<td><? echo CInvestToCarMain::ShowSelectFuelMark("fuel_mark",$arFuel["auto"],$arFuel["fuel_mark"]); ?></td>
+				<td><? echo CInvestToCarShowSelect::FuelMark("fuel_mark",$arFuel["auto"],$arFuel["fuel_mark"]); ?></td>
 			</tr>
 			<tr>
 				<td class="title"><?=GetMessage("DISPLACEMENT")?></td>
@@ -49,7 +49,7 @@
 			</tr>
 			<tr>
 				<td class="title"><?=GetMessage("WAYPOINT")?></td>
-				<td><? echo CInvestToCarMain::ShowSelectPoints("fuel_point",$arFuel["point"],2); ?></td>
+				<td><? echo CInvestToCarShowSelect::Points("fuel_point",$arFuel["point"],2); ?></td>
 			</tr>
 			<tr>
 				<td class="center" colspan="2"><?=GetMessage("OR")?></td>

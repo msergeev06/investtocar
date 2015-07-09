@@ -70,17 +70,17 @@
 				</tr>
 				<tr>
 					<td>Марка авто:</td>
-					<td><? echo CInvestToCarMain::ShowSelectCarBrands($arCar["trademark"]); ?></td>
+					<td><? echo CInvestToCarShowSelect::CarBrands($arCar["trademark"]); ?></td>
 					<td>&nbsp;</td>
 				</tr>
 				<tr>
 					<td>Модель:</td>
-					<td><? echo CInvestToCarMain::ShowSelectCarModel($arCar["trademark"],$arCar["model"]); ?></td>
+					<td><? echo CInvestToCarShowSelect::CarModel($arCar["trademark"],$arCar["model"]); ?></td>
 					<td>&nbsp;</td>
 				</tr>
 				<tr>
 					<td>Год выпуска: </td>
-					<td><? echo CInvestToCarMain::ShowSelectCarCreateYear($arCar["year"]); ?></td>
+					<td><? echo CInvestToCarShowSelect::CarCreateYear($arCar["year"]); ?></td>
 					<td>&nbsp;</td>
 				</tr>
 				<tr>
@@ -100,12 +100,12 @@
 				</tr>
 				<tr>
 					<td>КПП:</td>
-					<td><? echo CInvestToCarMain::ShowSelectCarGearbox($arCar["gearshift"]); ?></td>
+					<td><? echo CInvestToCarShowSelect::CarGearbox($arCar["gearshift"]); ?></td>
 					<td>&nbsp;</td>
 				</tr>
 				<tr>
 					<td>Тип кузова:</td>
-					<td><? echo CInvestToCarMain::ShowSelectCarBody($arCar["body"]); ?></td>
+					<td><? echo CInvestToCarShowSelect::CarBody($arCar["body"]); ?></td>
 					<td>&nbsp;</td>
 				</tr>
 				<tr>

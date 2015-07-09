@@ -5,7 +5,7 @@
 	class CInvestToCarMain
 	{
 		public static $arMessage = array();
-
+/*
 		/**
 		 * Функция возвращает <select> состоящий из автомобилей
 		 *
@@ -14,7 +14,7 @@
 		 * @param int $selected
 		 *
 		 * @return string
-		 */
+		 *
 		public function ShowSelectAuto ($select_name = "" ,$full=false, $selected=0)
 		{
 			return CInvestToCarShowSelect::Auto($select_name,$full,$selected);
@@ -27,7 +27,7 @@
 		 * @param int $selected
 		 * @param int|array $type
 		 * @return string
-		 */
+		 *
 		public function ShowSelectPoints ($select_name = "", $selected=0, $type=0)
 		{
 			return CInvestToCarShowSelect::Points($select_name,$selected,$type);
@@ -38,10 +38,10 @@
 		 *
 		 * @param int $selected Если указан, устанавливает выбранный бренд как selected
 		 * @return string HTML тег <select></select>
-		 */
+		 *
 		public function ShowSelectCarBrands ($selected = 0)
 		{
-			return CInvestToCarShowSelect::ShowSelectCarBrands($selected);
+			return CInvestToCarShowSelect::CarBrands($selected);
 		}
 
 		/**
@@ -49,7 +49,7 @@
 		 *
 		 * @param $brand Марка автомобиля
 		 * @return bool|string <select>, либо false
-		 */
+		 *
 		public function ShowSelectCarModel ($brand, $selected = 0)
 		{
 			return CInvestToCarShowSelect::CarModel($brand, $selected);
@@ -62,7 +62,7 @@
 		 * @param int $end Конец списка
 		 *
 		 * @return string
-		 */
+		 *
 		public function ShowSelectCarCreateYear ($selected = 0, $start = 1970, $end = 0)
 		{
 			return CInvestToCarShowSelect::CarCreateYear($selected, $start, $end);
@@ -74,7 +74,7 @@
 		 * @param string $sortCol Поле сортировки
 		 * @param string $sort Направление сортировки
 		 * @return string <select>
-		 */
+		 *
 		public function ShowSelectCarBody ($selected=0, $sortCol = "sort", $sort = "ASC")
 		{
 			return CInvestToCarShowSelect::CarBody($selected, $sortCol, $sort);
@@ -86,7 +86,7 @@
 		 * @param string $sortCol Поле сортировки
 		 * @param string $sort Направление сортировки
 		 * @return string <select>
-		 */
+		 *
 		public function ShowSelectCarGearbox ($selected=0, $sortCol = "sort", $sort = "ASC")
 		{
 			return CInvestToCarShowSelect::CarGearbox($selected, $sortCol, $sort);
@@ -98,7 +98,7 @@
 		 * @param string $name
 		 * @param int selected
 		 * @return string
-		 */
+		 *
 		public function ShowSelectTs ($name="ts_num", $selected=-1) {
 			return CInvestToCarShowSelect::Ts($name, $selected);
 		}
@@ -109,7 +109,7 @@
 		 * @param string $name
 		 * @param int $selected
 		 * @return string
-		 */
+		 *
 		public function ShowSelectRepair ($name="", $selected=0) {
 			return CInvestToCarShowSelect::Repair($name, $selected);
 		}
@@ -121,7 +121,7 @@
 		 * @param int $car
 		 * @param int $selected
 		 * @return string
-		 */
+		 *
 		public function ShowSelectFuelMark ($name="", $car=0, $selected=0) {
 			return CInvestToCarShowSelect::FuelMark($name, $car, $selected);
 		}
@@ -134,7 +134,7 @@
 		 * @param int $selected
 		 * @param string $additional_data
 		 * @return string
-		 */
+		 *
 		public function ShowSelectReasonTs ($name="", $car=0, $selected=0, $additional_data="") {
 			return CInvestToCarShowSelect::ReasonTs($name, $car, $selected, $additional_data);
 		}
@@ -147,7 +147,7 @@
 		 * @param int $selected
 		 * @param string $additional_data
 		 * @return string
-		 */
+		 *
 		public function ShowSelectReasonRepair($name="", $car=0, $selected=0, $additional_data="") {
 			return CInvestToCarShowSelect::ReasonRepair($name, $car, $selected, $additional_data);
 		}
@@ -160,11 +160,11 @@
 		 * @param int $selected
 		 * @param string $additional_data
 		 * @return string
-		 */
+		 *
 		public function ShowSelectReasonDtp ($name="", $car=0, $selected=0, $additional_data="") {
 			return CInvestToCarShowSelect::ReasonDtp($name, $car, $selected, $additional_data);
 		}
-
+*/
 		/**
 		 * Функция возвращает html-код графика Километража
 		 *

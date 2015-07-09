@@ -108,7 +108,7 @@
 		 * @param int $selected Если указан, устанавливает выбранный бренд как selected
 		 * @return string HTML тег <select></select>
 		 */
-		public function Brands ($selected = 0) {
+		public function CarBrands ($selected = 0) {
 			global $DB;
 
 			$query = "SELECT * FROM `ms_icar_setup_car_brand` ORDER BY `name` ASC";

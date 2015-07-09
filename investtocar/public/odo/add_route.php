@@ -26,7 +26,7 @@
 	<table style="border: 0;">
 		<tr>
 			<td class="name"><?=GetMessage("CAR")?></td>
-			<td class="value"><? echo CInvestToCarMain::ShowSelectAuto("auto")?></td>
+			<td class="value"><? echo CInvestToCarShowSelect::Auto("auto")?></td>
 		</tr>
 		<tr>
 			<td class="name"><?=GetMessage("DATE_DDMMYYYY")?></td>
@@ -38,7 +38,7 @@
 		</tr>
 		<tr>
 			<td class="name"><?=GetMessage("HOME_WAYPOINT")?></td>
-			<td class="value"><? echo CInvestToCarMain::ShowSelectPoints("start_point")?></td>
+			<td class="value"><? echo CInvestToCarShowSelect::Points("start_point")?></td>
 		</tr>
 		<tr>
 			<td class="name">&nbsp;</td>
@@ -53,7 +53,7 @@
 			<td class="value"><input type="text" name="start_address" value=""></td>
 		</tr>
 		<tr>
-			<td class="name"><?=GetMessage(LONGITUDE_NEW_WAYPOINT)?></td>
+			<td class="name"><?=GetMessage("LONGITUDE_NEW_WAYPOINT")?></td>
 			<td class="value"><input type="text" name="start_lon" value=""></td>
 		</tr>
 		<tr>
@@ -66,7 +66,7 @@
 		</tr>
 		<tr>
 			<td class="name"><?=GetMessage("FINAL_WAYPOINT")?></td>
-			<td class="value"><? echo CInvestToCarMain::ShowSelectPoints("end_point")?></td>
+			<td class="value"><? echo CInvestToCarShowSelect::Points("end_point")?></td>
 		</tr>
 		<tr>
 			<td class="name">&nbsp;</td>
