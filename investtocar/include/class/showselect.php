@@ -466,4 +466,115 @@
 			return $echo;
 		}
 
+		/**
+		 * Функция возвращает <select> состоящий из мест хранения
+		 *
+		 * @param string $name
+		 * @param int $selected
+		 * @return string
+		 */
+		public function Storage ($name="",$selected=0) {
+			global $DB;
+
+			if ($name=="") $name = "storage";
+
+			$echo = "<select name=\"".$name."\">";
+			$query = "SELECT * FROM `ms_icar_setup_storage` ORDER BY `sort` ASC";
+			if ($res = $DB->Select($query)) {
+				$first = true;
+				foreach ($res as $arRes) {
+					$echo .= "<option value=\"".$arRes."\"";
+					if ($first) {
+						if ($selected==0 || $selected==$arRes["id"]) {
+							$echo .= " selected";
+						}
+						$first = false;
+					}
+					else {
+						if ($selected>0 && $selected == $arRes["id"]) {
+							$echo .= " selected";
+						}
+					}
+					$echo .= ">".$arRes["name"]."</option>";
+				}
+			}
+			else {
+				return "";
+			}
+			$echo .= "</select>";
+
+			return $echo;
+		}
+
+		/**
+		 * Функция возвращает <select> состоящий из причин замены запчасти
+		 *
+		 * @param string $name
+		 * @param int $selected
+		 * @return string
+		 */
+		public function ReasonReplacement ($name="",$selected=0) {
+			global $DB;
+			if ($name=="") $name = "reason";
+
+			$echo = "<select name=\"".$name."\" class=\"".$name."\">";
+			$query = "SELECT * FROM `ms_icar_setup_reason_replacement` ORDER BY `sort` ASC";
+			if ($res = $DB->Select($query)) {
+				$first = true;
+				foreach ($res as $arRes) {
+					$echo .= "<option value=\"".$arRes["id"]."\"";
+					if ($first) {
+						if ($selected==0 || $selected==$arRes["id"]) {
+							$echo .= " selected";
+						}
+						$first = false;
+					}
+					else {
+						if ($selected>0 && $selected==$arRes["id"]) {
+							$echo .= " selected";
+						}
+					}
+					$echo .= ">".$arRes["name"]."</option>";
+				}
+				$echo .= "</select>";
+
+				return $echo;
+			}
+			else {
+				return "";
+			}
+
+		}
+
+		public function WhoPaid ($name="",$selected=0) {
+			global $DB;
+			if ($name=="") $name = "who_paid";
+
+			$echo = "<select name=\"".$name."\" class=\"".$name."\">";
+			$query = "SELECT * FROM `ms_icar_setup_who_paid` ORDER BY `sort` ASC";
+			if ($res = $DB->Select($query)) {
+				$first = true;
+				foreach ($res as $arRes) {
+					$echo .= "<option value=\"".$arRes["id"]."\"";
+					if ($first) {
+						if ($selected==0 || $selected==$arRes["id"]) {
+							$echo .= " selected";
+						}
+						$first = false;
+					}
+					else {
+						if ($selected>0 && $selected==$arRes["id"]) {
+							$echo .= " selected";
+						}
+					}
+					$echo .= ">".$arRes["name"]."</option>";
+				}
+				$echo .= "</select>";
+
+				return $echo;
+			}
+			else {
+				return "";
+			}
+		}
 	}

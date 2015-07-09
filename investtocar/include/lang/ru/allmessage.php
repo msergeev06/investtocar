@@ -189,8 +189,6 @@
 
 	$MESS["NAME"] = "Название";
 	$MESS["STORAGE"] = "Место хранения";
-	$MESS["ESTABLISHED"] = "Установлено";
-	$MESS["IN_STOCK"] = "На складе";
 	$MESS["CATALOG_NUMBER"] = "Каталожный номер";
 	$MESS["NUMBER"] = "Количество";
 	$MESS["REASON_REPLACEMENT"] = "Причина замены";

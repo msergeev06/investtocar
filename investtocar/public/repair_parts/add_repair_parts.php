@@ -31,10 +31,7 @@
 			</tr>
 			<tr>
 				<td class="title"><?=GetMessage("STORAGE")?></td>
-				<td><select name="storage">
-						<option value="1" selected><?=GetMessage("ESTABLISHED")?></option>
-						<option value="2"><?=GetMessage("IN_STOCK")?></option>
-					</select></td>
+				<td><? echo CInvestToCarShowSelect::Storage("storage"); ?></td>
 			</tr>
 			<tr>
 				<td class="title"><?=GetMessage("CATALOG_NUMBER")?></td>
@@ -50,14 +47,7 @@
 			</tr>
 			<tr>
 				<td class="title"><?=GetMessage("REASON_REPLACEMENT")?></td>
-				<td><select name="reason" class="reason">
-						<option value="1" selected><?=GetMessage("PLANNED_OR_TS")?></option>
-						<option value="2"><?=GetMessage("BREAKDOWN")?></option>
-						<option value="3"><?=GetMessage("ACCIDENT")?></option>
-						<option value="4"><?=GetMessage("TUNING")?></option>
-						<option value="5"><?=GetMessage("UPGRADE")?></option>
-						<option value="6"><?=GetMessage("TIRE")?></option>
-					</select></td>
+				<td><? echo CInvestToCarShowSelect::ReasonReplacement("reason"); ?></td>
 			</tr>
 			<tr>
 				<td class="title"><?=GetMessage("REASON_DETAILS")?></td>
@@ -72,11 +62,7 @@
 			</tr>
 			<tr>
 				<td class="title"><?=GetMessage("WHO_PAID")?></td>
-				<td><select name="who_paid">
-						<option value="1" selected><?=GetMessage("PAID_HIMSELF")?></option>
-						<option value="2"><?=GetMessage("OSAGO")?></option>
-						<option value="3"><?=GetMessage("KASKO")?></option>
-					</select></td>
+				<td><? echo CInvestToCarShowSelect::WhoPaid("who_paid"); ?></td>
 			</tr>
 			<tr>
 				<td class="title"><?=GetMessage("ODOMETER_VALUE")?></td>
@@ -119,7 +105,7 @@
 		$(document).on("ready",function(){
 			$(".reason").on("change",function(){
 				sel = $(this).val();
-				if (sel==1) {
+				if (sel==<?=$OPTIONS->GetOptionInt("reason_replacement_ts")?>) {
 					$(".reason_ts").show();
 					$(".reason_breakdown").hide();
 					$(".reason_dtp").hide();
@@ -127,7 +113,7 @@
 					$(".reason_upgrade").hide();
 					$(".reason_tire").hide();
 				}
-				if (sel==2) {
+				if (sel==<?=$OPTIONS->GetOptionInt("reason_replacement_breakdown")?>) {
 					$(".reason_ts").hide();
 					$(".reason_breakdown").show();
 					$(".reason_dtp").hide();
@@ -135,7 +121,7 @@
 					$(".reason_upgrade").hide();
 					$(".reason_tire").hide();
 				}
-				if (sel==3) {
+				if (sel==<?=$OPTIONS->GetOptionInt("reason_replacement_dtp")?>) {
 					$(".reason_ts").hide();
 					$(".reason_breakdown").hide();
 					$(".reason_dtp").show();
@@ -143,7 +129,7 @@
 					$(".reason_upgrade").hide();
 					$(".reason_tire").hide();
 				}
-				if (sel==4) {
+				if (sel==<?=$OPTIONS->GetOptionInt("reason_replacement_tuning")?>) {
 					$(".reason_ts").hide();
 					$(".reason_breakdown").hide();
 					$(".reason_dtp").hide();
@@ -151,7 +137,7 @@
 					$(".reason_upgrade").hide();
 					$(".reason_tire").hide();
 				}
-				if (sel==5) {
+				if (sel==<?=$OPTIONS->GetOptionInt("reason_replacement_upgrade")?>) {
 					$(".reason_ts").hide();
 					$(".reason_breakdown").hide();
 					$(".reason_dtp").hide();
@@ -159,7 +145,7 @@
 					$(".reason_upgrade").show();
 					$(".reason_tire").hide();
 				}
-				if (sel==6) {
+				if (sel==<?=$OPTIONS->GetOptionInt("reason_replacement_tire")?>) {
 					$(".reason_ts").hide();
 					$(".reason_breakdown").hide();
 					$(".reason_dtp").hide();

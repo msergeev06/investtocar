@@ -5,166 +5,6 @@
 	class CInvestToCarMain
 	{
 		public static $arMessage = array();
-/*
-		/**
-		 * Функция возвращает <select> состоящий из автомобилей
-		 *
-		 * @param string $select_name
-		 * @param bool $full
-		 * @param int $selected
-		 *
-		 * @return string
-		 *
-		public function ShowSelectAuto ($select_name = "" ,$full=false, $selected=0)
-		{
-			return CInvestToCarShowSelect::Auto($select_name,$full,$selected);
-		}
-
-		/**
-		 * Функция возвращает <select> состоящий из маршрутных точек
-		 *
-		 * @param string $select_name
-		 * @param int $selected
-		 * @param int|array $type
-		 * @return string
-		 *
-		public function ShowSelectPoints ($select_name = "", $selected=0, $type=0)
-		{
-			return CInvestToCarShowSelect::Points($select_name,$selected,$type);
-		}
-
-		/**
-		 * Функция возвращает <select> состоящий из автомобильных брендов
-		 *
-		 * @param int $selected Если указан, устанавливает выбранный бренд как selected
-		 * @return string HTML тег <select></select>
-		 *
-		public function ShowSelectCarBrands ($selected = 0)
-		{
-			return CInvestToCarShowSelect::CarBrands($selected);
-		}
-
-		/**
-		 * Функция возвращает <select> состоящий из марок автомобилей заданной марки
-		 *
-		 * @param $brand Марка автомобиля
-		 * @return bool|string <select>, либо false
-		 *
-		public function ShowSelectCarModel ($brand, $selected = 0)
-		{
-			return CInvestToCarShowSelect::CarModel($brand, $selected);
-		}
-
-		/**
-		 * Функция возвращает <select> состоящий из годов с start до end
-		 *
-		 * @param int $start Начало списка
-		 * @param int $end Конец списка
-		 *
-		 * @return string
-		 *
-		public function ShowSelectCarCreateYear ($selected = 0, $start = 1970, $end = 0)
-		{
-			return CInvestToCarShowSelect::CarCreateYear($selected, $start, $end);
-		}
-
-		/**
-		 * Функция возвращает <select> состоящий из типов Кузова отсортированных по sortCol в направлении sort
-		 *
-		 * @param string $sortCol Поле сортировки
-		 * @param string $sort Направление сортировки
-		 * @return string <select>
-		 *
-		public function ShowSelectCarBody ($selected=0, $sortCol = "sort", $sort = "ASC")
-		{
-			return CInvestToCarShowSelect::CarBody($selected, $sortCol, $sort);
-		}
-
-		/**
-		 * Функция возвращает <select> состоящий из типов КПП отсортированных по sortCol в направлении sort
-		 *
-		 * @param string $sortCol Поле сортировки
-		 * @param string $sort Направление сортировки
-		 * @return string <select>
-		 *
-		public function ShowSelectCarGearbox ($selected=0, $sortCol = "sort", $sort = "ASC")
-		{
-			return CInvestToCarShowSelect::CarGearbox($selected, $sortCol, $sort);
-		}
-
-		/**
-		 * Функция возвращает <select> состоящий из номеров ТО (ТО-0, ТО-1 и т.д.)
-		 *
-		 * @param string $name
-		 * @param int selected
-		 * @return string
-		 *
-		public function ShowSelectTs ($name="ts_num", $selected=-1) {
-			return CInvestToCarShowSelect::Ts($name, $selected);
-		}
-
-		/**
-		 * Функция возвращает <select> состоящий из исполнителей ремонта
-		 *
-		 * @param string $name
-		 * @param int $selected
-		 * @return string
-		 *
-		public function ShowSelectRepair ($name="", $selected=0) {
-			return CInvestToCarShowSelect::Repair($name, $selected);
-		}
-
-		/**
-		 * Функция возвращает <select> состоящий из марок топлива
-		 *
-		 * @param string $name
-		 * @param int $car
-		 * @param int $selected
-		 * @return string
-		 *
-		public function ShowSelectFuelMark ($name="", $car=0, $selected=0) {
-			return CInvestToCarShowSelect::FuelMark($name, $car, $selected);
-		}
-
-		/**
-		 * Функция возвращает <select> состоящий из списка пройденных ТО
-		 *
-		 * @param string $name
-		 * @param int $car
-		 * @param int $selected
-		 * @param string $additional_data
-		 * @return string
-		 *
-		public function ShowSelectReasonTs ($name="", $car=0, $selected=0, $additional_data="") {
-			return CInvestToCarShowSelect::ReasonTs($name, $car, $selected, $additional_data);
-		}
-
-		/**
-		 * Функция возвращает <select> состоящий из списка проведенных ремонтов
-		 *
-		 * @param string $name
-		 * @param int $car
-		 * @param int $selected
-		 * @param string $additional_data
-		 * @return string
-		 *
-		public function ShowSelectReasonRepair($name="", $car=0, $selected=0, $additional_data="") {
-			return CInvestToCarShowSelect::ReasonRepair($name, $car, $selected, $additional_data);
-		}
-
-		/**
-		 * Функция возвращает <select> состоящий из списка зарегистрированных ДТП
-		 *
-		 * @param string $name
-		 * @param int $car
-		 * @param int $selected
-		 * @param string $additional_data
-		 * @return string
-		 *
-		public function ShowSelectReasonDtp ($name="", $car=0, $selected=0, $additional_data="") {
-			return CInvestToCarShowSelect::ReasonDtp($name, $car, $selected, $additional_data);
-		}
-*/
 		/**
 		 * Функция возвращает html-код графика Километража
 		 *
@@ -1802,6 +1642,7 @@
 		 * @return bool
 		 */
 		public function AddRepairParts ($post=array()) {
+			global $OPTIONS;
 			if (empty($post)) return false;
 			$arData = array();
 
@@ -1814,22 +1655,22 @@
 			$arData["cost"] = floatval(str_replace(",",".",$post["cost"]));
 			$arData["reason"] = intval($post["reason"]);
 			switch ($arData["reason"]) {
-				case 1:
+				case $OPTIONS->GetOptionInt("reason_replacement_ts"):
 					$arData["reason_detail"] = intval($post["reason_ts"]);
 					break;
-				case 2:
+				case $OPTIONS->GetOptionInt("reason_replacement_breakdown"):
 					$arData["reason_detail"] = intval($post["reason_breakdown"]);
 					break;
-				case 3:
+				case $OPTIONS->GetOptionInt("reason_replacement_dtp"):
 					$arData["reason_detail"] = intval($post["reason_dtp"]);
 					break;
-				case 4:
+				case $OPTIONS->GetOptionInt("reason_replacement_tuning"):
 					$arData["reason_detail"] = intval($post["reason_tuning"]);
 					break;
-				case 5:
+				case $OPTIONS->GetOptionInt("reason_replacement_upgrade"):
 					$arData["reason_detail"] = intval($post["reason_upgrade"]);
 					break;
-				case 6:
+				case $OPTIONS->GetOptionInt("reason_replacement_tire"):
 					$arData["reason_detail"] = 0;
 					break;
 			}
@@ -1881,5 +1722,110 @@
 			else {
 				return false;
 			}
+		}
+
+		/**
+		 * Функция возвращает массив со списком запчастей
+		 *
+		 * @param int $car
+		 * @return bool
+		 */
+	    public function GetListRepairParts ($car=0) {
+		    global $DB,$OPTIONS;
+		    if ($car==0) $car = self::GetDefaultCar();
+		    $arData = array();
+
+		    $query = "SELECT * FROM `ms_icar_repair_parts` WHERE `auto` =".$car." ORDER BY `auto` ASC";
+		    if ($res = $DB->Select($query)) {
+			    $i=0;
+			    foreach ($res as $arRes) {
+				    $arData[$i]["id"] = $arRes["id"];
+			        //$arData[$i]["auto"] = self::GetMyCarsInfo($car);
+				    $arData[$i]["date"] = date("d.m.Y",$arRes["date"]);
+				    $arData[$i]["name"] = $arRes["name"];
+				    $arData[$i]["storage"] = self::GetNameByIDFromDB($arRes["storage"],"ms_icar_setup_storage");
+				    $arData[$i]["catalog_number"] = $arRes["catalog_number"];
+				    $arData[$i]["number"] = round($arRes["number"],2);
+				    $arData[$i]["cost"] = number_format($arRes["cost"],2);
+				    $arData[$i]["reason"] = self::GetNameByIDFromDB($arRes["reason"],"ms_icar_setup_reason_replacement");
+				    if ($arRes["reason"]==$OPTIONS->GetOptionInt("reason_replacement_ts")) {
+						if ($arRes["reason_detail"]>0) {
+							$arTemp = self::GetTsInfo($arRes["reason_detail"]);
+							$arData[$i]["reason_detail"] = date("d.m.Y",$arTemp[0]["date"])." ".GetMessage("TS")."-".$arTemp[0]["ts_num"];
+						}
+					    else {
+						    $arData[$i]["reason_detail"] = GetMessage("NOT_SELECTED");
+					    }
+				    }
+				    elseif ($arRes["reason"]==$OPTIONS->GetOptionInt("reason_replacement_breakdown")) {
+					    if ($arRes["reason_detail"]>0) {
+						    $arData[$i]["reason_detail"] = "Нет данных";
+					    }
+					    else {
+						    $arData[$i]["reason_detail"] = GetMessage("NOT_SELECTED");
+					    }
+				    }
+				    elseif ($arRes["reason"]==$OPTIONS->GetOptionInt("reason_replacement_dtp")) {
+					    if ($arRes["reason_detail"]>0) {
+						    $arData[$i]["reason_detail"] = "Нет данных";
+					    }
+					    else {
+						    $arData[$i]["reason_detail"] = GetMessage("NOT_SELECTED");
+					    }
+				    }
+				    elseif ($arRes["reason"]==$OPTIONS->GetOptionInt("reason_replacement_tuning")) {
+					    if ($arRes["reason_detail"]>0) {
+						    $arData[$i]["reason_detail"] = "Нет данных";
+					    }
+					    else {
+						    $arData[$i]["reason_detail"] = GetMessage("NOT_SELECTED");
+					    }
+				    }
+				    elseif ($arRes["reason"]==$OPTIONS->GetOptionInt("reason_replacement_upgrade")) {
+					    if ($arRes["reason_detail"]>0) {
+						    $arData[$i]["reason_detail"] = "Нет данных";
+					    }
+					    else {
+						    $arData[$i]["reason_detail"] = GetMessage("NOT_SELECTED");
+					    }
+				    }
+				    else {
+					    $arData[$i]["reason_detail"] = "-";
+				    }
+				    //$arData[$i]["reason_detail"] = $arRes["reason_detail"];
+				    $arData[$i]["who_paid"] = self::GetNameByIDFromDB($arRes["who_paid"],"ms_icar_setup_who_paid");
+				    $arData[$i]["odo"] = round($arRes["odo"],2);
+				    $arData[$i]["waypoint"] = self::GetNameByIDFromDB($arRes["waypoint"],"ms_icar_points");
+				    $arData[$i]["comment"] = $arRes["comment"];
+				    $i++;
+			    }
+			    //echo "<pre>"; print_r($arData); echo "</pre>";
+			    return $arData;
+		    }
+		    else {
+			    return false;
+		    }
+	    }
+
+		/**
+		 * Функция возвращает значение указанной колонки строки по ее id из DB
+		 *
+		 * @param int $ID
+		 * @param string $table
+		 * @param string $name_col
+		 * @return bool
+		 */
+		public function GetNameByIDFromDB ($ID=0, $table="", $name_col="name") {
+			global $DB;
+			if ($ID==0 || $table=="") return false;
+
+			$query = "SELECT `".$name_col."` FROM `".$table."` WHERE `id` =".$ID;
+			if ($res = $DB->Select($query)) {
+				return $res[0][$name_col];
+			}
+			else {
+				return false;
+			}
+
 		}
 	}

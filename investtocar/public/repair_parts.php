@@ -10,26 +10,38 @@
 		<tr>
 			<td><?=GetMessage("DATE")?></td>
 			<td><?=GetMessage("TITLE")?></td>
+			<td><?=GetMessage("STORAGE")?></td>
+			<td><?=GetMessage("CATALOG_NUMBER")?></td>
+			<td><?=GetMessage("NUMBER")?></td>
 			<td><?=GetMessage("AMOUNT")?>,<br><?=GetMessage("RUB")?></td>
-			<td><?=GetMessage("MILEAGE")?></td>
-			<td><?=GetMessage("ARTIST_WORKS")?></td>
-			<td><?=GetMessage("POINT")?></td>
+			<td><?=GetMessage("REASON_REPLACEMENT")?></td>
+			<td><?=GetMessage("REASON_DETAILS")?></td>
+			<td><?=GetMessage("WHO_PAID")?></td>
+			<td><?=GetMessage("ODOMETER_VALUE")?></td>
+			<td><?=GetMessage("WAYPOINT")?></td>
+			<td>&nbsp;</td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
 		</tr>
 		</thead>
 		<tbody class="list_ts">
-		<? $arTsList = CInvestToCarMain::GetListCarTs ($defaultCar); ?>
-		<?foreach($arTsList as $arTs):?>
+		<? $arRepairPartsList = CInvestToCarMain::GetListRepairParts ($defaultCar); ?>
+		<?foreach($arRepairPartsList as $arRP):?>
 			<tr>
-				<td>ТО-<?=$arTs["ts_num"]?></td>
-				<td><?=date("d.m.Y",$arTs["date"])?></td>
-				<td><?=$arTs["cost"]?></td>
-				<td><?=$arTs["odo"]?></td>
-				<td><?=$arTs["repair"]?></td>
-				<td><?=($arTs["point"]!==false) ? $arTs["point"]["name"] : GetMessage("NO_DATA")?></td>
-				<td><a href="<?=$path?>ts/ts_edit.php?id=<?=$arTs["id"]?>"><img src="/msergeev/images/edit.png"></a></td>
-				<td><a href="<?=$path?>ts/ts_delete.php?id=<?=$arTs["id"]?>"><img src="/msergeev/images/del.png"></a></td>
+				<td><?=$arRP["date"]?></td>
+				<td><?=$arRP["name"]?></td>
+				<td><?=$arRP["storage"]?></td>
+				<td><?=$arRP["catalog_number"]?></td>
+				<td><?=$arRP["number"]?></td>
+				<td><?=$arRP["cost"]?></td>
+				<td><?=$arRP["reason"]?></td>
+				<td><?=$arRP["reason_detail"]?></td>
+				<td><?=$arRP["who_paid"]?></td>
+				<td><?=$arRP["odo"]?></td>
+				<td><?=$arRP["waypoint"]?></td>
+				<td><a href="#" title="<?=$arRP["comment"]?>">(i)</a></td>
+				<td><a href="<?=$path?>repair_parts/edit_repair_parts.php?id=<?=$arRP["id"]?>"><img src="/msergeev/images/edit.png"></a></td>
+				<td><a href="<?=$path?>repair_parts/delete_repair_parts.php?id=<?=$arRP["id"]?>"><img src="/msergeev/images/del.png"></a></td>
 			</tr>
 		<?endforeach;?>
 		</tbody>
