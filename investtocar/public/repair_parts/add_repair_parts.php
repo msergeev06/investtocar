@@ -19,7 +19,7 @@
 		<table class="add_ts">
 			<tr>
 				<td class="title"><?=GetMessage("CAR")?></td>
-				<td><? echo CInvestToCarMain::ShowSelectAuto("auto",false,$car); ?></td>
+				<td><? echo CInvestToCarShowSelect::Auto("auto",false,$car); ?></td>
 			</tr>
 			<tr>
 				<td class="title"><?=GetMessage("DATE_DDMMYYYY")?></td>
@@ -62,11 +62,11 @@
 			<tr>
 				<td class="title"><?=GetMessage("REASON_DETAILS")?></td>
 				<td class="reason_add">
-					<? echo CInvestToCarMain::ShowSelectReasonTs("reason_ts",$car); ?>
-					<? echo CInvestToCarMain::ShowSelectReasonRepair("reason_breakdown",$car,0,' style="display: none;"'); ?>
-					<? echo CInvestToCarMain::ShowSelectReasonDtp("reason_dtp",$car,0,' style="display: none;"'); ?>
-					<? echo CInvestToCarMain::ShowSelectReasonRepair("reason_tuning",$car,0,' style="display: none;"'); ?>
-					<? echo CInvestToCarMain::ShowSelectReasonRepair("reason_upgrade",$car,0,' style="display: none;"'); ?>
+					<? echo CInvestToCarShowSelect::ReasonTs("reason_ts",$car); ?>
+					<? echo CInvestToCarShowSelect::ReasonRepair("reason_breakdown",$car,0,' style="display: none;"'); ?>
+					<? echo CInvestToCarShowSelect::ReasonDtp("reason_dtp",$car,0,' style="display: none;"'); ?>
+					<? echo CInvestToCarShowSelect::ReasonRepair("reason_tuning",$car,0,' style="display: none;"'); ?>
+					<? echo CInvestToCarShowSelect::ReasonRepair("reason_upgrade",$car,0,' style="display: none;"'); ?>
 					<span class="reason_tire" style="display: none;">-</span>
 				</td>
 			</tr>
@@ -84,7 +84,7 @@
 			</tr>
 			<tr>
 				<td class="title"><?=GetMessage("WAYPOINT")?></td>
-				<td><? echo CInvestToCarMain::ShowSelectPoints("waypoint",0,array($pService,$pStore,$pCarwash)); ?></td>
+				<td><? echo CInvestToCarShowSelect::Points("waypoint",0,array($pService,$pStore,$pCarwash)); ?></td>
 			</tr>
 			<tr>
 				<td class="center" colspan="2"><?=GetMessage("OR")?></td>

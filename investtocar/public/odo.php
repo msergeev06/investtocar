@@ -3,7 +3,7 @@
 <?
 	$defaultCar = CInvestToCarMain::GetDefaultCar();
 ?>
-	<p><?=GetMessage("STATISTICS_FOR")?>: <? echo CInvestToCarMain::ShowSelectAuto("my_car",true); ?><br><br></p>
+	<p><?=GetMessage("STATISTICS_FOR")?>: <? echo CInvestToCarShowSelect::Auto("my_car",true); ?><br><br></p>
 	<p><a href="<?=$path?>odo/add_route.php?car=<?=$defaultCar?>"><?=GetMessage("ADD_MILEAGE_INFORMATION")?></a></p>
 
 	<select name="period" id="period_select">

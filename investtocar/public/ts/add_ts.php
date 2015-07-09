@@ -7,11 +7,11 @@
 	<table class="add_ts">
 		<tr>
 			<td class="title"><?=GetMessage("NUMBER_TS")?></td>
-			<td><? echo CInvestToCarMain::ShowSelectTs("ts_num"); ?></td>
+			<td><? echo CInvestToCarShowSelect::Ts("ts_num"); ?></td>
 		</tr>
 		<tr>
 			<td class="title"><?=GetMessage("CAR")?></td>
-			<td><? echo CInvestToCarMain::ShowSelectAuto("ts_auto",false,$car); ?></td>
+			<td><? echo CInvestToCarShowSelect::Auto("ts_auto",false,$car); ?></td>
 		</tr>
 		<tr>
 			<td class="title"><?=GetMessage("DATE_DDMMYYYY")?></td>
@@ -37,7 +37,7 @@
 		</tr>
 		<tr>
 			<td class="title"><?=GetMessage("WAYPOINT")?></td>
-			<td><? echo CInvestToCarMain::ShowSelectPoints("ts_point"); ?></td>
+			<td><? echo CInvestToCarShowSelect::Points("ts_point"); ?></td>
 		</tr>
 		<tr>
 			<td class="center" colspan="2"><?=GetMessage("OR")?></td>

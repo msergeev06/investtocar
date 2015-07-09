@@ -19,11 +19,11 @@
 			<table class="add_ts">
 				<tr>
 					<td class="title"><?=GetMessage("NUMBER_TS")?></td>
-					<td><? echo CInvestToCarMain::ShowSelectTs("ts_num",$arTs[0]["ts_num"]); ?></td>
+					<td><? echo CInvestToCarShowSelect::Ts("ts_num",$arTs[0]["ts_num"]); ?></td>
 				</tr>
 				<tr>
 					<td class="title"><?=GetMessage("CAR")?></td>
-					<td><? echo CInvestToCarMain::ShowSelectAuto("ts_auto",false,$arTs[0]["auto"]); ?></td>
+					<td><? echo CInvestToCarShowSelect::Auto("ts_auto",false,$arTs[0]["auto"]); ?></td>
 				</tr>
 				<tr>
 					<td class="title"><?=GetMessage("DATE_DDMMYYYY")?></td>
@@ -31,7 +31,7 @@
 				</tr>
 				<tr>
 					<td class="title"><?=GetMessage("ARTIST_WORKS")?></td>
-					<td><? echo CInvestToCarMain::ShowSelectRepair("ts_repair",$arTs[0]["repair"])?></td>
+					<td><? echo CInvestToCarShowSelect::Repair("ts_repair",$arTs[0]["repair"])?></td>
 				</tr>
 				<tr>
 					<td class="title"><?=GetMessage("AMOUNT")?></td>
@@ -43,7 +43,7 @@
 				</tr>
 				<tr>
 					<td class="title"><?=GetMessage("WAYPOINT")?></td>
-					<td><? echo CInvestToCarMain::ShowSelectPoints("ts_point",$arTs[0]["point"]); ?></td>
+					<td><? echo CInvestToCarShowSelect::Points("ts_point",$arTs[0]["point"]); ?></td>
 				</tr>
 				<tr>
 					<td class="center" colspan="2"><?=GetMessage("OR")?></td>

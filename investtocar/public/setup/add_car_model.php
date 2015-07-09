@@ -16,7 +16,7 @@
 	}
 ?>
 <form action="" method="POST">
-	<? echo CInvestToCarMain::ShowSelectCarBrands($selected); ?><br>
+	<? echo CInvestToCarShowSelect::CarBrands($selected); ?><br>
 	<input type="text" value="" name="car_model"><input type="hidden" name="action" value="1">
 	<input type="submit" value="<?=GetMessage("SUBMIT_ADD")?>">
 </form>
