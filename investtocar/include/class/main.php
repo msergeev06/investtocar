@@ -1735,7 +1735,7 @@
 		    if ($car==0) $car = self::GetDefaultCar();
 		    $arData = array();
 
-		    $query = "SELECT * FROM `ms_icar_repair_parts` WHERE `auto` =".$car." ORDER BY `auto` ASC";
+		    $query = "SELECT * FROM `ms_icar_repair_parts` WHERE `auto` =".$car." ORDER BY `date` ASC";
 		    if ($res = $DB->Select($query)) {
 			    $i=0;
 			    foreach ($res as $arRes) {
@@ -1847,4 +1847,144 @@
 				return false;
 			}
 		}
+
+		/**
+		 * Функция возвращает массив значений для id запчасти
+		 *
+		 * @param int $repairPartsID
+		 * @return bool
+		 */
+		public function GetRepairPartsInfo ($repairPartsID=0) {
+			global $DB;
+			if ($repairPartsID==0) return false;
+
+			$query = "SELECT * FROM `ms_icar_repair_parts` WHERE `id` =".$repairPartsID;
+			if ($res = $DB->Select($query)) {
+				$arRes = $res[0];
+				return $arRes;
+			}
+			else {
+				return false;
+			}
+
+		}
+
+		/**
+		 * Функция подготавливает запись о запчасти к записи
+		 *
+		 * @param $post
+		 * @return bool
+		 */
+		public function UpdateRepairParts ($post) {
+			global $OPTIONS;
+			if (empty($post)) return false;
+			$arData = array();
+
+			$arData["id"] = intval($post["id"]);
+			$arData["auto"] = intval($post["auto"]);
+			$arData["date"] = self::ConvertDateToTimestamp($post["date"]);
+			$arData["name"] = htmlspecialchars($post["name"]);
+			$arData["storage"] = intval($post["storage"]);
+			$arData["catalog_number"] = htmlspecialchars($post["catalog_number"]);
+			$arData["number"] = floatval(str_replace(",",".",$post["number"]));
+			$arData["cost"] = floatval(str_replace(",",".",$post["cost"]));
+			$arData["reason"] = intval($post["reason"]);
+			switch ($arData["reason"]) {
+				case $OPTIONS->GetOptionInt("reason_replacement_ts"):
+					$arData["reason_detail"] = intval($post["reason_ts"]);
+					break;
+				case $OPTIONS->GetOptionInt("reason_replacement_breakdown"):
+					$arData["reason_detail"] = intval($post["reason_breakdown"]);
+					break;
+				case $OPTIONS->GetOptionInt("reason_replacement_dtp"):
+					$arData["reason_detail"] = intval($post["reason_dtp"]);
+					break;
+				case $OPTIONS->GetOptionInt("reason_replacement_tuning"):
+					$arData["reason_detail"] = intval($post["reason_tuning"]);
+					break;
+				case $OPTIONS->GetOptionInt("reason_replacement_upgrade"):
+					$arData["reason_detail"] = intval($post["reason_upgrade"]);
+					break;
+				case $OPTIONS->GetOptionInt("reason_replacement_tire"):
+					$arData["reason_detail"] = 0;
+					break;
+			}
+			$arData["who_paid"] = intval($post["who_paid"]);
+			$arData["odo"] = floatval(str_replace(",",".",$post["odo"]));
+			$arData["waypoint"] = intval($post["waypoint"]);
+			if ($arData["waypoint"]==0) {
+				$arData["waypoint"] = self::CreateNewPoint(
+					$post["newpoint_name"],
+					$post["newpoint_address"],
+					$post["newpoint_lon"],
+					$post["newpoint_lat"],
+					3
+				);
+			}
+			$arData["comment"] = htmlspecialchars($post["comment"]);
+
+			if ($res = self::UpdateRepairPartsDB($arData)) {
+				return $res;
+			}
+			else {
+				return false;
+			}
+		}
+
+		/**
+		 * Функция обновляет информацию о запчасти в DB
+		 *
+		 * @param array $arData
+		 * @return bool
+		 */
+		public function UpdateRepairPartsDB ($arData=array()) {
+			global $DB;
+
+			if (empty($arData)) return false;
+
+			$query = "UPDATE `ms_icar_repair_parts` SET ";
+			$query .= "`auto` = '".$arData["auto"]."', ";
+			$query .= "`date` = '".$arData["date"]."', ";
+			$query .= "`name` = '".$arData["name"]."', ";
+			$query .= "`storage` = '".$arData["storage"]."', ";
+			$query .= "`catalog_number` = '".$arData["catalog_number"]."', ";
+			$query .= "`number` = '".$arData["number"]."', ";
+			$query .= "`cost` = '".$arData["cost"]."', ";
+			$query .= "`reason` = '".$arData["reason"]."', ";
+			$query .= "`reason_detail` = '".$arData["reason_detail"]."', ";
+			$query .= "`who_paid` = '".$arData["who_paid"]."', ";
+			$query .= "`odo` = '".$arData["odo"]."', ";
+			$query .= "`waypoint` = '".$arData["waypoint"]."', ";
+			$query .= "`comment` = '".$arData["comment"]."' ";
+			$query .= "WHERE `id` =".$arData["id"].";";
+
+			if ($res = $DB->Update($query)) {
+				return $res;
+			}
+			else {
+				return false;
+			}
+		}
+
+		/**
+		 * Функция возвращает общую сумму расходов на запчасти
+		 *
+		 * @param int $car
+		 * @return float|int
+		 */
+		public function GetTotalRepairPartsCosts ($car=0) {
+			global $DB,$OPTIONS;
+			if ($car==0) $car = self::GetDefaultCar();
+
+			$query = "SELECT SUM(`cost`) FROM `ms_icar_repair_parts` WHERE `auto` =".$car." AND `who_paid` =".$OPTIONS->GetOptionInt("who_paid_himself");
+			$res = $DB->Select($query);
+			$res = $res[0]["SUM(`cost`)"];
+			if (floatval($res)>0) {
+				return round($res, 2);
+			}
+			else {
+				return 0;
+			}
+		}
+
 	}

@@ -206,4 +206,7 @@
 	$MESS["ADD_REPAIR_PARTS_FAILED"] = "Ошибка добавления данных по запчастям";
 
 	$MESS["DELETE_NOTE_REPAIR_PARTS"] = "Удаление записи запчасти";
+	$MESS["EDIT_REPAIR_PARTS"] = "Редактирование записи о запчасти";
+	$MESS["EDIT_REPAIR_PARTS_SUCCESS"] = "Данные о запчасти успешно изменены";
+	$MESS["EDIT_REPAIR_PARTS_FAILED"] = "Ошибка изменения данных о запчасти";
 

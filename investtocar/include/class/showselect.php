@@ -483,7 +483,7 @@
 			if ($res = $DB->Select($query)) {
 				$first = true;
 				foreach ($res as $arRes) {
-					$echo .= "<option value=\"".$arRes."\"";
+					$echo .= "<option value=\"".$arRes["id"]."\"";
 					if ($first) {
 						if ($selected==0 || $selected==$arRes["id"]) {
 							$echo .= " selected";
@@ -546,6 +546,13 @@
 
 		}
 
+		/**
+		 * Функция возвращает <select> состоящий из списка плательщиков
+		 *
+		 * @param string $name
+		 * @param int $selected
+		 * @return string
+		 */
 		public function WhoPaid ($name="",$selected=0) {
 			global $DB;
 			if ($name=="") $name = "who_paid";
