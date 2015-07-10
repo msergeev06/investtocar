@@ -585,6 +585,13 @@
 			}
 		}
 
+		/**
+		 * Функция возвращает <select> состоящий из типов прочих расходов
+		 *
+		 * @param string $name
+		 * @param int $selected
+		 * @return string
+		 */
 		public function TypeOtherCosts ($name="", $selected=0) {
 			global $DB;
 			if ($name=="") $name="other_type";
@@ -611,6 +618,14 @@
 			}
 		}
 
+		/**
+		 * Функция возвращает <select> состоящий из типов Путевых точкек
+		 *
+		 * @param string $name
+		 * @param int $selected
+		 * @param array $arTypes
+		 * @return string
+		 */
 		public function PointTypes ($name="", $selected=0, $arTypes=array()) {
 			global $DB;
 			if ($name=="") $name = "newpoint_type";
@@ -619,5 +634,33 @@
 			$echo .= "<option value=\"0\"";
 			if ($selected==0) $echo .= " selected";
 			$echo .= ">".GetMessage("SELECT_DEFAULT_DEFAULT")."</option>";
+			$query = "SELECT * FROM `ms_icar_setup_points_types` ";
+			if (!empty($arTypes)) {
+				$query .= "WHERE `id` IN (";
+				$first = true;
+				foreach ($arTypes as $type) {
+					if ($first) {
+						$first = false;
+						$query .= $type;
+					}
+					else {
+						$query .= ", ".$type;
+					}
+				}
+				$query .= ") ";
+			}
+			$query .= "ORDER BY `sort` ASC";
+			if ($res = $DB->Select($query)) {
+				foreach ($res as $arRes) {
+					$echo .= "<option value=\"".$arRes["id"]."\"";
+					if ($selected>0 && $selected==$arRes["id"]) $echo .= " selected";
+					$echo .= ">".$arRes["name"]."</option>";
+				}
+				$echo .= "</select>";
+				return $echo;
+			}
+			else {
+				return "";
+			}
 		}
 	}

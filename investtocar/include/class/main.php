@@ -2044,9 +2044,12 @@
 		/**
 		 * Функция возвращает html-код добавляющий форму добавления новой точки
 		 *
+		 * @param bool $showType
+		 * @param int $typeSelect
+		 * @param array $arTypes
 		 * @return string
 		 */
-		public function ShowFormNewPointAdd ($showType=false, $arTypes=array()) {
+		public function ShowFormNewPointAdd ($showType=false, $typeSelect=0, $arTypes=array()) {
 			$echo = "<tr>";
 			$echo .= "<td class=\"center\" colspan=\"2\">".GetMessage("OR")."</td>";
 			$echo .= "</tr>";
@@ -2069,8 +2072,9 @@
 
 			if ($showType) {
 				$echo .= "<tr>";
-				$echo .= "<td class=\"title\">".GetMessage("LATITUDE_NEW_WAYPOINT")."</td>";
+				$echo .= "<td class=\"title\">".GetMessage("TYPE_NEW_WAYPOINT")."</td>";
 				$echo .= "<td>";
+				$echo .= CInvestToCarShowSelect::PointTypes("",$typeSelect,$arTypes);
 				$echo .= "</td>";
 				$echo .= "</tr>";
 			}
@@ -2110,5 +2114,6 @@
 			$res = $DB->Select($query);
 			return $res[0][$info];
 		}
+
 
 	}

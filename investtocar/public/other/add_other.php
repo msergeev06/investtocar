@@ -56,7 +56,7 @@ if(isset($_POST["action"])) {
 				<td class="title"><?=GetMessage("WAYPOINT")?></td>
 				<td><? echo CInvestToCarShowSelect::Points("waypoint",0,array($pService,$pStore,$pCarwash)); ?></td>
 			</tr>
-			<? echo CInvestToCarMain::ShowFormNewPointAdd (); ?>
+			<? echo CInvestToCarMain::ShowFormNewPointAdd (true,$pService,array($pService,$pStore,$pCarwash)); ?>
 			<tr>
 				<td class="title"><?=GetMessage("COMMENT")?></td>
 				<td><input type="text" name="comment" value=""></td>
