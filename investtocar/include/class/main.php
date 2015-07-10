@@ -2040,4 +2040,67 @@
 
 			return round($mileage,2);
 		}
+
+		/**
+		 * Функция возвращает html-код добавляющий форму добавления новой точки
+		 *
+		 * @return string
+		 */
+		public function ShowFormNewPointAdd () {
+			$echo = "<tr>";
+			$echo .= "<td class=\"center\" colspan=\"2\">".GetMessage("OR")."</td>";
+			$echo .= "</tr>";
+			$echo .= "<tr>";
+			$echo .= "<td class=\"title\">".GetMessage("NAME_NEW_WAYPOINT")."</td>";
+			$echo .= "<td><input type=\"text\" name=\"newpoint_name\" value=\"\"></td>";
+			$echo .= "</tr>";
+			$echo .= "<tr>";
+			$echo .= "<td class=\"title\">".GetMessage("ADDRESS_NEW_WAYPOINT")."</td>";
+			$echo .= "<td><input type=\"text\" name=\"newpoint_address\" value=\"\"></td>";
+			$echo .= "</tr>";
+			$echo .= "<tr>";
+			$echo .= "<td class=\"title\">".GetMessage("LONGITUDE_NEW_WAYPOINT")."</td>";
+			$echo .= "<td><input type=\"text\" name=\"newpoint_lon\" value=\"\"></td>";
+			$echo .= "</tr>";
+			$echo .= "<tr>";
+			$echo .= "<td class=\"title\">".GetMessage("LATITUDE_NEW_WAYPOINT")."</td>";
+			$echo .= "<td><input type=\"text\" name=\"newpoint_lat\" value=\"\"></td>";
+			$echo .= "</tr>";
+
+			return $echo;
+		}
+
+		/**
+		 * Функция возвращает название таблицы по ее коду
+		 *
+		 * @param string $code
+		 * @return mixed
+		 */
+		public function GetTableByCode ($code="") {
+			global $DB;
+			if ($code=="") return false;
+
+			$query = "SELECT `table` FROM `ms_icar_setup_tables` WHERE `code` LIKE '".$code."'";
+			$res = $DB->Select($query);
+			return $res[0]["table"];
+		}
+
+		/**
+		 * Функция возвращает info строки по code для заданной table
+		 *
+		 * @param string $table
+		 * @param string $code
+		 * @param string $info
+		 * @return mixed
+		 */
+		public function GetInfoByCode ($table="", $code="", $info="id") {
+			global $DB;
+			if ($table=="" || $code=="") return false;
+			$table = self::GetTableByCode($table);
+
+			$query = "SELECT `".$info."` FROM `".$table."` WHERE `code` LIKE '".$code."'";
+			$res = $DB->Select($query);
+			return $res[0][$info];
+		}
+
 	}
