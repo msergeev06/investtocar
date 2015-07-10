@@ -3,6 +3,7 @@
 <?
 	$defaultCar = CInvestToCarMain::GetDefaultCar();
 ?>
+	<?=GetMessage("TS_INFO")?>
 	<p><?=GetMessage("STATISTICS_FOR")?>: <? echo CInvestToCarShowSelect::Auto("my_car",true); ?><?=GetMessage("TOTAL_MAINTENANCE_COSTS")?>: <?=CInvestToCarMain::GetTotalMaintenanceCosts()?> <?=GetMessage("RUB")?><br><br></p>
 	<p><a href="<?=$path?>ts/add_ts.php?car=<?=$defaultCar?>"><?=GetMessage("ADD_NOTE")?></a><br><br></p>
 	<table class="ts_list">

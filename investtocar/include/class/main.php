@@ -1987,4 +1987,57 @@
 			}
 		}
 
+		/**
+		 * Функция возвращает число израсходованных литров бензина, основываясь на записях о заправках
+		 *
+		 * @param int $car
+		 * @return float
+		 */
+		public function GetTotalSpentFuel($car=0) {
+			global $DB;
+			if ($car==0) $car = self::GetDefaultCar();
+
+			$query = "SELECT SUM(`liter`) FROM `ms_icar_fuel` WHERE `auto` =".$car;
+			$res = $DB->Select($query);
+			$res = $res[0]["SUM(`liter`)"];
+			return round($res,2);
+		}
+
+		/**
+		 * Функция возвращает текущий пробег, находя максимальную запись в разных таблицах
+		 *
+		 * @param int $car
+		 * @return float
+		 */
+		public function GetCurrentMileage ($car=0) {
+			global $DB;
+			if ($car==0) $car = self::GetDefaultCar();
+			$mileage = 0;
+
+			//Максимальный пробег в записях о заправках
+			$query = "SELECT MAX(`odo`) AS maxODO FROM `ms_icar_fuel` WHERE `auto` =".$car;
+			$res = $DB->Select($query);
+			$res = $res[0]["maxODO"];
+			if ($res>$mileage) $mileage = $res;
+
+			//Максимальный пробег в записях о маршрутах
+			$query = "SELECT MAX(`odo`) AS maxODO FROM `ms_icar_routs` WHERE `auto` =".$car;
+			$res = $DB->Select($query);
+			$res = $res[0]["maxODO"];
+			if ($res>$mileage) $mileage = $res;
+
+			//Максимальный пробег в записях о запчастях
+			$query = "SELECT MAX(`odo`) AS maxODO FROM `ms_icar_repair_parts` WHERE `auto` =".$car;
+			$res = $DB->Select($query);
+			$res = $res[0]["maxODO"];
+			if ($res>$mileage) $mileage = $res;
+
+			//Максимальный пробег в записях о прохождении ТО
+			$query = "SELECT MAX(`odo`) AS maxODO FROM `ms_icar_ts` WHERE `auto` =".$car;
+			$res = $DB->Select($query);
+			$res = $res[0]["maxODO"];
+			if ($res>$mileage) $mileage = $res;
+
+			return round($mileage,2);
+		}
 	}

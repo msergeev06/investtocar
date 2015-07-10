@@ -3,6 +3,7 @@
 <?
 	$defaultCar = CInvestToCarMain::GetDefaultCar();
 ?>
+	<?=GetMessage("REPAIR_PARTS_INFO")?>
 	<p><?=GetMessage("INFORMATION_FOR")?>: <? echo CInvestToCarShowSelect::Auto("my_car",true); ?><?=GetMessage("TOTAL_REPAIR_PARTS_COSTS")?>: <?=number_format(CInvestToCarMain::GetTotalRepairPartsCosts(),2)?> <?=GetMessage("RUB")?><br><br></p>
 	<p><a href="<?=$path?>repair_parts/add_repair_parts.php?car=<?=$defaultCar?>"><?=GetMessage("ADD_NOTE")?></a><br><br></p>
 	<table class="ts_list">

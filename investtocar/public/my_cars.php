@@ -51,6 +51,14 @@
 							<td colspan="5"><?=round($myCar["average_fuel_consum"],2)?> <?=GetMessage("LITERS_FOR_100KM")?></td>
 						</tr>
 						<tr>
+							<td><b><?=GetMessage("TOTAL_SPENT_FUEL")?>:</b></td>
+							<td colspan="5"><?=number_format(CInvestToCarMain::GetTotalSpentFuel($defaultCar),2)?> <?=GetMessage("LITER")?></td>
+						</tr>
+						<tr>
+							<td><b><?=GetMessage("CURRENT_MILEAGE")?>:</b></td>
+							<td colspan="5"><?=number_format(CInvestToCarMain::GetCurrentMileage($defaultCar),2)?> <?=GetMessage("KM")?></td>
+						</tr>
+						<tr>
 							<td colspan="6">&nbsp;</td>
 						</tr>
 						<tr>

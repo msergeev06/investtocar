@@ -3,9 +3,11 @@
 <?
 	$defaultCar = CInvestToCarMain::GetDefaultCar();
 ?>
+	<?=GetMessage("FUEL_INFO")?>
 	<p><?=GetMessage("STATISTICS_FOR")?>: <? echo CInvestToCarShowSelect::Auto("my_car",true); ?><br>
 		<?=GetMessage("TOTAL_FUEL_COSTS")?>: <? echo CInvestToCarMain::GetTotalFuelCosts($defaultCar); ?> <?=GetMessage("RUB")?><br>
-		<?=GetMessage("AVERAGE_FUEL_CONSUMPTION")?>: <?=number_format(CInvestToCarMain::GetAverageFuelConsumption($defaultCar),2)?> <?=GetMessage("LITERS_FOR_100KM")?><br><br></p>
+		<?=GetMessage("AVERAGE_FUEL_CONSUMPTION")?>: <?=number_format(CInvestToCarMain::GetAverageFuelConsumption($defaultCar),2)?> <?=GetMessage("LITERS_FOR_100KM")?><br>
+		<?=GetMessage("TOTAL_SPENT_FUEL")?>: <?=number_format(CInvestToCarMain::GetTotalSpentFuel($defaultCar),2)?> <?=GetMessage("LITER")?><br><br></p>
 	<p><a href="<?=$path?>fuel/add_fuel.php?car=<?=$defaultCar?>"><?=GetMessage("ADD_NOTE")?></a><br><br></p>
 	<table class="ts_list">
 		<thead>
