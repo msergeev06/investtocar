@@ -1,9 +1,9 @@
 <? require_once($_SERVER["DOCUMENT_ROOT"]."/msergeev/investtocar/public/include/header.php"); ?>
 	<h1><?=GetMessage("ADD_REPAIR_PARTS")?></h1>
 <? $car = $_GET["car"];
-	$pService = $OPTIONS->GetOptionInt("point_service");
-	$pStore = $OPTIONS->GetOptionInt("point_auto_parts_store");
-	$pCarwash = $OPTIONS->GetOptionInt("point_carwash");
+	$pService = CInvestToCarMain::GetInfoByCode ("pointtype","service");
+	$pStore = CInvestToCarMain::GetInfoByCode ("pointtype","shop");
+	$pCarwash = CInvestToCarMain::GetInfoByCode ("pointtype","wash");
 
 	if (isset($_POST["action"])) {
 		if ($res = CInvestToCarMain::AddRepairParts($_POST)) {
@@ -105,7 +105,7 @@
 		$(document).on("ready",function(){
 			$(".reason").on("change",function(){
 				sel = $(this).val();
-				if (sel==<?=$OPTIONS->GetOptionInt("reason_replacement_ts")?>) {
+				if (sel==<?=intval(CInvestToCarMain::GetInfoByCode ("reason","ts"))?>) {
 					$(".reason_ts").show();
 					$(".reason_breakdown").hide();
 					$(".reason_dtp").hide();
@@ -113,7 +113,7 @@
 					$(".reason_upgrade").hide();
 					$(".reason_tire").hide();
 				}
-				if (sel==<?=$OPTIONS->GetOptionInt("reason_replacement_breakdown")?>) {
+				if (sel==<?=intval(CInvestToCarMain::GetInfoByCode ("reason","breakdown"))?>) {
 					$(".reason_ts").hide();
 					$(".reason_breakdown").show();
 					$(".reason_dtp").hide();
@@ -121,7 +121,7 @@
 					$(".reason_upgrade").hide();
 					$(".reason_tire").hide();
 				}
-				if (sel==<?=$OPTIONS->GetOptionInt("reason_replacement_dtp")?>) {
+				if (sel==<?=intval(CInvestToCarMain::GetInfoByCode ("reason","dtp"))?>) {
 					$(".reason_ts").hide();
 					$(".reason_breakdown").hide();
 					$(".reason_dtp").show();
@@ -129,7 +129,7 @@
 					$(".reason_upgrade").hide();
 					$(".reason_tire").hide();
 				}
-				if (sel==<?=$OPTIONS->GetOptionInt("reason_replacement_tuning")?>) {
+				if (sel==<?=intval(CInvestToCarMain::GetInfoByCode ("reason","tuning"))?>) {
 					$(".reason_ts").hide();
 					$(".reason_breakdown").hide();
 					$(".reason_dtp").hide();
@@ -137,7 +137,7 @@
 					$(".reason_upgrade").hide();
 					$(".reason_tire").hide();
 				}
-				if (sel==<?=$OPTIONS->GetOptionInt("reason_replacement_upgrade")?>) {
+				if (sel==<?=intval(CInvestToCarMain::GetInfoByCode ("reason","upgrade"))?>) {
 					$(".reason_ts").hide();
 					$(".reason_breakdown").hide();
 					$(".reason_dtp").hide();
@@ -145,7 +145,7 @@
 					$(".reason_upgrade").show();
 					$(".reason_tire").hide();
 				}
-				if (sel==<?=$OPTIONS->GetOptionInt("reason_replacement_tire")?>) {
+				if (sel==<?=intval(CInvestToCarMain::GetInfoByCode ("reason","tire"))?>) {
 					$(".reason_ts").hide();
 					$(".reason_breakdown").hide();
 					$(".reason_dtp").hide();

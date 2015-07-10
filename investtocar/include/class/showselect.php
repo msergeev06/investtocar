@@ -82,7 +82,7 @@
 				$query .= " ORDER BY `period` DESC";
 			}
 			else {
-				if ($type==0) $type = $OPTIONS->GetOptionInt("point_default");
+				if ($type==0) $type = intval(CInvestToCarMain::GetInfoByCode ("pointtype",$OPTIONS->GetOptionInt("point_default")));
 				$query = "SELECT `id` , `name` FROM `ms_icar_points` WHERE `type` =".$type." ORDER BY `period` DESC";
 			}
 			$arResult = $DB->Select ($query);
@@ -583,5 +583,41 @@
 			else {
 				return "";
 			}
+		}
+
+		public function TypeOtherCosts ($name="", $selected=0) {
+			global $DB;
+			if ($name=="") $name="other_type";
+
+			$echo = "<select name=\"".$name."\" class=\"".$name."\">";
+			$echo .= "<option value=\"0\"";
+			if ($selected==0) $echo .= " selected";
+			$echo .= ">".GetMessage("SELECT_DEFAULT_SELECTED")."</option>";
+			$query = "SELECT * FROM `ms_icar_setup_flow_type` ORDER BY `sort` ASC";
+			if ($res = $DB->Select($query)) {
+				foreach ($res as $arRes) {
+					$echo .= "<option value=\"".$arRes["id"]."\"";
+					if ($selected>0 && $selected==$arRes["id"]) {
+						$echo .= " selected";
+					}
+					$echo .= ">".$arRes["name"]."</option>";
+				}
+				$echo .= "</select>";
+
+				return $echo;
+			}
+			else {
+				return "";
+			}
+		}
+
+		public function PointTypes ($name="", $selected=0, $arTypes=array()) {
+			global $DB;
+			if ($name=="") $name = "newpoint_type";
+
+			$echo = "<select name=\"".$name."\" class=\"".$name."\">";
+			$echo .= "<option value=\"0\"";
+			if ($selected==0) $echo .= " selected";
+			$echo .= ">".GetMessage("SELECT_DEFAULT_DEFAULT")."</option>";
 		}
 	}

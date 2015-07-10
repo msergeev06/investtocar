@@ -1292,7 +1292,7 @@
 		 */
 		public function CreateNewPoint ($name, $address,$lon,$lat,$type=0) {
 			global $OPTIONS;
-			if ($type==0) $type = $OPTIONS->GetOptionInt("point_default");
+			if ($type==0) $type = intval(CInvestToCarMain::GetInfoByCode ("pointtype",$OPTIONS->GetOptionString("point_default")));
 			if (strlen($lon)<2 || strlen($lat)<2)
 			{
 				if (strlen ($address) > 3)
@@ -1655,22 +1655,22 @@
 			$arData["cost"] = floatval(str_replace(",",".",$post["cost"]));
 			$arData["reason"] = intval($post["reason"]);
 			switch ($arData["reason"]) {
-				case $OPTIONS->GetOptionInt("reason_replacement_ts"):
+				case intval(CInvestToCarMain::GetInfoByCode ("reason","ts")):
 					$arData["reason_detail"] = intval($post["reason_ts"]);
 					break;
-				case $OPTIONS->GetOptionInt("reason_replacement_breakdown"):
+				case intval(CInvestToCarMain::GetInfoByCode ("reason","breakdown")):
 					$arData["reason_detail"] = intval($post["reason_breakdown"]);
 					break;
-				case $OPTIONS->GetOptionInt("reason_replacement_dtp"):
+				case intval(CInvestToCarMain::GetInfoByCode ("reason","dtp")):
 					$arData["reason_detail"] = intval($post["reason_dtp"]);
 					break;
-				case $OPTIONS->GetOptionInt("reason_replacement_tuning"):
+				case intval(CInvestToCarMain::GetInfoByCode ("reason","tuning")):
 					$arData["reason_detail"] = intval($post["reason_tuning"]);
 					break;
-				case $OPTIONS->GetOptionInt("reason_replacement_upgrade"):
+				case intval(CInvestToCarMain::GetInfoByCode ("reason","upgrade")):
 					$arData["reason_detail"] = intval($post["reason_upgrade"]);
 					break;
-				case $OPTIONS->GetOptionInt("reason_replacement_tire"):
+				case intval(CInvestToCarMain::GetInfoByCode ("reason","tire")):
 					$arData["reason_detail"] = 0;
 					break;
 			}
@@ -1748,7 +1748,7 @@
 				    $arData[$i]["number"] = round($arRes["number"],2);
 				    $arData[$i]["cost"] = number_format($arRes["cost"],2);
 				    $arData[$i]["reason"] = self::GetNameByIDFromDB($arRes["reason"],"ms_icar_setup_reason_replacement");
-				    if ($arRes["reason"]==$OPTIONS->GetOptionInt("reason_replacement_ts")) {
+				    if ($arRes["reason"]==intval(CInvestToCarMain::GetInfoByCode ("reason","ts"))) {
 						if ($arRes["reason_detail"]>0) {
 							$arTemp = self::GetTsInfo($arRes["reason_detail"]);
 							$arData[$i]["reason_detail"] = date("d.m.Y",$arTemp[0]["date"])." ".GetMessage("TS")."-".$arTemp[0]["ts_num"];
@@ -1757,7 +1757,7 @@
 						    $arData[$i]["reason_detail"] = GetMessage("NOT_SELECTED");
 					    }
 				    }
-				    elseif ($arRes["reason"]==$OPTIONS->GetOptionInt("reason_replacement_breakdown")) {
+				    elseif ($arRes["reason"]==intval(CInvestToCarMain::GetInfoByCode ("reason","breakdown"))) {
 					    if ($arRes["reason_detail"]>0) {
 						    $arData[$i]["reason_detail"] = "Нет данных";
 					    }
@@ -1765,7 +1765,7 @@
 						    $arData[$i]["reason_detail"] = GetMessage("NOT_SELECTED");
 					    }
 				    }
-				    elseif ($arRes["reason"]==$OPTIONS->GetOptionInt("reason_replacement_dtp")) {
+				    elseif ($arRes["reason"]==intval(CInvestToCarMain::GetInfoByCode ("reason","dtp"))) {
 					    if ($arRes["reason_detail"]>0) {
 						    $arData[$i]["reason_detail"] = "Нет данных";
 					    }
@@ -1773,7 +1773,7 @@
 						    $arData[$i]["reason_detail"] = GetMessage("NOT_SELECTED");
 					    }
 				    }
-				    elseif ($arRes["reason"]==$OPTIONS->GetOptionInt("reason_replacement_tuning")) {
+				    elseif ($arRes["reason"]==intval(CInvestToCarMain::GetInfoByCode ("reason","tuning"))) {
 					    if ($arRes["reason_detail"]>0) {
 						    $arData[$i]["reason_detail"] = "Нет данных";
 					    }
@@ -1781,7 +1781,7 @@
 						    $arData[$i]["reason_detail"] = GetMessage("NOT_SELECTED");
 					    }
 				    }
-				    elseif ($arRes["reason"]==$OPTIONS->GetOptionInt("reason_replacement_upgrade")) {
+				    elseif ($arRes["reason"]==intval(CInvestToCarMain::GetInfoByCode ("reason","upgrade"))) {
 					    if ($arRes["reason_detail"]>0) {
 						    $arData[$i]["reason_detail"] = "Нет данных";
 					    }
@@ -1890,22 +1890,22 @@
 			$arData["cost"] = floatval(str_replace(",",".",$post["cost"]));
 			$arData["reason"] = intval($post["reason"]);
 			switch ($arData["reason"]) {
-				case $OPTIONS->GetOptionInt("reason_replacement_ts"):
+				case intval(CInvestToCarMain::GetInfoByCode ("reason","ts")):
 					$arData["reason_detail"] = intval($post["reason_ts"]);
 					break;
-				case $OPTIONS->GetOptionInt("reason_replacement_breakdown"):
+				case intval(CInvestToCarMain::GetInfoByCode ("reason","breakdown")):
 					$arData["reason_detail"] = intval($post["reason_breakdown"]);
 					break;
-				case $OPTIONS->GetOptionInt("reason_replacement_dtp"):
+				case intval(CInvestToCarMain::GetInfoByCode ("reason","dtp")):
 					$arData["reason_detail"] = intval($post["reason_dtp"]);
 					break;
-				case $OPTIONS->GetOptionInt("reason_replacement_tuning"):
+				case intval(CInvestToCarMain::GetInfoByCode ("reason","tuning")):
 					$arData["reason_detail"] = intval($post["reason_tuning"]);
 					break;
-				case $OPTIONS->GetOptionInt("reason_replacement_upgrade"):
+				case intval(CInvestToCarMain::GetInfoByCode ("reason","upgrade")):
 					$arData["reason_detail"] = intval($post["reason_upgrade"]);
 					break;
-				case $OPTIONS->GetOptionInt("reason_replacement_tire"):
+				case intval(CInvestToCarMain::GetInfoByCode ("reason","tire")):
 					$arData["reason_detail"] = 0;
 					break;
 			}
@@ -2046,7 +2046,7 @@
 		 *
 		 * @return string
 		 */
-		public function ShowFormNewPointAdd () {
+		public function ShowFormNewPointAdd ($showType=false, $arTypes=array()) {
 			$echo = "<tr>";
 			$echo .= "<td class=\"center\" colspan=\"2\">".GetMessage("OR")."</td>";
 			$echo .= "</tr>";
@@ -2066,6 +2066,14 @@
 			$echo .= "<td class=\"title\">".GetMessage("LATITUDE_NEW_WAYPOINT")."</td>";
 			$echo .= "<td><input type=\"text\" name=\"newpoint_lat\" value=\"\"></td>";
 			$echo .= "</tr>";
+
+			if ($showType) {
+				$echo .= "<tr>";
+				$echo .= "<td class=\"title\">".GetMessage("LATITUDE_NEW_WAYPOINT")."</td>";
+				$echo .= "<td>";
+				$echo .= "</td>";
+				$echo .= "</tr>";
+			}
 
 			return $echo;
 		}
