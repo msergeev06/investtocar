@@ -2,7 +2,7 @@
 	<h1><?=GetMessage("MY_CARS")?></h1>
 	<p><?=GetMessage("CARS_IN_YOUR_GARAGE")?>:</p>
 	<div class="mycars">
-		<?$arCars = CInvestToCarMain::GetMyCarsInfo(); ?>
+		<?$arCars = CInvestToCarCars::GetMyCarsInfo(); ?>
 		<?//echo "<pre>"; print_r($arCars); echo "</pre><br>";?>
 		<?foreach ($arCars as $myCar):?>
 			<div class="carinfo" id="car_<?=$myCar["id"]?>">
@@ -52,11 +52,11 @@
 						</tr>
 						<tr>
 							<td><b><?=GetMessage("TOTAL_SPENT_FUEL")?>:</b></td>
-							<td colspan="5"><?=number_format(CInvestToCarMain::GetTotalSpentFuel($defaultCar),2)?> <?=GetMessage("LITER")?></td>
+							<td colspan="5"><?=number_format(CInvestToCarFuel::GetTotalSpentFuel($defaultCar),2)?> <?=GetMessage("LITER")?></td>
 						</tr>
 						<tr>
 							<td><b><?=GetMessage("CURRENT_MILEAGE")?>:</b></td>
-							<td colspan="5"><?=number_format(CInvestToCarMain::GetCurrentMileage($defaultCar),2)?> <?=GetMessage("KM")?></td>
+							<td colspan="5"><?=number_format(CInvestToCarOdo::GetCurrentMileage($defaultCar),2)?> <?=GetMessage("KM")?></td>
 						</tr>
 						<tr>
 							<td colspan="6">&nbsp;</td>

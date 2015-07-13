@@ -28,4 +28,21 @@
 	$OPTIONS = new CInvestToCarOptions();
 	//Основной класс
 	require_once (INVESTTOCAR_CLASS_PATH."main.php");
+	//<select>
 	require_once (INVESTTOCAR_CLASS_PATH."showselect.php");
+	//Пробег
+	require_once (INVESTTOCAR_CLASS_PATH."odo.php");
+	//Графики
+	require_once (INVESTTOCAR_CLASS_PATH."charts.php");
+	//Путевые точки
+	require_once (INVESTTOCAR_CLASS_PATH."points.php");
+	//Автомобили
+	require_once (INVESTTOCAR_CLASS_PATH."cars.php");
+	//ТО
+	require_once (INVESTTOCAR_CLASS_PATH."ts.php");
+	//Топливо
+	require_once (INVESTTOCAR_CLASS_PATH."fuel.php");
+	//Запчасти
+	require_once (INVESTTOCAR_CLASS_PATH."repair_parts.php");
+	//Прочие расходы
+	require_once (INVESTTOCAR_CLASS_PATH."other.php");

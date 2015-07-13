@@ -77,7 +77,7 @@
 	</form>
 <?else:?>
 <?
-	if ($res = CInvestToCarMain::AddNewOdo($_POST)) {
+	if ($res = CInvestToCarOdo::AddNewOdo($_POST)) {
 		?><span style="color: green;"><?=GetMessage("NEW_ODO_ADD_SUCCESS")?></span><p><a href="<?=$path?>odo/add_odo.php?car=<?=$defaultCar?>"><?=GetMessage("ADD_MORE")?></a></p><?
 	}
 	else {

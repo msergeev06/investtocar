@@ -8,7 +8,7 @@
 	</form></p>
 <?else:?>
 	<?
-	if ($res = CInvestToCarMain::DeleteRepairPartsInfoDB($_POST["repair_parts_id"])) {
+	if ($res = CInvestToCarRepairParts::DeleteRepairPartsInfoDB($_POST["repair_parts_id"])) {
 		?><span style="color: green;"><?=GetMessage("DATA_DELETE_SUCCESS")?></span><?
 	}
 	else {

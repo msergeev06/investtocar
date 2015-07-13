@@ -2,7 +2,7 @@
 
 	$car = $_POST["car"];
 	$arReturn["html"] = "";
-	$arTsList = CInvestToCarMain::GetListCarTs ($car);
+	$arTsList = CInvestToCarTs::GetListCarTs ($car);
 	foreach($arTsList as $arTs) {
 		$arReturn["html"] .= "<tr>";
 		$arReturn["html"] .= "<td>ТО-".$arTs["ts_num"]."</td>";

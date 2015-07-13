@@ -6,7 +6,7 @@
 	$pCarwash = CInvestToCarMain::GetInfoByCode ("pointtype","wash");
 
 	if (isset($_POST["action"])) {
-		if ($res = CInvestToCarMain::AddRepairParts($_POST)) {
+		if ($res = CInvestToCarRepairParts::AddRepairParts($_POST)) {
 			?><span style="color: green;"><?=GetMessage("ADD_REPAIR_PARTS_SUCCESS")?></span><?
 		}
 		else {

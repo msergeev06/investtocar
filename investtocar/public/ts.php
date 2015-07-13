@@ -1,7 +1,7 @@
 <? require_once($_SERVER["DOCUMENT_ROOT"]."/msergeev/investtocar/public/include/header.php"); ?>
 	<h1><?=GetMessage("MAINTENANCE")?></h1>
 <?
-	$defaultCar = CInvestToCarMain::GetDefaultCar();
+	$defaultCar = CInvestToCarCars::GetDefaultCar();
 ?>
 	<?=GetMessage("TS_INFO")?>
 	<p><?=GetMessage("STATISTICS_FOR")?>: <? echo CInvestToCarShowSelect::Auto("my_car",true); ?><?=GetMessage("TOTAL_MAINTENANCE_COSTS")?>: <?=CInvestToCarMain::GetTotalMaintenanceCosts()?> <?=GetMessage("RUB")?><br><br></p>
@@ -20,7 +20,7 @@
 			</tr>
 		</thead>
 		<tbody class="list_ts">
-		<? $arTsList = CInvestToCarMain::GetListCarTs ($defaultCar); ?>
+		<? $arTsList = CInvestToCarTs::GetListCarTs ($defaultCar); ?>
 		<?foreach($arTsList as $arTs):?>
 			<tr>
 				<td>ТО-<?=$arTs["ts_num"]?></td>

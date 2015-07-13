@@ -1,7 +1,7 @@
 <? require_once($_SERVER["DOCUMENT_ROOT"]."/msergeev/investtocar/public/include/header.php"); ?>
 	<h1><?=GetMessage("REPAIR_PARTS")?></h1>
 <?
-	$defaultCar = CInvestToCarMain::GetDefaultCar();
+	$defaultCar = CInvestToCarCars::GetDefaultCar();
 ?>
 	<?=GetMessage("REPAIR_PARTS_INFO")?>
 	<p><?=GetMessage("INFORMATION_FOR")?>: <? echo CInvestToCarShowSelect::Auto("my_car",true); ?><?=GetMessage("TOTAL_REPAIR_PARTS_COSTS")?>: <?=number_format(CInvestToCarMain::GetTotalRepairPartsCosts(),2)?> <?=GetMessage("RUB")?><br><br></p>
@@ -26,7 +26,7 @@
 		</tr>
 		</thead>
 		<tbody class="list_ts">
-		<? $arRepairPartsList = CInvestToCarMain::GetListRepairParts ($defaultCar); ?>
+		<? $arRepairPartsList = CInvestToCarRepairParts::GetListRepairParts ($defaultCar); ?>
 		<? //echo "<pre>"; print_r($arRepairPartsList); echo "</pre>"; ?>
 		<?foreach($arRepairPartsList as $arRP):?>
 			<tr>

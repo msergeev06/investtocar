@@ -8,7 +8,7 @@
 		die("ERROR");
 	}
 	if (!isset($_POST["action"])) {
-		if (!$arTs = CInvestToCarMain::GetTsInfo($tsID)) {
+		if (!$arTs = CInvestToCarTs::GetTsInfo($tsID)) {
 			die("ERROR");
 		}
 		//echo "<pre>"; print_r($arTs); echo "</pre>";
@@ -82,7 +82,7 @@
 	}
 	else {
 		$arPost = $_POST;
-		if ($res = CInvestToCarMain::UpdateTsInfo($tsID,$arPost)) {
+		if ($res = CInvestToCarTs::UpdateTsInfo($tsID,$arPost)) {
 			?><span style="color: green;"><?=GetMessage("DATA_UPDATE_SUCCESS")?></span><?
 		}
 		else {

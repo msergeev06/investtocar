@@ -69,7 +69,7 @@
 </form>
 <?else:?>
 	<?
-		if ($res = CInvestToCarMain::AddNewTs($_POST)) {
+		if ($res = CInvestToCarTs::AddNewTs($_POST)) {
 			?><span style="color: green;"><?=GetMessage("EXPENDED_TS_ADD_SUCCESS")?></span><?
 		}
 		else {

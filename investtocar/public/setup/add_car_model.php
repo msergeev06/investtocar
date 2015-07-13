@@ -10,7 +10,7 @@
 
 	if (isset($_POST["action"]) && intval($_POST["action"])==1) {
 		//Добавляем модель в базу
-		if ($added = CInvestToCarMain::AddNewModel($_POST["car_brand"],$_POST["car_model"])) {
+		if ($added = CInvestToCarCars::AddNewModel($_POST["car_brand"],$_POST["car_model"])) {
 			echo "<span style=\"color: green;\">".GetMessage("ADDED").": (".$added.") ".$_POST["car_model"]."</span><br>";
 		}
 	}

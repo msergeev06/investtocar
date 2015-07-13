@@ -2,7 +2,7 @@
 
 	$arReturn["brand"] = intval($_POST["brand"]);
 	if ($arReturn["brand"]>0) {
-		$arReturn["select"] = CInvestToCarMain::ShowSelectCarModel($arReturn["brand"]);
+		$arReturn["select"] = CInvestToCarShowSelect::CarModel($arReturn["brand"]);
 		if (!$arReturn["select"]) {
 			$arReturn["select"] = "<input type=\"text\" name=\"car_model_add\" value=\"\">";
 		}

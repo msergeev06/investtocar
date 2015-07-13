@@ -82,7 +82,7 @@
 				$query .= " ORDER BY `period` DESC";
 			}
 			else {
-				if ($type==0) $type = intval(CInvestToCarMain::GetInfoByCode ("pointtype",$OPTIONS->GetOptionInt("point_default")));
+				if ($type==0) $type = intval(CInvestToCarMain::GetInfoByCode ("pointtype",$OPTIONS->GetOptionString("point_default")));
 				$query = "SELECT `id` , `name` FROM `ms_icar_points` WHERE `type` =".$type." ORDER BY `period` DESC";
 			}
 			$arResult = $DB->Select ($query);

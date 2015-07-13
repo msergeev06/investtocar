@@ -19,7 +19,7 @@
 		"yTitle" => $_GET["yTitle"],
 		"type" => $_GET["type"]
 	);
-	if ($echo = CInvestToCarMain::ShowChartsOdo($arSettings)) echo $echo;
+	if ($echo = CInvestToCarOdo::ShowChartsOdo($arSettings)) echo $echo;
 
 ?>
 	</body>

@@ -1,7 +1,7 @@
 <? require_once($_SERVER["DOCUMENT_ROOT"]."/msergeev/investtocar/public/include/header.php"); ?>
 	<h1><?=GetMessage("MILEAGE")?></h1>
 <?
-	$defaultCar = CInvestToCarMain::GetDefaultCar();
+	$defaultCar = CInvestToCarCars::GetDefaultCar();
 ?>
 	<p><?=GetMessage("STATISTICS_FOR")?>: <? echo CInvestToCarShowSelect::Auto("my_car",true); ?><br><br></p>
 	<p><a href="<?=$path?>odo/add_route.php?car=<?=$defaultCar?>"><?=GetMessage("ADD_MILEAGE_INFORMATION")?></a></p>

@@ -2,7 +2,7 @@
 	<h1><?=GetMessage("OTHER")?></h1>
 	<?=GetMessage("OTHER_INFO")?>
 <?
-	$defaultCar = CInvestToCarMain::GetDefaultCar();
+	$defaultCar = CInvestToCarCars::GetDefaultCar();
 ?>
 	<p><?=GetMessage("STATISTICS_FOR")?>: <? echo CInvestToCarShowSelect::Auto("my_car",true); ?><?=GetMessage("TOTAL_COSTS")?>: <?=CInvestToCarMain::GetTotalMaintenanceCosts()?> <?=GetMessage("RUB")?><br><br></p>
 	<p><a href="<?=$path?>other/add_other.php?car=<?=$defaultCar?>"><?=GetMessage("ADD_NOTE")?></a><br><br></p>

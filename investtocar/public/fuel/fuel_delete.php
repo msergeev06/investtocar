@@ -4,7 +4,7 @@
 	$fuelCostsID = $_GET["id"];
 	if(isset($_POST["action"]))
 	{
-		if ($res = CInvestToCarMain::DeleteFuelCostsDB ($_POST))
+		if ($res = CInvestToCarFuel::DeleteFuelCostsDB ($_POST))
 		{
 			?><span style="color: green;"><?=GetMessage ("DELETING_FUEL_COSTS_SUCCESS")?></span><?
 		}

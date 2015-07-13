@@ -163,6 +163,7 @@
 	$MESS["AVERAGE_FUEL_CONSUMPTION"] = "Средний расход топлива";
 	$MESS["LITERS_FOR_100KM"] = "л/100км";
 	$MESS["LITER"] = "л.";
+	$MESS["LITERS"] = "литра";
 
 	$MESS["ADDING_FUEL_COSTS"] = "Добавление расхода на топливо";
 	$MESS["SELECT_DEFAULT_SELECTED"] = "--Выбрать--";
@@ -245,3 +246,22 @@
 	$MESS["TYPE"] = "Тип";
 	$MESS["ADD_OTHER_SUCCESS"] = "Данные о прочих расхода успешно добавлены";
 	$MESS["ADD_OTHER_ERROR"] = "Ошибка добавления информации о прочих расходах";
+	$MESS["ADDING_CAR_SUCCESS"] = "Автомобиль был успешно добавлен";
+	$MESS["ADDING_CAR_FAILED"] = "Ошибка добавления автомобиля";
+	$MESS["ADDING_NEW_CAR"] = "Добавление нового автомобиля";
+	$MESS["CAR_MARK"] = "Марка автомобиля";
+	$MESS["CAR_MODEL"] = "Модель автомобиля";
+	$MESS["CAR_YEAR"] = "Год выпуска";
+	$MESS["START_ODO"] = "Пробег при покупке";
+	$MESS["SETUP_ALARM_SMART_HOME"] = "Настроить напоминание Кузьмы";
+	$MESS["CAR_USE_AS_DEFAULT"] = "Использовать данный автомобиль по-умолчанию";
+	$MESS["NUMERIC_AND_LAT_SIGN"] = "Цифры и латинские буквы";
+	$MESS["DELETING_CAR"] = "Удаление автомобиля";
+	$MESS["YOU_CAN_NOT_DELETE_BY"] = "Вы не можете удалить данный автомобиль по следующим причинам";
+	$MESS["ARE_YOU_SHURE_DELETE"] = "Вы действительно хотите удалить данный автомобиль? Восстановление будет невозможно!";
+	$MESS["YES_IAM_DELETE_THIS_CAR"] = "Я подтверждаю, что хочу удалить данный автомобиль!";
+	$MESS["DELETING_CAR_SUCCESS"] = "Автомобиль успешно удален";
+	$MESS["DELETING_CAR_FAILED"] = "Ошибка удаления автомобиля!";
+	$MESS["EDITING_CAR"] = "Редактирование автомобиля";
+	$MESS["EDITING_CAR_SUCCESS"] = "Автомобиль успешно обновлен!";
+	$MESS["EDITING_CAR_FAILED"] = "Ошибка обновления данных автомобиля!";

@@ -2,7 +2,7 @@
 <h1><?=GetMessage("ADDING_FUEL_COSTS")?></h1>
 <? $car = $_GET["car"];
  if(isset($_POST["action"])) {
-	 if ($res = CInvestToCarMain::AddFuelCosts($_POST)) {
+	 if ($res = CInvestToCarFuel::AddFuelCosts($_POST)) {
 		 ?><span style="color: green;"><?=GetMessage("ADDING_FUEL_COSTS_SUCCESS")?></span><?
 	 }
 	 else {

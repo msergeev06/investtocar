@@ -6,7 +6,7 @@
 	$pCarwash = $OPTIONS->GetOptionInt("point_carwash");
 
 	if (isset($_POST["action"])) {
-		if ($res = CInvestToCarMain::UpdateRepairParts($_POST)) {
+		if ($res = CInvestToCarRepairParts::UpdateRepairParts($_POST)) {
 			?><span style="color: green;"><?=GetMessage("EDIT_REPAIR_PARTS_SUCCESS")?></span><?
 		}
 		else {
@@ -14,7 +14,7 @@
 		}
 	}
 	else {
-		$arRepairParts = CInvestToCarMain::GetRepairPartsInfo($repairPartsID);
+		$arRepairParts = CInvestToCarRepairParts::GetRepairPartsInfo($repairPartsID);
 		?>
 	<form action="" method="post">
 		<input type="hidden" name="id" value="<?=$repairPartsID?>">

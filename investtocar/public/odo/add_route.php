@@ -2,20 +2,24 @@
 	<h1><?=GetMessage("ADDING_ROUTE")?></h1>
 <? $car = intval($_GET["car"]); ?>
 <?
-	$defaultCar = CInvestToCarMain::GetDefaultCar();
+	$defaultCar = CInvestToCarCars::GetDefaultCar();
+	$pWaypoint = CInvestToCarMain::GetInfoByCode ("pointtype","waypoint");
+	$pService = CInvestToCarMain::GetInfoByCode ("pointtype","service");
+	$pStore = CInvestToCarMain::GetInfoByCode ("pointtype","shop");
+	$pCarwash = CInvestToCarMain::GetInfoByCode ("pointtype","wash");
+
 ?>
 
 <?
 	if (isset($_POST["action"])&&$_POST["action"]==1) {
-		if (CInvestToCarMain::AddNewRoute($_POST)) {
+		if (CInvestToCarOdo::AddNewRoute($_POST)) {
 			echo "<span class=\"ok\">".GetMessage("DATA_ADD_SUCCESS")."</span>";
 		}
 		else {
 			echo "<span class=\"err\">".GetMessage("DATA_ADD_ERROR")."</span>";
 		}
-		list($day, $month, $year) = explode (".", $post["date"]);
-		$arResult["date"] = mktime (0, 0, 0, $month, $day, $year, 0) + 3600;
-		CInvestToCarMain::UpdateDayOdometer($arResult["date"]);
+		$arResult["date"] = CInvestToCarMain::ConvertDateToTimestamp($_POST["date"]);
+		CInvestToCarOdo::UpdateDayOdometer($arResult["date"]);
 	}
 
 
@@ -38,7 +42,7 @@
 		</tr>
 		<tr>
 			<td class="name"><?=GetMessage("HOME_WAYPOINT")?></td>
-			<td class="value"><? echo CInvestToCarShowSelect::Points("start_point")?></td>
+			<td class="value"><? echo CInvestToCarShowSelect::Points("start_point",0,array($pWaypoint,$pService,$pStore,$pCarwash))?></td>
 		</tr>
 		<tr>
 			<td class="name">&nbsp;</td>
@@ -66,7 +70,7 @@
 		</tr>
 		<tr>
 			<td class="name"><?=GetMessage("FINAL_WAYPOINT")?></td>
-			<td class="value"><? echo CInvestToCarShowSelect::Points("end_point")?></td>
+			<td class="value"><? echo CInvestToCarShowSelect::Points("end_point",0,array($pWaypoint,$pService,$pStore,$pCarwash))?></td>
 		</tr>
 		<tr>
 			<td class="name">&nbsp;</td>
