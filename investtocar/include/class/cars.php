@@ -461,8 +461,10 @@
 			$summ += CInvestToCarTs::GetTotalMaintenanceCosts($car);
 			//Прочие расходы
 			$summ += CInvestToCarOther::GetTotalOtherCosts($car);
+			/*
 			//Запчасти
 			$summ += CInvestToCarRepairParts::GetTotalRepairPartsCosts($car);
+			*/
 
 			if ($summ>0) {
 				return round($summ,2);
