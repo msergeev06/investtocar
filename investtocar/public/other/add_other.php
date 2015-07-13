@@ -5,6 +5,7 @@
 	$pService = CInvestToCarMain::GetInfoByCode ("pointtype","service");
 	$pStore = CInvestToCarMain::GetInfoByCode ("pointtype","shop");
 	$pCarwash = CInvestToCarMain::GetInfoByCode ("pointtype","wash");
+	$pParking = CInvestToCarMain::GetInfoByCode ("pointtype","parking");
 
 
 if(isset($_POST["action"])) {
@@ -54,9 +55,9 @@ if(isset($_POST["action"])) {
 			</tr>
 			<tr>
 				<td class="title"><?=GetMessage("WAYPOINT")?></td>
-				<td><? echo CInvestToCarShowSelect::Points("waypoint",0,array($pService,$pStore,$pCarwash)); ?></td>
+				<td><? echo CInvestToCarShowSelect::Points("waypoint",0,array($pService,$pStore,$pCarwash,$pParking)); ?></td>
 			</tr>
-			<? echo CInvestToCarPoints::ShowFormNewPointAdd (true,$pService,array($pService,$pStore,$pCarwash)); ?>
+			<? echo CInvestToCarPoints::ShowFormNewPointAdd (true,$pService,array($pService,$pStore,$pCarwash,$pParking)); ?>
 			<tr>
 				<td class="title"><?=GetMessage("COMMENT")?></td>
 				<td><input type="text" name="comment" value=""></td>

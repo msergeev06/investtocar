@@ -41,7 +41,7 @@
 				$res2 = $DB->Select ($query2);
 				$arCar["body"] = $res2[0]["name"];
 
-				$arCar["total_costs"] = CInvestToCarMain::GetTotalCosts($arCar["id"]);
+				$arCar["total_costs"] = self::GetTotalCosts($arCar["id"]);
 				$arCar["average_fuel_consum"] = CInvestToCarFuel::GetAverageFuelConsumption($arCar["id"]);
 			}
 
@@ -163,6 +163,7 @@
 			}
 
 		}
+
 		/**
 		 * Функция добавляет новый автомобиль в гараж
 		 *
@@ -251,6 +252,7 @@
 				return false;
 			}
 		}
+
 		/**
 		 * Функция обновляет информацию об автомобиле в DB
 		 *
@@ -457,6 +459,10 @@
 			$summ += CInvestToCarFuel::GetTotalFuelCosts($car);
 			//Расходы на ТО
 			$summ += CInvestToCarTs::GetTotalMaintenanceCosts($car);
+			//Прочие расходы
+			$summ += CInvestToCarOther::GetTotalOtherCosts($car);
+			//Запчасти
+			$summ += CInvestToCarRepairParts::GetTotalRepairPartsCosts($car);
 
 			if ($summ>0) {
 				return round($summ,2);

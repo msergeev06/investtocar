@@ -21,7 +21,7 @@
 			if ($full) {
 				$query .= "`trademark`, `model`, `year`, `carnumber`, ";
 			}
-			$query .= "`default` FROM `ms_icar_my_car` ORDER BY `name` ASC";
+			$query .= "`default` FROM `".CInvestToCarMain::GetTableByCode("mycar")."` ORDER BY `name` ASC";
 			$arResult = $DB->Select ($query);
 
 			$echo = "<select name=\"".$select_name."\">\n";
@@ -29,8 +29,8 @@
 			foreach ($arResult as $arAuto)
 			{
 				if ($full) {
-					$arAuto["trademark"] = CInvestToCarMain::GetCarTrademarkNameByID($arAuto["trademark"]);
-					$arAuto["model"] = CInvestToCarMain::GetCarModelNameByID($arAuto["model"]);
+					$arAuto["trademark"] = CInvestToCarCars::GetCarTrademarkNameByID($arAuto["trademark"]);
+					$arAuto["model"] = CInvestToCarCars::GetCarModelNameByID($arAuto["model"]);
 				}
 				$echo .= "<option value=\"".intval ($arAuto["id"])."\"";
 				if ($selected==0) {
@@ -66,7 +66,7 @@
 		public function Points ($select_name = "", $selected=0, $type=0) {
 			global $DB,$OPTIONS;
 			if (is_array($type)) {
-				$query = "SELECT `id` , `name` FROM `ms_icar_points` WHERE `type` ";
+				$query = "SELECT `id` , `name` FROM `".CInvestToCarMain::GetTableByCode("points")."` WHERE `type` ";
 				$query .= "IN (";
 				$first = true;
 				foreach ($type as $in) {
@@ -83,7 +83,7 @@
 			}
 			else {
 				if ($type==0) $type = intval(CInvestToCarMain::GetInfoByCode ("pointtype",$OPTIONS->GetOptionString("point_default")));
-				$query = "SELECT `id` , `name` FROM `ms_icar_points` WHERE `type` =".$type." ORDER BY `period` DESC";
+				$query = "SELECT `id` , `name` FROM `".CInvestToCarMain::GetTableByCode("points")."` WHERE `type` =".$type." ORDER BY `period` DESC";
 			}
 			$arResult = $DB->Select ($query);
 
@@ -111,7 +111,7 @@
 		public function CarBrands ($selected = 0) {
 			global $DB;
 
-			$query = "SELECT * FROM `ms_icar_setup_car_brand` ORDER BY `name` ASC";
+			$query = "SELECT * FROM `".CInvestToCarMain::GetTableByCode("brand")."` ORDER BY `name` ASC";
 			$res = $DB->Select ($query);
 
 			$select = '<select name="car_brand" id="car_brand">'."\n";
@@ -151,7 +151,7 @@
 				return false;
 			}
 
-			$query = "SELECT * FROM `ms_icar_setup_car_model` WHERE `brand` =".intval ($brand)." ORDER BY `name` ASC";
+			$query = "SELECT * FROM `".CInvestToCarMain::GetTableByCode("model")."` WHERE `brand` =".intval ($brand)." ORDER BY `name` ASC";
 			$res = $DB->Select ($query);
 
 			if (!isset($res[0]["name"]))
@@ -215,7 +215,7 @@
 		{
 			global $DB;
 
-			$query = "SELECT * FROM `ms_icar_setup_car_body` ORDER BY `".$sortCol."` ".$sort;
+			$query = "SELECT * FROM `".CInvestToCarMain::GetTableByCode("body")."` ORDER BY `".$sortCol."` ".$sort;
 			$res = $DB->Select ($query);
 
 			$select = "<select name=\"car_body\" id=\"car_body\">";
@@ -244,7 +244,7 @@
 		{
 			global $DB;
 
-			$query = "SELECT * FROM `ms_icar_setup_car_gearbox` ORDER BY `".$sortCol."` ".$sort;
+			$query = "SELECT * FROM `".CInvestToCarMain::GetTableByCode("gearbox")."` ORDER BY `".$sortCol."` ".$sort;
 			$res = $DB->Select ($query);
 
 			$select = "<select name=\"car_gearbox\" id=\"car_gearbox\">";
@@ -323,10 +323,10 @@
 		public function FuelMark ($name="", $car=0, $selected=0) {
 			global $DB;
 			if ($name=="") $name = "fuel_mark";
-			if ($car==0) $car = CInvestToCarMain::GetDefaultCar();
+			if ($car==0) $car = CInvestToCarCars::GetDefaultCar();
 			$echo = "";
 
-			$query = "SELECT * FROM `ms_icar_setup_fuel_mark` ORDER BY `sort` ASC";
+			$query = "SELECT * FROM `".CInvestToCarMain::GetTableByCode("fuelmark")."` ORDER BY `sort` ASC";
 			$res = $DB->Select($query);
 			$echo .= "<select name=\"".$name."\">";
 			if ($selected==0) {
@@ -357,10 +357,10 @@
 			global $DB;
 
 			if ($name=="") $name="reason_ts";
-			if ($car==0) $car = CInvestToCarMain::GetDefaultCar();
+			if ($car==0) $car = CInvestToCarCars::GetDefaultCar();
 			$echo = "<select name=\"".$name."\" class=\"".$name."\"".$additional_data.">";
 
-			$query = "SELECT * FROM `ms_icar_ts` WHERE `auto` =".$car;
+			$query = "SELECT * FROM `".CInvestToCarMain::GetTableByCode("ts")."` WHERE `auto` =".$car;
 			if ($res = $DB->Select($query)) {
 				if ($selected==0) {
 					$echo .= "<option value=\"0\" selected>".GetMessage("NOT_SELECTED")."</option>";
@@ -395,7 +395,7 @@
 			global $DB;
 
 			if ($name=="") $name="reason_repair";
-			if ($car==0) $car = CInvestToCarMain::GetDefaultCar();
+			if ($car==0) $car = CInvestToCarCars::GetDefaultCar();
 			$echo = "<select name=\"".$name."\" class=\"".$name."\"".$additional_data.">";
 
 			/*
@@ -436,7 +436,7 @@
 		public function ReasonDtp ($name="", $car=0, $selected=0, $additional_data="") {
 			global $DB;
 			if ($name=="") $name="reason_dtp";
-			if ($car==0) $car = CInvestToCarMain::GetDefaultCar();
+			if ($car==0) $car = CInvestToCarCars::GetDefaultCar();
 
 			$echo = "<select name=\"".$name."\" class=\"".$name."\"".$additional_data.">";
 
@@ -479,7 +479,7 @@
 			if ($name=="") $name = "storage";
 
 			$echo = "<select name=\"".$name."\">";
-			$query = "SELECT * FROM `ms_icar_setup_storage` ORDER BY `sort` ASC";
+			$query = "SELECT * FROM `".CInvestToCarMain::GetTableByCode("storage")."` ORDER BY `sort` ASC";
 			if ($res = $DB->Select($query)) {
 				$first = true;
 				foreach ($res as $arRes) {
@@ -518,7 +518,7 @@
 			if ($name=="") $name = "reason";
 
 			$echo = "<select name=\"".$name."\" class=\"".$name."\">";
-			$query = "SELECT * FROM `ms_icar_setup_reason_replacement` ORDER BY `sort` ASC";
+			$query = "SELECT * FROM `".CInvestToCarMain::GetTableByCode("reason")."` ORDER BY `sort` ASC";
 			if ($res = $DB->Select($query)) {
 				$first = true;
 				foreach ($res as $arRes) {
@@ -558,7 +558,7 @@
 			if ($name=="") $name = "who_paid";
 
 			$echo = "<select name=\"".$name."\" class=\"".$name."\">";
-			$query = "SELECT * FROM `ms_icar_setup_who_paid` ORDER BY `sort` ASC";
+			$query = "SELECT * FROM `".CInvestToCarMain::GetTableByCode("whopaid")."` ORDER BY `sort` ASC";
 			if ($res = $DB->Select($query)) {
 				$first = true;
 				foreach ($res as $arRes) {
@@ -600,7 +600,7 @@
 			$echo .= "<option value=\"0\"";
 			if ($selected==0) $echo .= " selected";
 			$echo .= ">".GetMessage("SELECT_DEFAULT_SELECTED")."</option>";
-			$query = "SELECT * FROM `ms_icar_setup_flow_type` ORDER BY `sort` ASC";
+			$query = "SELECT * FROM `".CInvestToCarMain::GetTableByCode("flowtype")."` ORDER BY `sort` ASC";
 			if ($res = $DB->Select($query)) {
 				foreach ($res as $arRes) {
 					$echo .= "<option value=\"".$arRes["id"]."\"";
@@ -634,7 +634,7 @@
 			$echo .= "<option value=\"0\"";
 			if ($selected==0) $echo .= " selected";
 			$echo .= ">".GetMessage("SELECT_DEFAULT_DEFAULT")."</option>";
-			$query = "SELECT * FROM `ms_icar_setup_points_types` ";
+			$query = "SELECT * FROM `".CInvestToCarMain::GetTableByCode("pointtype")."` ";
 			if (!empty($arTypes)) {
 				$query .= "WHERE `id` IN (";
 				$first = true;
