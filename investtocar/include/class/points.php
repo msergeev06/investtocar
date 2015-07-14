@@ -160,4 +160,55 @@
 			return $echo;
 		}
 
+		public function CreateTables () {
+			$arTables = array();
+			$arTables[] = self::QueryTablePoints();
+
+			return $arTables;
+		}
+
+		public function QueryTablePoints () {
+			$query = "CREATE TABLE `".CInvestToCarMain::GetTableByCode("points")."` ( ";
+			$query .= "`id` INT (10) AUTO_INCREMENT, ";
+			$query .= "`name` VARCHAR(255) NOT NULL, ";
+			$query .= "`type` INT (11) NOT NULL, ";
+			$query .= "`address` VARCHAR(255) NOT NULL, ";
+			$query .= "`longitude` VARCHAR(255) NOT NULL, ";
+			$query .= "`latitude` VARCHAR(255) NOT NULL, ";
+			$query .= "`period` INT (11) NOT NULL, ";
+			$query .= "PRIMARY KEY (`id`) );";
+
+			return $query;
+		}
+
+		public function DataTables () {
+			$arData = array();
+			$arData["points"] = self::DataTablePoints();
+
+			return $arData;
+		}
+
+		public function DataTablePoints () {
+			global $DB;
+			$arData = array();
+
+			$query = "SELECT * FROM `".CInvestToCarMain::GetTableByCode("points")."`";
+			if ($res = $DB->Select($query)) {
+				$arData["FIELDS"] = array(
+					"id", "name", "type", "address",
+					"longitude","latitude","period"
+				);
+				foreach ($res as $arRes) {
+					$arData["DATA"][] = array(
+						$arRes["id"],$arRes["name"],$arRes["type"],$arRes["address"],
+						$arRes["longitude"],$arRes["latitude"],$arRes["period"]
+					);
+				}
+				return $arData;
+			}
+			else {
+				return array();
+			}
+		}
+
 	}

@@ -1,6 +1,7 @@
 <?php
 
 	$arDefaultOptions = array(
+		"DB_table_prefix" => "ms_icar_",
 		"mktime_add_time" => "3600",
 		"point_default" => "waypoint",
 		"reason_replacement_ts" => "1",

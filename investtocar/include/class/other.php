@@ -245,4 +245,63 @@
 				return false;
 			}
 		}
+
+		public function CreateTables () {
+			$arTables = array();
+			$arTables[] = self::QueryTableOther();
+
+			return $arTables;
+		}
+
+		public function QueryTableOther () {
+			$query = "CREATE TABLE `".CInvestToCarMain::GetTableByCode("other")."` ( ";
+			$query .= "`id` INT (10) AUTO_INCREMENT, ";
+			$query .= "`car` INT (11) NOT NULL, ";
+			$query .= "`date` INT (11) NOT NULL, ";
+			$query .= "`cost` FLOAT NOT NULL, ";
+			$query .= "`type` INT (11) NOT NULL, ";
+			$query .= "`name` VARCHAR(255) NOT NULL, ";
+			$query .= "`number` FLOAT NOT NULL, ";
+			$query .= "`odo` FLOAT NOT NULL, ";
+			$query .= "`catalog_number` VARCHAR(255) NOT NULL, ";
+			$query .= "`waypoint` INT (11) NOT NULL, ";
+			$query .= "`comment` VARCHAR(255) NOT NULL, ";
+			$query .= "PRIMARY KEY (`id`) );";
+
+			return $query;
+		}
+
+		public function DataTables () {
+			$arData = array();
+			$arData["other"] = self::DataTableOther();
+
+			return $arData;
+		}
+
+		public function DataTableOther () {
+			global $DB;
+			$arData = array();
+
+			$query = "SELECT * FROM `".CInvestToCarMain::GetTableByCode("other")."`";
+			if ($res = $DB->Select($query)) {
+				$arData["FIELDS"] = array(
+					"id", "car", "date", "cost","type",
+					"name","number","odo","catalog_number","waypoint",
+					"comment"
+				);
+				foreach ($res as $arRes) {
+					$arData["DATA"][] = array(
+						$arRes["id"],$arRes["car"],$arRes["date"],$arRes["cost"],$arRes["type"],
+						$arRes["name"],$arRes["number"],$arRes["odo"],$arRes["catalog_number"],$arRes["waypoint"],
+						$arRes["comment"]
+					);
+				}
+				return $arData;
+			}
+			else {
+				return array();
+			}
+		}
+
+
 	}

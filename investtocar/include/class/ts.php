@@ -214,4 +214,59 @@
 			}
 		}
 
+		public function CreateTables () {
+			$arTables = array();
+			$arTables[] = self::QueryTableTs();
+
+			return $arTables;
+		}
+
+		public function QueryTableTs () {
+			$query = "CREATE TABLE `".CInvestToCarMain::GetTableByCode("ts")."` ( ";
+			$query .= "`id` INT (10) AUTO_INCREMENT, ";
+			$query .= "`ts_num` INT (11) NOT NULL, ";
+			$query .= "`auto` INT (11) NOT NULL, ";
+			$query .= "`date` INT (11) NOT NULL, ";
+			$query .= "`repair` INT (11) NOT NULL, ";
+			$query .= "`cost` FLOAT NOT NULL, ";
+			$query .= "`odo` FLOAT NOT NULL, ";
+			$query .= "`point` INT (11) NOT NULL, ";
+			$query .= "`description` VARCHAR(255) NOT NULL, ";
+			$query .= "PRIMARY KEY (`id`) );";
+
+			return $query;
+		}
+
+		public function DataTables () {
+			$arData = array();
+			$arData["ts"] = self::DataTableTs();
+
+			return $arData;
+		}
+
+		public function DataTableTs () {
+			global $DB;
+			$arData = array();
+
+			$query = "SELECT * FROM `".CInvestToCarMain::GetTableByCode("ts")."`";
+			if ($res = $DB->Select($query)) {
+				$arData["FIELDS"] = array(
+					"id", "ts_num", "auto", "date",
+					"repair","cost","odo","point",
+					"description"
+				);
+				foreach ($res as $arRes) {
+					$arData["DATA"][] = array(
+						$arRes["id"],$arRes["ts_num"],$arRes["auto"],$arRes["date"],
+						$arRes["repair"],$arRes["cost"],$arRes["odo"],$arRes["point"],
+						$arRes["description"]
+					);
+				}
+				return $arData;
+			}
+			else {
+				return array();
+			}
+		}
+
 	}

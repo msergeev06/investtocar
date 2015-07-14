@@ -46,3 +46,6 @@
 	require_once (INVESTTOCAR_CLASS_PATH."repair_parts.php");
 	//Прочие расходы
 	require_once (INVESTTOCAR_CLASS_PATH."other.php");
+	//Настройки
+	require_once (INVESTTOCAR_CLASS_PATH."setup.php");
+

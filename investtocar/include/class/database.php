@@ -72,6 +72,15 @@
 			}
 		}
 
+		function Query ($query) {
+			if ($res=mysql_query($query, $this->dbh)) {
+				return $res;
+			}
+			else {
+				$this->Error($query);
+			}
+		}
+
 		function Insert($query) {
 			if (!mysql_query($query, $this->dbh)) {
 				$this->error($qry);

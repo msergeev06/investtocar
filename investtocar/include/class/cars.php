@@ -474,4 +474,36 @@
 			}
 		}
 
+		public function CreateTables () {
+			$arTables = array();
+			$arTables[] = self::QueryTableMyCar();
+
+			return $arTables;
+		}
+
+		public function QueryTableMyCar () {
+			$query = "CREATE TABLE `".CInvestToCarMain::GetTableByCode("mycar")."` ( ";
+			$query .= "`id` INT (10) AUTO_INCREMENT, ";
+			$query .= "`name` VARCHAR(255) NOT NULL, ";
+			$query .= "`trademark` INT (11) NOT NULL, ";
+			$query .= "`model` INT (11) NOT NULL, ";
+			$query .= "`year` INT (11) NOT NULL, ";
+			$query .= "`vin` VARCHAR(255) NOT NULL, ";
+			$query .= "`carnumber` VARCHAR(255) NOT NULL, ";
+			$query .= "`enginecapacity` FLOAT NOT NULL, ";
+			$query .= "`gearshift` INT (11) NOT NULL, ";
+			$query .= "`body` INT (11) NOT NULL, ";
+			$query .= "`interval_ts` INT (11) NOT NULL, ";
+			$query .= "`cost` FLOAT NOT NULL, ";
+			$query .= "`mileage` FLOAT NOT NULL, ";
+			$query .= "`credit` TINYINT(4) NOT NULL, ";
+			$query .= "`creditcost` FLOAT NOT NULL, ";
+			$query .= "`osago_end` INT (11) NOT NULL, ";
+			$query .= "`gto_end` INT (11) NOT NULL, ";
+			$query .= "`default` TINYINT(4) NOT NULL, ";
+			$query .= "PRIMARY KEY (`id`) );";
+
+			return $query;
+		}
+
 	}

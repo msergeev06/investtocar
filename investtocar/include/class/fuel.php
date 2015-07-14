@@ -465,4 +465,30 @@
 			return round($res,2);
 		}
 
+		public function CreateTables () {
+			$arTables = array();
+			$arTables[] = self::QueryTableFuel();
+
+			return $arTables;
+		}
+
+		public function QueryTableFuel () {
+			$query = "CREATE TABLE `".CInvestToCarMain::GetTableByCode("fuel")."` ( ";
+			$query .= "`id` INT (10) AUTO_INCREMENT, ";
+			$query .= "`auto` INT (11) NOT NULL, ";
+			$query .= "`date` INT (11) NOT NULL, ";
+			$query .= "`odo` FLOAT NOT NULL, ";
+			$query .= "`fuel_mark` INT (11) NOT NULL, ";
+			$query .= "`summ` FLOAT NOT NULL, ";
+			$query .= "`liter` FLOAT NOT NULL, ";
+			$query .= "`liter_cost` FLOAT NOT NULL, ";
+			$query .= "`full` TINYINT(1) NOT NULL, ";
+			$query .= "`expense` FLOAT NOT NULL, ";
+			$query .= "`point` INT (11) NOT NULL, ";
+			$query .= "`description` VARCHAR(255) NOT NULL, ";
+			$query .= "PRIMARY KEY (`id`) );";
+
+			return $query;
+		}
+
 	}

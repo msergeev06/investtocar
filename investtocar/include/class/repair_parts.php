@@ -336,4 +336,66 @@
 			}
 		}
 
+		public function CreateTables () {
+			$arTables = array();
+			$arTables[] = self::QueryTableRepairParts();
+
+			return $arTables;
+		}
+
+		public function QueryTableRepairParts () {
+			$query = "CREATE TABLE `".CInvestToCarMain::GetTableByCode("repairparts")."` ( ";
+			$query .= "`id` INT (10) AUTO_INCREMENT, ";
+			$query .= "`auto` INT (11) NOT NULL, ";
+			$query .= "`date` INT (11) NOT NULL, ";
+			$query .= "`name` VARCHAR(255) NOT NULL, ";
+			$query .= "`storage` INT (11) NOT NULL, ";
+			$query .= "`catalog_number` VARCHAR(255) NOT NULL, ";
+			$query .= "`number` FLOAT NOT NULL, ";
+			$query .= "`cost` FLOAT NOT NULL, ";
+			$query .= "`reason` INT (11) NOT NULL, ";
+			$query .= "`reason_detail` INT (11) NOT NULL, ";
+			$query .= "`who_paid` INT (11) NOT NULL, ";
+			$query .= "`odo` FLOAT NOT NULL, ";
+			$query .= "`waypoint` INT (11) NOT NULL, ";
+			$query .= "`comment` VARCHAR(255) NOT NULL, ";
+			$query .= "PRIMARY KEY (`id`) );";
+
+			return $query;
+		}
+
+		public function DataTables () {
+			$arData = array();
+			$arData["repairparts"] = self::DataTableRepairParts();
+
+			return $arData;
+		}
+
+		public function DataTableRepairParts () {
+			global $DB;
+			$arData = array();
+
+			$query = "SELECT * FROM `".CInvestToCarMain::GetTableByCode("repairparts")."`";
+			if ($res = $DB->Select($query)) {
+				$arData["FIELDS"] = array(
+					"id", "auto", "date", "name",
+					"storage","catalog_number","number","cost",
+					"reason","reason_detail","who_paid","odo",
+					"waypoint","comment"
+				);
+				foreach ($res as $arRes) {
+					$arData["DATA"][] = array(
+						$arRes["id"],$arRes["auto"],$arRes["date"],$arRes["name"],
+						$arRes["storage"],$arRes["catalog_number"],$arRes["number"],$arRes["cost"],
+						$arRes["reason"],$arRes["reason_detail"],$arRes["who_paid"],$arRes["odo"],
+						$arRes["waypoint"],$arRes["comment"]
+					);
+				}
+				return $arData;
+			}
+			else {
+				return array();
+			}
+		}
+
 	}

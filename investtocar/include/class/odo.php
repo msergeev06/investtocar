@@ -383,4 +383,84 @@
 			return $res;
 		}
 
+		public function CreateTables () {
+			$arTables = array();
+			$arTables[] = self::QueryTableOdo();
+			$arTables[] = self::QueryTableRouts();
+
+			return $arTables;
+		}
+
+		public function QueryTableOdo () {
+			$query = "CREATE TABLE `".CInvestToCarMain::GetTableByCode("odo")."` ( ";
+			$query .= "`id` INT (10) AUTO_INCREMENT, ";
+			$query .= "`auto` INT (11) NOT NULL, ";
+			$query .= "`date` INT (11) NOT NULL, ";
+			$query .= "`odo` FLOAT NOT NULL, ";
+			$query .= "PRIMARY KEY (`id`) );";
+
+			return $query;
+		}
+
+		public function QueryTableRouts () {
+			$query = "CREATE TABLE `".CInvestToCarMain::GetTableByCode("routs")."` ( ";
+			$query .= "`id` INT (10) AUTO_INCREMENT, ";
+			$query .= "`auto` INT (11) NOT NULL, ";
+			$query .= "`date` INT (11) NOT NULL, ";
+			$query .= "`start_point` INT (11) NOT NULL, ";
+			$query .= "`end_start` TINYINT(1) NOT NULL, ";
+			$query .= "`end_point` INT (11) NOT NULL, ";
+			$query .= "`odo` FLOAT NOT NULL, ";
+			$query .= "PRIMARY KEY (`id`) );";
+
+			return $query;
+		}
+
+		public function DataTables () {
+			$arData = array();
+			$arData["odo"] = self::DataTableOdo();
+			$arData["routs"] = self::DataTableRouts();
+
+			return $arData;
+		}
+
+		public function DataTableOdo () {
+			global $DB;
+			$arData = array();
+
+			$query = "SELECT * FROM `".CInvestToCarMain::GetTableByCode("odo")."`";
+			if ($res = $DB->Select($query)) {
+				$arData["FIELDS"] = array("id", "auto", "date", "odo");
+				foreach ($res as $arRes) {
+					$arData["DATA"][] = array(
+						$arRes["id"],$arRes["auto"],$arRes["date"],$arRes["odo"]
+					);
+				}
+				return $arData;
+			}
+			else {
+				return array();
+			}
+		}
+
+		public function DataTableRouts () {
+			global $DB;
+			$arData = array();
+
+			$query = "SELECT * FROM `".CInvestToCarMain::GetTableByCode("routs")."`";
+			if ($res = $DB->Select($query)) {
+				$arData["FIELDS"] = array("id", "auto", "date", "start_point", "end_start", "end_point", "odo");
+				foreach ($res as $arRes) {
+					$arData["DATA"][] = array(
+						$arRes["id"],$arRes["auto"],$arRes["date"],$arRes["start_point"],
+						$arRes["end_start"],$arRes["end_point"],$arRes["odo"]
+					);
+				}
+				return $arData;
+			}
+			else {
+				return array();
+			}
+		}
+
 	}

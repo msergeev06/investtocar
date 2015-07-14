@@ -5,6 +5,7 @@
 	class CInvestToCarMain
 	{
 		public static $arMessage = array();
+		private static $arTable = array();
 
 		/**
 		 * Функция получает координаты объекта по его адресу через сервис Яндекса
@@ -164,15 +165,26 @@
 		 * Функция возвращает название таблицы по ее коду
 		 *
 		 * @param string $code
+		 * @param bool $prefix
 		 * @return mixed
 		 */
-		public function GetTableByCode ($code="") {
-			global $DB;
+		public function GetTableByCode ($code="",$prefix=true) {
+			global $DB,$OPTIONS;
 			if ($code=="") return false;
 
-			$query = "SELECT `table` FROM `ms_icar_setup_tables` WHERE `code` LIKE '".$code."'";
-			$res = $DB->Select($query);
-			return $res[0]["table"];
+			if (!isset(self::$arTable[$code])) {
+				$query = "SELECT `table` FROM `"
+				         .$OPTIONS->GetOptionString("DB_table_prefix")
+				         ."setup_tables` WHERE `code` LIKE '".$code."'";
+				$res = $DB->Select($query);
+				self::$arTable[$code] = $res[0]["table"];
+			}
+			if ($prefix) {
+				return $OPTIONS->GetOptionString("DB_table_prefix").self::$arTable[$code];
+			}
+			else {
+				return self::$arTable[$code];
+			}
 		}
 
 		/**
