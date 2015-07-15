@@ -28,6 +28,9 @@
 						$arTs["point"] = CInvestToCarPoints::GetPointInfoByID($arTs["point"]);
 					}
 					$arTs["repair"] = CInvestToCarRepair::GetRepairNameByID($arTs["repair"]);
+					if (floatval($arTs["cost"])==0) {
+						$arTs["cost"] = self::CalculateCostTs ($arTs["id"]);
+					}
 				}
 				return $res;
 			}
@@ -141,6 +144,9 @@
 					$arPost["newpoint_lat"]
 				);
 			}
+			else {
+				$arData["point"] = intval($arPost["ts_point"]);
+			}
 			$arData["comment"] = $arPost["comment"];
 			if ($res = self::UpdateTsInfoDB($arData)) {
 				return true;
@@ -168,7 +174,7 @@
 			$query .= "`odo` = '".$arData["odo"]."', ";
 			$query .= "`point` = '".$arData["point"]."', ";
 			$query .= "`description` = '".$arData["comment"]."' ";
-			$query .= "WHERE `ms_icar_ts`.`id` =".$arData["id"].";";
+			$query .= "WHERE `".CInvestToCarMain::GetTableByCode("ts")."`.`id` =".$arData["id"].";";
 			if ($res = $DB->Update($query)) {
 				return true;
 			}
@@ -202,16 +208,25 @@
 		public function GetTotalMaintenanceCosts ($car=0) {
 			global $DB;
 			if ($car==0) $car = CInvestToCarCars::GetDefaultCar();
+			$sumCost = 0;
 
-			$query = "SELECT SUM(`cost`) FROM `".CInvestToCarMain::GetTableByCode("ts")."` WHERE `auto` =".$car;
-			$res = $DB->Select($query);
-			$res = $res[0]["SUM(`cost`)"];
-			if (floatval($res)>0) {
-				return round($res, 2);
+			$query = "SELECT `id`, `cost` FROM `".CInvestToCarMain::GetTableByCode("ts")."` WHERE `auto` =".$car;
+			if ($res = $DB->Select($query)) {
+				foreach ($res as $arRes) {
+					if (floatval($arRes["cost"])==0) {
+						$sumCost += self::CalculateCostTs($arRes["id"]);
+					}
+					else {
+						$sumCost += $arRes["cost"];
+					}
+				}
+
+				return round($sumCost, 2);
 			}
 			else {
 				return 0;
 			}
+
 		}
 
 		public function CreateTables () {
@@ -267,6 +282,29 @@
 			else {
 				return array();
 			}
+		}
+
+		/**
+		 * Функция возвращает сумму расходов на ТО для указанного ID
+		 *
+		 * @param int $tsID
+		 * @return int
+		 */
+		public function CalculateCostTs ($tsID=0) {
+			global $DB;
+			if ($tsID==0) return 0;
+			$sumCost = 0;
+			$reasonTs = intval(CInvestToCarMain::GetInfoByCode("reason","ts"));
+
+			//Проверяем, нет ли записей о приобретенных запчастях для данного ТО
+			$sumCost += CInvestToCarRepairParts::CalculateCostRepairParts($reasonTs,$tsID);
+
+
+			//Проверяем, нет ли записей о ремонте для данного ТО
+			$sumCost += CInvestToCarRepair::CalculateCostRepair($reasonTs,$tsID);
+
+
+			return $sumCost;
 		}
 
 	}

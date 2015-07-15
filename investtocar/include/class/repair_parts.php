@@ -398,4 +398,50 @@
 			}
 		}
 
+		/**
+		 * Функция возвращает общую стоимость запчастей для reason и reason_detail
+		 *
+		 * @param int|array $reason
+		 * @param int $reasonDetail
+		 * @param bool $not
+		 * @return int
+		 */
+		public function CalculateCostRepairParts ($reason=0, $reasonDetail=0, $not=false) {
+			global $DB;
+			if ($reason==0 || $reasonDetail==0) return 0;
+			$sumCost = 0;
+
+			$query = "SELECT `cost` FROM `".CInvestToCarMain::GetTableByCode("repairparts")."` WHERE ";
+			if (is_array($reason)) {
+				$query .= "`reason` ";
+				if ($not){
+					$query .= "NOT ";
+				}
+				$query .= "IN ( ";
+				$bFirst = true;
+				foreach ($reason as $arReason) {
+					if ($bFirst) {
+						$query .= $arReason;
+						$bFirst = false;
+					}
+					else {
+						$query .= ", ".$arReason;
+					}
+				}
+				$query .= ") ";
+			}
+			else {
+				$query .= "`reason` =".$reason." ";
+			}
+			$query .= "AND `reason_detail` =".$reasonDetail." ORDER BY `id` ASC";
+			if ($res = $DB->Select($query)) {
+				foreach ($res as $arRes) {
+					$sumCost += $arRes["cost"];
+				}
+				return $sumCost;
+			}
+			else {
+				return 0;
+			}
+		}
 	}

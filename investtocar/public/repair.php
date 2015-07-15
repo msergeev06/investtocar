@@ -4,7 +4,7 @@
 <?
 	$defaultCar = CInvestToCarCars::GetDefaultCar();
 ?>
-	<p><?=GetMessage("STATISTICS_FOR")?>: <? echo CInvestToCarShowSelect::Auto("my_car",true); ?><?=GetMessage("TOTAL_REPAIR_COSTS")?>: <?=CInvestToCarRepair::GetTotalRepairCosts()?> <?=GetMessage("RUB")?><br><br></p>
+	<p><?=GetMessage("STATISTICS_FOR")?>: <? echo CInvestToCarShowSelect::Auto("my_car",true); ?><?=GetMessage("TOTAL_REPAIR_COSTS")?>: <?=number_format(CInvestToCarRepair::GetTotalRepairCosts(),2)?> <?=GetMessage("RUB")?><br><br></p>
 	<p><a href="<?=$path?>repair/add_repair.php?car=<?=$defaultCar?>"><?=GetMessage("ADD_NOTE")?></a><br><br></p>
 	<table class="ts_list">
 		<thead>

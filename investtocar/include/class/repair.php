@@ -51,9 +51,33 @@
 		}
 
 		public function GetTotalRepairCosts ($car=0) {
+			global $DB;
 			if ($car==0) $car = CInvestToCarCars::GetDefaultCar();
+			$sumCost = 0;
 
-			return 0;
+			$query = "SELECT `id`, `cost` FROM `".CInvestToCarMain::GetTableByCode("repair")."` WHERE `auto` =".$car;
+			if ($res = $DB->Select($query)) {
+				foreach ($res as $arRes) {
+					if (floatval($arRes["cost"])==0) {
+						$sumCost += CInvestToCarRepairParts::CalculateCostRepairParts(
+							array(
+								intval(CInvestToCarMain::GetInfoByCode("reason","ts")),
+								intval(CInvestToCarMain::GetInfoByCode("reason","dtp"))
+							),
+							$arRes["id"],
+							true
+						);
+					}
+					else {
+						$sumCost += $arRes["cost"];
+					}
+				}
+
+				return round($sumCost, 2);
+			}
+			else {
+				return 0;
+			}
 		}
 
 		/**
@@ -116,7 +140,7 @@
 
 			$query = "INSERT INTO `".CInvestToCarMain::GetTableByCode("repair")."` (";
 			$query .= "`auto` , `date` , `cost` , `repair` , ";
-			$query .= "`name` , `odo` , `reason` , ";
+			$query .= "`name` , `odo` , `reason` , `who_paid` , ";
 			$query .= "`reason_detail` , `waypoint` , `comment`)VALUES (";
 			$query .= "'".$arData["auto"]."', '".$arData["date"]."', '".$arData["cost"]."', '".$arData["repair"]."', ";
 			$query .= "'".$arData["name"]."', '".$arData["odo"]."', '".$arData["reason"]."', '".$arData["who_paid"]."', ";
@@ -304,5 +328,37 @@
 			else {
 				return false;
 			}
+		}
+
+		public function CalculateCostRepair ($reason=0, $reasonDetail=0) {
+			global $DB;
+			if ($reason==0 || $reasonDetail==0) return 0;
+			$sumCost = 0;
+
+			$query = "SELECT `id`, `cost`, `reason` FROM `".CInvestToCarMain::GetTableByCode("repair")
+			         ."` WHERE `reason` =".$reason
+			         ." AND `reason_detail` =".$reasonDetail." ORDER BY `id` ASC";
+			if ($res = $DB->Select($query)) {
+				foreach ($res as $arRes) {
+					if (floatval($arRes["cost"])==0) {
+						$sumCost += CInvestToCarRepairParts::CalculateCostRepairParts(
+							array(
+								intval(CInvestToCarMain::GetInfoByCode("reason","ts")),
+								intval(CInvestToCarMain::GetInfoByCode("reason","dtp"))
+							),
+							$arRes["id"],
+							true
+						);
+					}
+					else {
+						$sumCost += $arRes["cost"];
+					}
+				}
+				return $sumCost;
+			}
+			else {
+				return 0;
+			}
+
 		}
 	}

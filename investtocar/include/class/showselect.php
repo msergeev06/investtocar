@@ -408,8 +408,7 @@
 			if ($car==0) $car = CInvestToCarCars::GetDefaultCar();
 			$echo = "<select name=\"".$name."\" class=\"".$name."\"".$additional_data.">";
 
-			/*
-			$query = "SELECT * FROM `ms_icar_ts` WHERE `auto` =".$car;
+			$query = "SELECT * FROM `".CInvestToCarMain::GetTableByCode("repair")."` WHERE `auto` =".$car." ORDER BY `date` ASC";
 			if ($res = $DB->Select($query)) {
 				if ($selected==0) {
 					$echo .= "<option value=\"0\" selected>".GetMessage("NOT_SELECTED")."</option>";
@@ -420,14 +419,12 @@
 					if ($selected>0 && $selected==$arRes["id"]) {
 						$echo .= " selected";
 					}
-					$echo .= ">".date("d.m.Y",$arRes["date"])." ".GetMessage("TS")."-".$arRes["ts_num"]."</option>";
+					$echo .= ">".date("d.m.Y",$arRes["date"])." ".$arRes["name"]."</option>";
 				}
 			}
 			else {
 				$echo .= "<option value=\"0\" selected>".GetMessage("NO_REPAIR")."</option>";
 			}
-			*/
-			$echo .= "<option value=\"0\" selected>".GetMessage("NO_REPAIR")."</option>";
 
 			$echo .= "</select>";
 
