@@ -19,13 +19,7 @@
 		</tr>
 		<tr>
 			<td class="title"><?=GetMessage("ARTIST_WORKS")?></td>
-			<td><select name="ts_repair">
-					<option value="1" selected><?=GetMessage("NO_DEALER")?></option>
-					<option value="2"><?=GetMessage("DEALER")?></option>
-					<option value="3"><?=GetMessage("SERVICE_STATION")?></option>
-					<option value="4"><?=GetMessage("DID_HE")?></option>
-					<option value="5"><?=GetMessage("PRIVATE_SERVICE")?></option>
-				</select></td>
+			<td><? echo CInvestToCarShowSelect::Repair("ts_repair"); ?></td>
 		</tr>
 		<tr>
 			<td class="title"><?=GetMessage("AMOUNT")?></td>

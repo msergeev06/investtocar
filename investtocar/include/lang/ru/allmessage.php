@@ -272,4 +272,13 @@
 	$MESS["EDIT_OTHER_SUCCESS"] = "Данные о прочих расхода успешно изменены";
 	$MESS["EDIT_OTHER_ERROR"] = "Ошибка изменения информации о прочих расходах";
 	$MESS["EDIT_OTHER_COST"] = "Редактирование прочего расхода";
+	$MESS["REPAIR"] = "Ремонт";
+	$MESS["TOTAL_REPAIR_COSTS"] = "Всего расходов на ремонт";
+	$MESS["ADD_REPAIR"] = "Добавление расхода на ремонт";
+	$MESS["ADD_REPAIR_SUCCESS"] = "Расходы на ремонт успешно добавлены";
+	$MESS["ADD_REPAIR_FAILED"] = "Ошибка при добавлении расходов на ремонт";
+	$MESS["DELETE_REPAIR"] = "Удаление записи о ремонте";
+	$MESS["EDIT_REPAIR"] = "Редактирование записи о ремонте";
+	$MESS["EDIT_REPAIR_SUCCESS"] = "Запись о ремонте успешно сохранена";
+	$MESS["EDIT_REPAIR_FAILED"] = "Ошибка сохранения записи о ремонте";
 

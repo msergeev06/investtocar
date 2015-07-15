@@ -55,7 +55,7 @@
 				<td class="title"><?=GetMessage("REASON_DETAILS")?></td>
 				<td class="reason_add">
 					<?
-						if ($arRepairParts["reason"]==$OPTIONS->GetOptionInt("reason_replacement_ts")) {
+						if ($arRepairParts["reason"]==intval(CInvestToCarMain::GetInfoByCode ("reason","ts"))) {
 							echo CInvestToCarShowSelect::ReasonTs("reason_ts",$arRepairParts["auto"],$arRepairParts["reason_detail"]);
 						}
 						else {
@@ -63,7 +63,7 @@
 						}
 					?>
 					<?
-						if ($arRepairParts["reason"]==$OPTIONS->GetOptionInt("reason_replacement_breakdown")) {
+						if ($arRepairParts["reason"]==intval(CInvestToCarMain::GetInfoByCode ("reason","breakdown"))) {
 							echo CInvestToCarShowSelect::ReasonRepair("reason_breakdown",$arRepairParts["auto"],$arRepairParts["reason_detail"]);
 						}
 						else {
@@ -71,7 +71,7 @@
 						}
 					?>
 					<?
-						if ($arRepairParts["reason"]==$OPTIONS->GetOptionInt("reason_replacement_dtp")) {
+						if ($arRepairParts["reason"]==intval(CInvestToCarMain::GetInfoByCode ("reason","dtp"))) {
 							echo CInvestToCarShowSelect::ReasonDtp("reason_dtp",$arRepairParts["auto"],$arRepairParts["reason_detail"]);
 						}
 						else {
@@ -79,7 +79,7 @@
 						}
 					?>
 					<?
-						if ($arRepairParts["reason"]==$OPTIONS->GetOptionInt("reason_replacement_tuning")) {
+						if ($arRepairParts["reason"]==intval(CInvestToCarMain::GetInfoByCode ("reason","tuning"))) {
 							echo CInvestToCarShowSelect::ReasonRepair("reason_tuning",$arRepairParts["auto"],$arRepairParts["reason_detail"]);
 						}
 						else {
@@ -87,7 +87,7 @@
 						}
 					?>
 					<?
-						if ($arRepairParts["reason"]==$OPTIONS->GetOptionInt("reason_replacement_upgrade")) {
+						if ($arRepairParts["reason"]==intval(CInvestToCarMain::GetInfoByCode ("reason","upgrade"))) {
 							echo CInvestToCarShowSelect::ReasonRepair("reason_upgrade",$arRepairParts["auto"],$arRepairParts["reason_detail"]);
 						}
 						else {
@@ -95,7 +95,7 @@
 						}
 					?>
 					<?
-						if ($arRepairParts["reason"]==$OPTIONS->GetOptionInt("reason_replacement_tire")) {
+						if ($arRepairParts["reason"]==intval(CInvestToCarMain::GetInfoByCode ("reason","tire"))) {
 							?><span class="reason_tire"">-</span><?
 						}
 						else {

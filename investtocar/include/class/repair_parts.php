@@ -114,11 +114,11 @@
 					//$arData[$i]["auto"] = self::GetMyCarsInfo($car);
 					$arData[$i]["date"] = date("d.m.Y",$arRes["date"]);
 					$arData[$i]["name"] = $arRes["name"];
-					$arData[$i]["storage"] = CInvestToCarMain::GetNameByIDFromDB($arRes["storage"],"ms_icar_setup_storage");
+					$arData[$i]["storage"] = CInvestToCarMain::GetNameByIDFromDB($arRes["storage"],CInvestToCarMain::GetTableByCode("storage"));
 					$arData[$i]["catalog_number"] = $arRes["catalog_number"];
 					$arData[$i]["number"] = round($arRes["number"],2);
 					$arData[$i]["cost"] = number_format($arRes["cost"],2);
-					$arData[$i]["reason"] = CInvestToCarMain::GetNameByIDFromDB($arRes["reason"],"ms_icar_setup_reason_replacement");
+					$arData[$i]["reason"] = CInvestToCarMain::GetNameByIDFromDB($arRes["reason"],CInvestToCarMain::GetTableByCode("reason"));
 					if ($arRes["reason"]==intval(CInvestToCarMain::GetInfoByCode ("reason","ts"))) {
 						if ($arRes["reason_detail"]>0) {
 							$arTemp = CInvestToCarTs::GetTsInfo($arRes["reason_detail"]);
@@ -164,9 +164,9 @@
 						$arData[$i]["reason_detail"] = "-";
 					}
 					//$arData[$i]["reason_detail"] = $arRes["reason_detail"];
-					$arData[$i]["who_paid"] = CInvestToCarMain::GetNameByIDFromDB($arRes["who_paid"],"ms_icar_setup_who_paid");
+					$arData[$i]["who_paid"] = CInvestToCarMain::GetNameByIDFromDB($arRes["who_paid"],CInvestToCarMain::GetTableByCode("whopaid"));
 					$arData[$i]["odo"] = round($arRes["odo"],2);
-					$arData[$i]["waypoint"] = CInvestToCarMain::GetNameByIDFromDB($arRes["waypoint"],"ms_icar_points");
+					$arData[$i]["waypoint"] = CInvestToCarMain::GetNameByIDFromDB($arRes["waypoint"],CInvestToCarMain::GetTableByCode("points"));
 					$arData[$i]["comment"] = $arRes["comment"];
 					$i++;
 				}
