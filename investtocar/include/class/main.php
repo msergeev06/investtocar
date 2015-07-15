@@ -103,29 +103,6 @@
 		}
 
 		/**
-		 * Функция возвращает Название ремонтирующего по его ID
-		 *
-		 * @param $id
-		 * @return string
-		 */
-		public function GetRepairNameByID ($id) {
-			switch ($id) {
-				case 1:
-					return GetMessage("NO_DEALER");
-				case 2:
-					return GetMessage("DEALER");
-				case 3:
-					return GetMessage("SERVICE_STATION");
-				case 4:
-					return GetMessage("DID_HE");
-				case 5:
-					return GetMessage("PRIVATE_SERVICE");
-				default:
-					return GetMessage("NO_DATA");
-			}
-		}
-
-		/**
 		 * Функция преобразует дату формата dd.mm.YYYY в timestamp
 		 *
 		 * @param string $date

@@ -27,7 +27,7 @@
 					if (intval($arTs["point"])>0) {
 						$arTs["point"] = CInvestToCarPoints::GetPointInfoByID($arTs["point"]);
 					}
-					$arTs["repair"] = CInvestToCarMain::GetRepairNameByID($arTs["repair"]);
+					$arTs["repair"] = CInvestToCarRepair::GetRepairNameByID($arTs["repair"]);
 				}
 				return $res;
 			}

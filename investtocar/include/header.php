@@ -48,4 +48,6 @@
 	require_once (INVESTTOCAR_CLASS_PATH."other.php");
 	//Настройки
 	require_once (INVESTTOCAR_CLASS_PATH."setup.php");
+	//Ремонт
+	require_once (INVESTTOCAR_CLASS_PATH."repair.php");
 

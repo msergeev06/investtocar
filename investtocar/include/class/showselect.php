@@ -290,26 +290,36 @@
 		 * @return string
 		 */
 		public function Repair ($name="", $selected=0) {
-			if ($name=="") {
-				$name = "repair";
+			global $DB;
+			if ($name=="") $name = "repair";
+			$echo = "";
+
+			$query = "SELECT * FROM `".CInvestToCarMain::GetTableByCode("repairtype")."` ORDER BY `sort` ASC";
+			if ($res = $DB->Select($query)) {
+				$echo .= "<select name=\"".$name."\" class=\"".$name."\">";
+				$bFirst = true;
+				foreach ($res as $arRes) {
+					$echo .= "<option value=\"".$arRes["id"]."\"";
+					if ($bFirst) {
+						if ($selected==0 || $selected==$arRes["id"]) {
+							$echo .= " selected=\"selected\"";
+						}
+						$bFirst = false;
+					}
+					else {
+						if ($selected>0 && $selected==$arRes["id"]) {
+							$echo .= " selected=\"selected\"";
+						}
+					}
+					$echo .= ">".$arRes["name"]."</option>";
+				}
+				$echo .= "</select>";
+				return $echo;
+			}
+			else {
+				return "";
 			}
 
-			$echo = "<select name=\"".$name."\">";
-			for ($i=1; $i<=5; $i++) {
-				$echo .= "<option value=\"".$i."\"";
-				if ($selected>0 && $selected==$i) {
-					$echo .= " selected=\"selected\"";
-				}
-				else {
-					if ($i==1) $echo .= " selected=\"selected\"";
-				}
-				$echo .= ">";
-				$echo .= CInvestToCarMain::GetRepairNameByID($i);
-				$echo .= "</option>";
-			}
-			$echo .= "</select>";
-
-			return $echo;
 		}
 
 		/**
